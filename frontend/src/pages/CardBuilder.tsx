@@ -1,12 +1,14 @@
+const FontStyle = {color: 'white'}
+
 
 function NavBarTest () {
     return (
         <>
             <div style={{backgroundColor: '#303236', width: '5%', height: '100%', display: 'flex', flexDirection: 'column', position: 'fixed', justifyContent: 'center', rowGap: '100px', alignItems: 'center'}}>
-                <a href="#" target="_blank">Home</a>
-                <a href="#" target="_blank">Card Builder</a>
-                <a href="#" target="_blank">Share</a>
-                <a href="#" target="_blank">etc</a>
+                <a href="#" target="_blank" style={FontStyle}>Home</a>
+                <a href="#" target="_blank" style={FontStyle}>Card Builder</a>
+                <a href="#" target="_blank" style={FontStyle}>Share</a>
+                <a href="#" target="_blank" style={FontStyle}>etc</a>
             </div>
         </>
     );

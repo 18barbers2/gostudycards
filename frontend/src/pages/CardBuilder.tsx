@@ -1,4 +1,4 @@
-const FontStyle = {color: 'white'}
+const FontStyle = {color: 'white', textDecoration: 'none'}
 
 
 function NavBarTest () {

@@ -1,7 +1,16 @@
 .card-input {
     background-color: #303236;
+    color: white;
 }
 
 .card-builder-page {
     background-color: #222222;
+    color: white;
+}
+
+body {
+    margin: 0;
+}
+.page-title {
+    margin: 0;
 }

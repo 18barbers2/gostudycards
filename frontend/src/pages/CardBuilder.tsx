@@ -16,7 +16,9 @@ export default function CardBuilder() {
     return (
         <div className='card-builder-page'>
             <h1 className='page-title'>Card Builder</h1>
-            <TextBox></TextBox>
+            <div className='card-builder'>
+                <TextBox></TextBox>
+            </div>
         </div>
     );
 }

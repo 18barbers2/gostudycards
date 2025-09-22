@@ -1,16 +1,25 @@
-.card-input {
-    background-color: #303236;
-    color: white;
-}
-
 .card-builder-page {
     background-color: #222222;
     color: white;
+    
+}
+
+.card-builder {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.card-input {
+    background-color: #303236;
+    color: white;
+    grid-row: 1 / 1;
 }
 
 body {
     margin: 0;
 }
+
 .page-title {
     margin: 0;
 }

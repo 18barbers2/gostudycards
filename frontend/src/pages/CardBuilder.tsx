@@ -4,11 +4,19 @@ import '../css/CardBuilder.css';
 
 
 
-export default function CardBuilder() {
+function TextBox() {
     return (
         <div>
+            <textarea className={'card-input'} rows={40} cols={100} defaultValue={'card text goes here'}/>
+        </div>
+    )
+}
+
+export default function CardBuilder() {
+    return (
+        <div className='card-builder-page'>
             <h1 className='page-title'>Card Builder</h1>
-            
+            <TextBox></TextBox>
         </div>
     );
 }

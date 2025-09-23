@@ -32,7 +32,7 @@ function CardPreview({html} : { html: string }) {
 export default function CardBuilder() {
 
     const [html, setHtml] = useState("");
-    const [isHtmlMode, setIsHtmlMode] = useState(false);
+    // const [isHtmlMode, setIsHtmlMode] = useState(false);
 
     return (
         <div className='card-builder-page'>

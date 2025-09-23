@@ -26,6 +26,8 @@ body {
 }
 
 .card-preview {
-    background-color: red;
-    border-radius: 30px;
+    background-color: rgba(137, 137, 137, 0.126);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

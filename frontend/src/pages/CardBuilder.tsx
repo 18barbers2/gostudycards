@@ -1,41 +1,45 @@
+import { useState } from 'react';
 import '../css/CardBuilder.css';
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+// const testHtml = `<div class='card' style='background-color: white'>User's HTML goes here</div>`;
+const iFrameStyle = {backgroundColor: 'green', border: '0', width: '100%', height: '100%'};
 
-const style = {backgroundColor: 'green', border: '0', width: '100%', height: '100%'};
 
-function htmlFrame() {
+function HtmlFrame({ html } : {html : string}) {
     return(
         <div>
-            <iframe style= {style} srcDoc={`<div class='card' style='background-color: blue'>User's HTML goes here</div>`}>
+            <iframe width='200px' height='200px' sandbox="" style= {iFrameStyle} srcDoc={html}>
             </iframe>
         </div>
     );
 }
 
-function TextBox() {
+function TextBox({ html, onChange } : {html : string; onChange : (v: string) => void}) {
+
     return (
-        <div>
-            <textarea className={'card-input'} rows={40} cols={100} defaultValue={'card text goes here'}/>
-        </div>
+        <textarea className={'card-input'} rows={40} cols={100} value={html} onChange={e => onChange(e.target.value)} />
     );
 }
 
-function CardPreview() {
+function CardPreview({html} : { html: string }) {
+
     return(
         <div className='card-preview'>
-            {htmlFrame()}
+            <HtmlFrame html={html}></HtmlFrame>
         </div>
     );
 }
 export default function CardBuilder() {
+
+    const [html, setHtml] = useState("");
+    const [isHtmlMode, setIsHtmlMode] = useState(false);
+
     return (
         <div className='card-builder-page'>
             <h1 className='page-title'>Card Builder</h1>
             <div className='card-builder'>
-                <TextBox></TextBox>
-                <CardPreview>
-                    
+                <TextBox html={html} onChange={setHtml}></TextBox>
+                <CardPreview html={html}>
                 </CardPreview>
             </div>
         </div>

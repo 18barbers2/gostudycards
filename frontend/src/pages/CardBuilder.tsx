@@ -2,13 +2,13 @@ import { useState } from 'react';
 import '../css/CardBuilder.css';
 
 // const testHtml = `<div class='card' style='background-color: white'>User's HTML goes here</div>`;
-const iFrameStyle = {backgroundColor: 'green', border: '0', width: '100%', height: '100%'};
+const iFrameStyle = {backgroundColor: 'green', border: '0'};
 
 
 function HtmlFrame({ html } : {html : string}) {
     return(
         <div>
-            <iframe width='200px' height='200px' sandbox="" style= {iFrameStyle} srcDoc={html}>
+            <iframe sandbox="" style={iFrameStyle} srcDoc={html}>
             </iframe>
         </div>
     );
@@ -22,7 +22,7 @@ function TextBox({ html, onChange } : {html : string; onChange : (v: string) => 
 }
 
 function CardPreview({html} : { html: string }) {
-
+    
     return(
         <div className='card-preview'>
             <HtmlFrame html={html}></HtmlFrame>

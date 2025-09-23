@@ -23,3 +23,8 @@ body {
 .page-title {
     margin: 0;
 }
+
+.card-preview {
+    background-color: red;
+    border-radius: 30px;
+}

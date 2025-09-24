@@ -2,16 +2,10 @@ import { useState } from 'react';
 import '../css/CardBuilder.css';
 
 // const testHtml = `<div class='card' style='background-color: white'>User's HTML goes here</div>`;
-const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '50%',height: '75%', borderRadius: '10px'};
+const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '50%', height: '75%', borderRadius: '10px'};
 
-
-// function HtmlFrame({ html } : {html : string}) {
-//     return(
-//     );
-// }
 
 function TextBox({ html, onChange } : {html : string; onChange : (v: string) => void}) {
-
     return (
         <textarea className={'card-input'} rows={40} cols={100} value={html} onChange={e => onChange(e.target.value)} />
     );
@@ -20,10 +14,12 @@ function TextBox({ html, onChange } : {html : string; onChange : (v: string) => 
 function CardPreview({html} : { html: string }) {
     return(
         <div className='card-preview'>
-            <iframe sandbox="" style={iFrameStyle} srcDoc={html}></iframe>
+            <iframe title='Card Preview' sandbox="" style={iFrameStyle} srcDoc={html}>
+            </iframe>
         </div>
     );
 }
+
 export default function CardBuilder() {
 
     const [html, setHtml] = useState("");

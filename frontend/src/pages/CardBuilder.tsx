@@ -58,7 +58,17 @@ export default function CardBuilder() {
     return (
         <div className='card-builder-page'>
             <h1 className='page-title'>Card Builder</h1>
-            <button>Button1</button><button>Button2</button><button>Button3</button>
+            <div className='editor-controls'>
+                <button>Button1</button>
+                <button>Button2</button>
+                <button>Button3</button>
+            </div>
+            <div className='editor-format-controls'>
+                <button><b>B</b></button>
+                <button><i>I</i></button>
+                <button><u>U</u></button>
+                <button><s>S</s></button>
+            </div>
             <div className='card-builder'>
                 <Editor html={html} onChange={setHtml}></Editor>
                 <Preview html={html}>

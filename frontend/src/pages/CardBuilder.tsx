@@ -13,6 +13,10 @@ const TestCardDoc = `<!DOCTYPE html>
         html, body { margin:0; padding:0; }
         body {
             font-size: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
     </style>
 </head>
@@ -28,14 +32,14 @@ const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '50%', he
 
 
 // Text input for user
-function TextBox({ html, onChange } : {html : string; onChange : (v: string) => void}) {
+function Editor({ html, onChange } : {html : string; onChange : (v: string) => void}) {
     return (
         <textarea className={'card-input'} rows={40} cols={100} value={html} onChange={e => onChange(e.target.value)} />
     );
 }
 
 // Card preview for user
-function CardPreview({html} : { html: string }) {
+function Preview({html} : { html: string }) {
     return(
         <div className='card-preview'>
             <iframe title='Card Preview' sandbox="" style={iFrameStyle} srcDoc={TestCardDoc}>
@@ -53,9 +57,9 @@ export default function CardBuilder() {
         <div className='card-builder-page'>
             <h1 className='page-title'>Card Builder</h1>
             <div className='card-builder'>
-                <TextBox html={html} onChange={setHtml}></TextBox>
-                <CardPreview html={html}>
-                </CardPreview>
+                <Editor html={html} onChange={setHtml}></Editor>
+                <Preview html={html}>
+                </Preview>
             </div>
         </div>
     );

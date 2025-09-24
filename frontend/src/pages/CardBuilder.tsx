@@ -28,7 +28,7 @@ const TestCardDoc = `<!DOCTYPE html>
 </html>`;
 
 // const testHtml = `<div class='card' style='background-color: white'>User's HTML goes here</div>`;
-const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '50%', height: '75%', borderRadius: '10px'};
+const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '60%', height: '85%', borderRadius: '10px'};
 
 
 // Text input for user

@@ -1,8 +1,13 @@
 import { useState } from 'react';
 import '../css/CardBuilder.css';
 
+const testQuestion = "qewrqwerqwert";
+const testAnswer = "answerGoes Here";
+const testHint = "Hint Goes Here";
+const testDescription = "Description Goes here";
+
 // Test data to inject to the iframe
-const TestCardDoc = `<!DOCTYPE html>
+const cardDoc = `<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -22,8 +27,10 @@ const TestCardDoc = `<!DOCTYPE html>
 </head>
 
 <body>
-    <h1>Content of body</h1>
-    <p>Paragraph</p>
+    <h1>test</h1>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
 </body>
 </html>`;
 
@@ -43,7 +50,7 @@ function Editor({ html, onChange } : {html : string; onChange : (v: string) => v
 function Preview({html} : { html: string }) {
     return(
         <div className='card-preview'>
-            <iframe title='Card Preview' sandbox="" style={iFrameStyle} srcDoc={TestCardDoc}>
+            <iframe title='Card Preview' sandbox="" style={iFrameStyle} srcDoc={cardDoc}>
             </iframe>
         </div>
     );

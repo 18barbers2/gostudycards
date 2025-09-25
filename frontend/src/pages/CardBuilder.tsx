@@ -42,7 +42,7 @@ type PageStatus = 'html-mode' | 'loading'| 'empty' | 'error';
 // Text input for user
 function Editor({ html, onChange } : {html : string; onChange : (v: string) => void}) {
     return (
-        <textarea className={'card-input'} rows={40} cols={100} value={html} onChange={e => onChange(e.target.value)} />
+        <textarea className={'card-input'} rows={40} cols={100} value={html} onChange={e => onChange(e.target.value) }/>
     );
 }
 

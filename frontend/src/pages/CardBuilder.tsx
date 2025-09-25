@@ -38,6 +38,9 @@ const cardDoc = `<!DOCTYPE html>
 const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '60%', height: '85%', borderRadius: '10px'};
 type PageStatus = 'html-mode' | 'loading'| 'empty' | 'error';
 
+// Track which side of the card the user is editing
+type CardTextInputMode = 'front' | 'back' | 'style';
+
 
 // Text input for user
 function Editor({ html, onChange } : {html : string; onChange : (v: string) => void}) {
@@ -60,15 +63,16 @@ export default function CardBuilder() {
 
     const [pageState, setPageState] = useState<PageStatus>('loading');
     const [html, setHtml] = useState("");
+    const [cardTextInputMode, setCardTextInputMode]= useState<CardTextInputMode>('front')
     // const [isHtmlMode, setIsHtmlMode] = useState(false);
 
     return (
         <div className='card-builder-page'>
             <h1 className='page-title'>Card Builder</h1>
             <div className='editor-controls'>
-                <button>Button1</button>
-                <button>Button2</button>
-                <button>Button3</button>
+                <button>Front</button>
+                <button>Back</button>
+                <button>Style</button>
             </div>
             <div className='editor-format-controls'>
                 <button><b>B</b></button>

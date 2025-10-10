@@ -19,7 +19,8 @@
 }
 
 body {
-    margin: 0;
+    /* margin: 10px; */
+    padding: 10px;
 }
 
 .page-title {
@@ -35,4 +36,20 @@ body {
 
 iframe {
     text-wrap: wrap;
+}
+
+button {
+    padding: 1vh;
+    margin: 0.5vh;
+}
+.front-button {
+    width: 15vh;
+    height: 5vh;
+    font-size: 25px;
+    font-family:'Roboto',  'Futura', 'Helvetica';
+    font-weight: bold;
+    background-color: #636468;
+    border-radius: 5px;
+    color: white;
+    border: none;
 }

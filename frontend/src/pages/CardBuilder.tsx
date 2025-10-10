@@ -70,7 +70,7 @@ export default function CardBuilder() {
         <div className='card-builder-page'>
             <h1 className='page-title'>Card Builder</h1>
             <div className='editor-controls'>
-                <button>Front</button>
+                <button className='front-button'>Front</button>
                 <button>Back</button>
                 <button>Style</button>
             </div>

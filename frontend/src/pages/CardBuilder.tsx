@@ -38,6 +38,7 @@ const cardDoc = `<!DOCTYPE html>
 const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '60%', height: '85%', borderRadius: '10px'};
 type PageStatus = 'html-mode' | 'loading'| 'empty' | 'error';
 
+
 // Track which side of the card the user is editing
 type CardTextInputMode = 'front' | 'back' | 'style';
 

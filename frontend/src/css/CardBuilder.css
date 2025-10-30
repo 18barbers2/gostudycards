@@ -1,30 +1,27 @@
 .card-builder-page {
     background-color: #222222;
     color: white;
-    
 }
 
 .card-builder {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 30px;
+
 }
 
 .card-input {
     background-color: #303236;
     color: white;
-    grid-row: 1 / 1;
     resize: none;
+
+
 }
 
 body {
     margin: 0px;
-    /* padding: 10px; */
 }
 
 .page-title {
     margin: 0;
+
 }
 
 .card-preview {
@@ -32,6 +29,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 iframe {
@@ -39,17 +37,20 @@ iframe {
 }
 
 button {
-    padding: 1vh;
-    margin: 0.5vh;
+    /* padding: 1vh;
+    margin: 0.5vh; */
 }
 .front-button {
-    width: 15vh;
-    height: 5vh;
-    font-size: 25px;
+    /* width: 15vh;
+    height: 5vh; */
+    /* font-size: 25px;
     font-family:'Roboto',  'Futura', 'Helvetica';
     font-weight: bold;
     background-color: #636468;
     border-radius: 5px;
     color: white;
-    border: none;
+    border: none; */
+}
+.editor-format-controls {
+
 }

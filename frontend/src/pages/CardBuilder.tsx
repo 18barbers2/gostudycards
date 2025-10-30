@@ -1,11 +1,6 @@
 import { useState } from 'react';
 import '../css/CardBuilder.css';
 
-const testQuestion = "qewrqwerqwert";
-const testAnswer = "answerGoes Here";
-const testHint = "Hint Goes Here";
-const testDescription = "Description Goes here";
-
 // Test data to inject to the iframe
 const cardDoc = `<!DOCTYPE html>
 <html lang="en">
@@ -63,9 +58,8 @@ function Preview({html} : { html: string }) {
 export default function CardBuilder() {
 
     const [pageState, setPageState] = useState<PageStatus>('loading');
-    const [html, setHtml] = useState("");
+    const [html, setHtml] = useState(''); // single source of truth for text
     const [cardTextInputMode, setCardTextInputMode]= useState<CardTextInputMode>('front')
-    // const [isHtmlMode, setIsHtmlMode] = useState(false);
 
     return (
         <div className='card-builder-page'>

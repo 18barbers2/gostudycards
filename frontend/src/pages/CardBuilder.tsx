@@ -29,6 +29,33 @@ const cardDoc = `<!DOCTYPE html>
 </body>
 </html>`;
 
+function createDoc ( userHtml: string ) {
+
+    return (`<!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Card Document</title>
+            <style>
+                html, body { margin:0; padding:0; }
+                body {
+                    font-size: 25px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                }
+            </style>
+        </head>
+
+        <body>
+            ${userHtml}
+        </body>
+        </html>`);
+}
+
 // const testHtml = `<div class='card' style='background-color: white'>User's HTML goes here</div>`;
 const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '60%', height: '500px', borderRadius: '10px'};
 type PageStatus = 'html-mode' | 'loading'| 'empty' | 'error';
@@ -46,10 +73,10 @@ function Editor({ html, onChange } : {html : string; onChange : (v: string) => v
 }
 
 // Card preview for user
-function Preview({html} : { html: string }) {
+function Preview({html, srcDoc} : { html: string; srcDoc : string }) {
     return(
         <div className='card-preview'>
-            <iframe title='Card Preview' sandbox="" style={iFrameStyle} srcDoc={cardDoc}>
+            <iframe title='Card Preview' sandbox="" style={iFrameStyle} srcDoc={srcDoc}>
             </iframe>
         </div>
     );
@@ -60,6 +87,7 @@ export default function CardBuilder() {
     const [pageState, setPageState] = useState<PageStatus>('loading');
     const [html, setHtml] = useState(''); // single source of truth for text
     const [cardTextInputMode, setCardTextInputMode]= useState<CardTextInputMode>('front')
+    const doc = createDoc(html);
 
     return (
         <div className='card-builder-page'>
@@ -77,7 +105,7 @@ export default function CardBuilder() {
             </div>
             <div className='card-builder'>
                 <Editor html={html} onChange={setHtml}></Editor>
-                <Preview html={html}>
+                <Preview html={html} srcDoc={doc}>
                 </Preview>
             </div>
             

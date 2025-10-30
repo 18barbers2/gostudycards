@@ -35,7 +35,7 @@ const cardDoc = `<!DOCTYPE html>
 </html>`;
 
 // const testHtml = `<div class='card' style='background-color: white'>User's HTML goes here</div>`;
-const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '60%', height: '85%', borderRadius: '10px'};
+const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '60%', height: '500px', borderRadius: '10px'};
 type PageStatus = 'html-mode' | 'loading'| 'empty' | 'error';
 
 

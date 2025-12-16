@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import '../css/CardBuilder.css';
+import NavBar from '../components/NavBar';
 
 // Test data to inject to the iframe
 const cardDoc = `<!DOCTYPE html>
@@ -132,6 +133,7 @@ export default function CardBuilder() {
     // Card Builder Page
     return (
         <div className='card-builder-page'>
+            <NavBar></NavBar>
             <h1 className='page-title'>Card Builder</h1>
             <div className='editor-controls'>
                 <button className={cardTextInputMode === 'front' ? 'active' : ''} onClick={() => handleTabChange('front')}>Front</button>

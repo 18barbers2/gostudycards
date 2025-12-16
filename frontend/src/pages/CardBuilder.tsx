@@ -111,6 +111,7 @@ export default function CardBuilder() {
         }
     }
 
+    // Handle tab change
     const handleTabChange = (mode: CardTextInputMode) => {
         setCardTextInputMode(mode);
         if (mode === 'front') {
@@ -121,11 +122,14 @@ export default function CardBuilder() {
         }
     };
 
+
+    // Handle card flip logic
     const handleFlip = () => {
         setPreviewSide(prev => prev === 'front' ? 'back' : 'front');
     }
 
 
+    // Card Builder Page
     return (
         <div className='card-builder-page'>
             <h1 className='page-title'>Card Builder</h1>

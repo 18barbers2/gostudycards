@@ -131,9 +131,9 @@ export default function CardBuilder() {
         <div className='card-builder-page'>
             <h1 className='page-title'>Card Builder</h1>
             <div className='editor-controls'>
-                <button className='front-button'>Front</button>
-                <button>Back</button>
-                <button>Style</button>
+                <button className={cardTextInputMode === 'front' ? 'active' : ''} onClick={() => handleTabChange('front')}>Front</button>
+                <button className={cardTextInputMode === 'back' ? 'active' : ''} onClick={() => handleTabChange('back')}>Back</button>
+                <button className={cardTextInputMode === 'style' ? 'active' : ''} onClick={() => handleTabChange('style')}>Style</button>
             </div>
             <div className='editor-format-controls'>
                 <button><b>B</b></button>

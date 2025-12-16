@@ -117,7 +117,7 @@ export default function CardBuilder() {
         if (mode === 'front') {
             setPreviewSide('front');
         }
-        else {
+        else if (mode === 'back') {
             setPreviewSide('back');
         }
     };

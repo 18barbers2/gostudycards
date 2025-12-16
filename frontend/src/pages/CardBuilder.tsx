@@ -87,12 +87,24 @@ function Preview({html, srcDoc, side, onFlip} : { html: string; srcDoc : string 
 }
 
 export default function CardBuilder() {
-
-    const [pageState, setPageState] = useState<PageStatus>('loading');
-    const [html, setHtml] = useState(''); // single source of truth for text
+    
+    
+    // Which version side of the card is displayed (HTML)
+    const [frontHtml, setFrontHtml] = useState('');
+    const [backHtml, setBackHtml] = useState('');
     const [cardTextInputMode, setCardTextInputMode]= useState<CardTextInputMode>('front')
-    const doc = createDoc(html);
+    const currentHtml = cardTextInputMode === 'front' ? frontHtml : backHtml;
 
+    // const [pageState, setPageState] = useState<PageStatus>('loading');
+    // const [html, setHtml] = useState(''); // single source of truth for text
+
+    const doc = createDoc(currentHtml);
+
+
+
+
+
+    
     return (
         <div className='card-builder-page'>
             <h1 className='page-title'>Card Builder</h1>
@@ -108,7 +120,7 @@ export default function CardBuilder() {
                 <button><s>S</s></button>
             </div>
             <div className='card-builder'>
-                <Editor html={html} onChange={setHtml}></Editor>
+                <Editor html={currentHtml} onChange={handleHtmlChange}></Editor>
                 <Preview html={html} srcDoc={doc}>
                 </Preview>
             </div>

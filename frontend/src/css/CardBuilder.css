@@ -1,0 +1,40 @@
+.card-builder-page {
+    background-color: #222222;
+    color: white;
+}
+
+.card-input {
+    background-color: #303236;
+    color: white;
+    resize: none;
+    width: 50%;
+}
+
+body {
+    margin: 0px;
+    background-color: #222222;
+
+}
+
+.page-title {
+    margin: 0;
+
+}
+
+.card-preview {
+    background-color: rgba(137, 137, 137, 0.126);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    flex-direction: column;
+}
+
+iframe {
+    text-wrap: wrap;
+}
+
+.card-builder {
+    display: flex;
+    gap: 1%;
+}

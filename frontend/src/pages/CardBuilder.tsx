@@ -100,11 +100,18 @@ export default function CardBuilder() {
 
     const doc = createDoc(currentHtml);
 
+    const handleHtmlChange = (newHtml: string) => {
+        if (cardTextInputMode === 'front') {
+            setFrontHtml(newHtml);
+        }
+        else {
+            setBackHtml(newHtml);
+        }
+    }
 
 
 
 
-    
     return (
         <div className='card-builder-page'>
             <h1 className='page-title'>Card Builder</h1>

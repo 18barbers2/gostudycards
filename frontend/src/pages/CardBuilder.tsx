@@ -60,10 +60,8 @@ function createDoc ( userHtml: string ) {
 const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '60%', height: '500px', borderRadius: '10px'};
 type PageStatus = 'html-mode' | 'loading'| 'empty' | 'error';
 
-
 // Track which side of the card the user is editing
 type CardTextInputMode = 'front' | 'back' | 'style';
-
 
 // Text input for user
 function Editor({ html, onChange } : {html : string; onChange : (v: string) => void}) {
@@ -73,11 +71,17 @@ function Editor({ html, onChange } : {html : string; onChange : (v: string) => v
 }
 
 // Card preview for user
-function Preview({html, srcDoc} : { html: string; srcDoc : string }) {
+function Preview({html, srcDoc, side, onFlip} : { html: string; srcDoc : string ; side: 'front' | 'back'; onFlip: () => void}) {
     return(
         <div className='card-preview'>
-            <iframe title='Card Preview' sandbox="" style={iFrameStyle} srcDoc={srcDoc}>
+            <p style={{marginBottom: '10px'}}>Preview - {side === 'front' ?  'Front' : 'Back'}</p>
+            <iframe 
+                title='Card Preview'
+                sandbox="" 
+                style={iFrameStyle} 
+                srcDoc={srcDoc}>
             </iframe>
+            <button onClick={onFlip} style={{marginTop: '10px'}}>Flip Card</button>
         </div>
     );
 }

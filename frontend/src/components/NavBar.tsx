@@ -1,7 +1,9 @@
+import '../css/NavBar.css';
+
 export default function NavBar() {
     return (
-        <div>
+        <nav className='navbar'>
             Navbar
-        </div>
+        </nav>
     );
 }

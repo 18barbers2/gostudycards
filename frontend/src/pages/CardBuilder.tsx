@@ -46,13 +46,12 @@ function createDoc ( userHtml: string ) {
                     justify-content: center;
                     align-items: center;
                     flex-direction: column;
+                    white-space: pre-wrap;
                 }
             </style>
         </head>
 
-        <body>
-            ${userHtml}
-        </body>
+        <body>${userHtml}</body>
         </html>`);
 }
 

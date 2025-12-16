@@ -41,7 +41,7 @@ function createDoc ( userHtml: string ) {
             <style>
                 html, body { margin:0; padding:0; }
                 body {
-                    font-size: 25px;
+                    font-size: 36px;
                     display: flex;
                     justify-content: center;
                     align-items: center;

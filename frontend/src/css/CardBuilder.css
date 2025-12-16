@@ -24,7 +24,7 @@ body {
 }
 
 .card-preview {
-    background-color: rgba(137, 137, 137, 0.126);
+    /* background-color: rgba(137, 137, 137, 0.126); */
     display: flex;
     justify-content: center;
     align-items: center;

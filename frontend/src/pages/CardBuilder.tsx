@@ -93,13 +93,16 @@ export default function CardBuilder() {
     const [frontHtml, setFrontHtml] = useState('');
     const [backHtml, setBackHtml] = useState('');
     const [cardTextInputMode, setCardTextInputMode]= useState<CardTextInputMode>('front')
+    const [previewSide, setPreviewSide] = useState<'front' | 'back'>('front');
+    
+    // Which HTML to show in editor based on mode
     const currentHtml = cardTextInputMode === 'front' ? frontHtml : backHtml;
+    
+    // Which HTML to show in the preview
+    const previewHtml = previewSide === 'front' ? frontHtml : backHtml;
+    const doc = createDoc(previewHtml);
 
-    // const [pageState, setPageState] = useState<PageStatus>('loading');
-    // const [html, setHtml] = useState(''); // single source of truth for text
-
-    const doc = createDoc(currentHtml);
-
+    // Handle the HTML update
     const handleHtmlChange = (newHtml: string) => {
         if (cardTextInputMode === 'front') {
             setFrontHtml(newHtml);
@@ -109,7 +112,19 @@ export default function CardBuilder() {
         }
     }
 
+    const handleTabChange = (mode: CardTextInputMode) => {
+        setCardTextInputMode(mode);
+        if (mode === 'front') {
+            setPreviewSide('front');
+        }
+        else {
+            setPreviewSide('back');
+        }
+    };
 
+    const handleFlip = () => {
+        setPreviewSide(prev => prev === 'front' ? 'back' : 'front');
+    }
 
 
     return (
@@ -128,10 +143,14 @@ export default function CardBuilder() {
             </div>
             <div className='card-builder'>
                 <Editor html={currentHtml} onChange={handleHtmlChange}></Editor>
-                <Preview html={html} srcDoc={doc}>
+                <Preview 
+                    html={previewHtml}
+                    srcDoc={doc}
+                    side={previewSide}
+                    onFlip={handleFlip}
+                >
                 </Preview>
             </div>
-            
         </div>
     );
 }

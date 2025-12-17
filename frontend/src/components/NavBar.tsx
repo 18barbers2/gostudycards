@@ -15,6 +15,9 @@ export default function NavBar() {
                 <span className="material-symbols-outlined">
                     cards_stack
                 </span>
+                <span className="material-symbols-outlined">
+                    contacts_product
+                </span>
             </ul>
             
         </nav>

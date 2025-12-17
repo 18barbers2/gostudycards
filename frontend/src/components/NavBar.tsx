@@ -1,14 +1,22 @@
 import '../css/NavBar.css';
 
 export default function NavBar() {
+
+
     return (
         <nav className='navbar'>
             <ul>
-                <li>Home</li>
-                <li>Decks</li>
-                <li>Share</li>
-                <li>Settings</li>
+                <span className="material-symbols-outlined">
+                    dataset
+                </span>
+                <span className="material-symbols-outlined">
+                    clear_all
+                </span>
+                <span className="material-symbols-outlined">
+                    cards_stack
+                </span>
             </ul>
+            
         </nav>
     );
 }

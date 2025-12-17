@@ -13,10 +13,11 @@ ul {
     padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
+    row-gap: 2em;
 }
 
 .material-symbols-outlined {

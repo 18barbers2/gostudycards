@@ -6,9 +6,11 @@ export default function NavBar() {
     return (
         <nav className='navbar'>
             <ul>
-                <span className="material-symbols-outlined">
+                <a href='#'>
+                    <span className="material-symbols-outlined">
                     dataset
-                </span>
+                    </span>
+                </a>
                 <span className="material-symbols-outlined">
                     clear_all
                 </span>

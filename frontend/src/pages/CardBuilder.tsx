@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import '../css/CardBuilder.css';
+import Card from '../components/Card';
 
 // Test data to inject to the iframe
 const cardDoc = `<!DOCTYPE html>
@@ -154,6 +155,16 @@ export default function CardBuilder() {
                 >
                 </Preview>
             </div>
+
+            <div>
+                <Card 
+                    template="<h1>{{Question}}<h1>"
+                    data={{ Question: "What is 2+2" }}>
+                </Card>
+            </div>
+
+
+
         </div>
     );
 }

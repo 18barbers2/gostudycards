@@ -2,11 +2,11 @@
 
 function Card( props : any) {
 
-    const html = props.html;
+    const template = props.template;
 
     return( 
         <div className="card">
-            <div dangerouslySetInnerHTML={{ __html : html }}></div>
+            <div dangerouslySetInnerHTML={{ __html : template }}></div>
         </div>
     );
 }

@@ -158,8 +158,8 @@ export default function CardBuilder() {
 
             <div>
                 <Card 
-                    template="<h1>{{Question}}<h1>"
-                    data={{ Question: "What is 2+2" }}>
+                    template="<h1>Question: {{Question}}<h1>Answer: {{Answer}}<p></p><p>Hint: {{Hint}}</p>"
+                    data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car"}}>
                 </Card>
             </div>
 

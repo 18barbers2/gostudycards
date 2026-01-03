@@ -3,34 +3,6 @@ import '../css/CardBuilder.css';
 import Card from '../components/Card';
 import { Description } from '@mui/icons-material';
 
-// Test data to inject to the iframe
-const cardDoc = `<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Document</title>
-    <style>
-        html, body { margin:0; padding:0; }
-        body {
-            font-size: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-    </style>
-</head>
-
-<body>
-    <h1>test</h1>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-</body>
-</html>`;
-
 function createDoc ( userHtml: string ) {
 
     return (`<!DOCTYPE html>

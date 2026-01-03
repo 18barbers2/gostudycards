@@ -77,7 +77,7 @@ function Preview({html, srcDoc, side, onFlip} : { html: string; srcDoc : string 
         <div className='card-preview'>
             <p style={{marginBottom: '10px'}}>Preview - {side === 'front' ?  'Front' : 'Back'}</p>
             <Card 
-                template="{{Question}}<br><br><div class='hint'>{{Hint}}</div><p>{{Answer}}</p>"
+                template={html}
                 data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car", Description: "Description goes here, it's simple just add two together two times. "}}>
             </Card>
             <button onClick={onFlip} style={{marginTop: '10px'}}>Flip Card</button>

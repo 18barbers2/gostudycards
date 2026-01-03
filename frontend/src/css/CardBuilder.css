@@ -26,3 +26,13 @@ body {
     display: flex;
     gap: 1%;
 }
+
+.card-preview {
+    display: flex; 
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    width: 1000px;
+
+}
+

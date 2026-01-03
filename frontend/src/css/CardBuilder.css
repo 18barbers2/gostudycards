@@ -25,11 +25,11 @@ body {
 
 .card-preview {
     /* background-color: rgba(137, 137, 137, 0.126); */
-    display: flex;
+    /* display: flex;
     justify-content: center;
     align-items: center;
     width: 50%;
-    flex-direction: column;
+    flex-direction: column; */
 }
 
 iframe {

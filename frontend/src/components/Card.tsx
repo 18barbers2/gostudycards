@@ -28,12 +28,11 @@ function Card( props : any) {
                         border-width: 0;
                         height: 500px;
                         border-radius: 10px;
+                        background: linear-gradient(45deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%);
                     }
                 </style>
             </head>
-            <body>
-                ${html}
-            </body>
+            <body>${html}</body>
             </html>`;
 
 

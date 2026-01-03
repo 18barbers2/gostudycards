@@ -1,4 +1,5 @@
 //TODO: add in an interface for CardProps
+const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '60%', height: '500px', borderRadius: '10px'};
 
 import { parseTemplate } from "../utils/templateParser";
 
@@ -10,7 +11,12 @@ function Card( props : any) {
 
     return( 
         <div className="card">
-            <div dangerouslySetInnerHTML={{ __html : html }}></div>
+            <iframe 
+                title='Card'
+                sandbox=""
+                style={iFrameStyle}
+                srcDoc={html}>
+            </iframe>
         </div>
     );
 }

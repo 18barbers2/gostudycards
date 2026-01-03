@@ -75,12 +75,10 @@ function Preview({html, srcDoc, side, onFlip} : { html: string; srcDoc : string 
     return(
         <div className='card-preview'>
             <p style={{marginBottom: '10px'}}>Preview - {side === 'front' ?  'Front' : 'Back'}</p>
-            <iframe 
-                title='Card Preview'
-                sandbox="" 
-                style={iFrameStyle} 
-                srcDoc={srcDoc}>
-            </iframe>
+            <Card 
+                template="<h1>Question: {{Question}}<h1>Answer: {{Answer}}<p></p><p>Hint: {{Hint}}</p>"
+                data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car"}}>
+            </Card>
             <button onClick={onFlip} style={{marginTop: '10px'}}>Flip Card</button>
         </div>
     );
@@ -155,15 +153,6 @@ export default function CardBuilder() {
                 >
                 </Preview>
             </div>
-
-            <div>
-                <Card 
-                    template="<h1>Question: {{Question}}<h1>Answer: {{Answer}}<p></p><p>Hint: {{Hint}}</p>"
-                    data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car"}}>
-                </Card>
-            </div>
-
-
 
         </div>
     );

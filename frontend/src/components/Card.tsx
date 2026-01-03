@@ -6,16 +6,45 @@ import { parseTemplate } from "../utils/templateParser";
 // TODO: replace props with the template and data props
 function Card( props : any) {
 
-    const template = props.template;
     const html = parseTemplate(props.template, props.data);
 
-    return( 
-        <iframe className='card'
-            title='Card'
-            sandbox=""
-            srcDoc={html}>
-        </iframe>
+    const baseDoc = `
+        <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Card Document</title>
+                <style>
+                    html, body { margin:0; padding:0; }
+                    body {
+                        font-size: 25px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                        white-space: pre-wrap;
+                        background-color: #e5e5e5ff;
+                        border-width: 0;
+                        height: 500px;
+                        border-radius: 10px;
+                    }
+                </style>
+            </head>
+            <body>
+                ${html}
+            </body>
+            </html>`;
 
+
+
+
+    return( 
+        <iframe className='card-iframe'
+            title='Card'
+            sandbox=''
+            srcDoc={baseDoc}>
+        </iframe>
     );
 }
 

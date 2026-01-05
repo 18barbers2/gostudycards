@@ -43,7 +43,7 @@ function Editor({ html, onChange } : {html : string; onChange : (v: string) => v
 }
 
 // Card preview for user
-function Preview({html, srcDoc, side, onFlip} : { html: string; srcDoc : string ; side: 'front' | 'back'; onFlip: () => void}) {
+function Preview({html, side, onFlip} : { html: string; srcDoc : string ; side: 'front' | 'back'; onFlip: () => void}) {
     return(
         <div className='card-preview'>
             <p style={{marginBottom: '10px'}}>Preview - {side === 'front' ?  'Front' : 'Back'}</p>

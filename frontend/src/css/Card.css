@@ -1,0 +1,21 @@
+html { margin:0; padding:0; }
+
+.card-iframe {
+    font-size: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* flex-direction: column; */
+    /* width: 100%; */
+    /* background-color: rgba(137, 137, 137, 0.126); */
+    /* background: #2A7B9B; */
+    /* background: linear-gradient(45deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%); */
+}
+
+iframe {
+    background-color: #e5e5e5ff;
+    border-width: 0;
+    height: 500px;
+    border-radius: 10px;
+    width: 100%;
+}

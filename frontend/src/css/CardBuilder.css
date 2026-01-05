@@ -10,33 +10,28 @@
     color: white;
     resize: none;
     width: 50%;
+    border-width: 0;
 }
 
 body {
     margin: 0px;
     background-color: #222222;
-
 }
 
 .page-title {
     margin: 0;
-
-}
-
-.card-preview {
-    /* background-color: rgba(137, 137, 137, 0.126); */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    flex-direction: column;
-}
-
-iframe {
-    text-wrap: wrap;
 }
 
 .card-builder {
     display: flex;
     gap: 1%;
 }
+
+.card-preview {
+    display: flex; 
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    width: 500px;
+}
+

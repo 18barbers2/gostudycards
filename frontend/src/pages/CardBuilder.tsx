@@ -1,33 +1,6 @@
 import { useState } from 'react';
 import '../css/CardBuilder.css';
-
-// Test data to inject to the iframe
-const cardDoc = `<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Document</title>
-    <style>
-        html, body { margin:0; padding:0; }
-        body {
-            font-size: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-    </style>
-</head>
-
-<body>
-    <h1>test</h1>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-</body>
-</html>`;
+import Card from '../components/Card';
 
 function createDoc ( userHtml: string ) {
 
@@ -70,16 +43,14 @@ function Editor({ html, onChange } : {html : string; onChange : (v: string) => v
 }
 
 // Card preview for user
-function Preview({html, srcDoc, side, onFlip} : { html: string; srcDoc : string ; side: 'front' | 'back'; onFlip: () => void}) {
+function Preview({html, side, onFlip} : { html: string; srcDoc : string ; side: 'front' | 'back'; onFlip: () => void}) {
     return(
         <div className='card-preview'>
             <p style={{marginBottom: '10px'}}>Preview - {side === 'front' ?  'Front' : 'Back'}</p>
-            <iframe 
-                title='Card Preview'
-                sandbox="" 
-                style={iFrameStyle} 
-                srcDoc={srcDoc}>
-            </iframe>
+            <Card 
+                template={html}
+                data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car", Description: "Description goes here, it's simple just add two together two times. "}}>
+            </Card>
             <button onClick={onFlip} style={{marginTop: '10px'}}>Flip Card</button>
         </div>
     );
@@ -154,6 +125,7 @@ export default function CardBuilder() {
                 >
                 </Preview>
             </div>
+
         </div>
     );
 }

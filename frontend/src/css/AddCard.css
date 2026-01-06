@@ -7,4 +7,41 @@
 
 .field-input {
     resize: none;
+    background-color: #303236;
+    color: white;
+    border-width: 0;
+}
+
+.field-input:focus {
+    outline: solid rgb(231, 231, 231) 1px;
+}
+
+button {
+    background-color: #303236;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    margin: 2px;
+    transition: none;
+}
+
+button:hover {
+    background-color: #303236;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+    color: white;
+    font-size: 16px;
+}
+
+.editor-format-controls {
+    display: flex;
+    justify-content: left;
+    align-content: center;
 }

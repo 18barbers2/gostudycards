@@ -4,14 +4,14 @@
     /* Colors */
     --bg-primary: #222222;
     --bg-secondary: #303236;
-    --border-secondary: rgb(47, 104, 190);
     --text-primary: white;
-    --border-color: #555;
+    --border-color-primary: #555;
+    --border-color-secondary: rgb(47, 104, 190);
 
     /* Sizes */
     --button-size: 40px;
     --icon-size: 16px;
-    --border-radius: 5px;
+    --border-radius: 20px;
     --spacing-sm: 2px;
     --spacing-md: 10px;
     --spacing-lg: 80px;
@@ -36,7 +36,7 @@
 }
 
 .field-input:focus {
-    outline: solid var(--border-secondary) 3px;
+    outline: solid var(--border-color-secondary) 3px;
 }
 
 button {
@@ -44,8 +44,7 @@ button {
     color: var(--text-primary);
     width: var(--button-size);
     height: var(--button-size);
-    /* border-radius: var(--border-radius); */
-    margin: var(--spacing-sm);
+    margin: 0px;
     transition: none;
     cursor: pointer;
     display: flex;
@@ -54,26 +53,28 @@ button {
 }
 .button-left {
     border-radius: var(--border-radius) 0px 0px var(--border-radius);
-    margin-left: 0px;
-    margin-right: 0px;
     border-right-width: 0px;
 }
 .button-right {
     border-radius: 0px var(--border-radius) var(--border-radius) 0px;
     border-left-width: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
 }
 .button-middle {
-    margin-left: 0px;
-    margin-right: 0px;
-    border-left-width: 0px;
-    border-right-width: 0px;
+    border-radius: 0px;
+}
+
+.button-group {
+    display: flex;
+    gap: 0px;
 }
 
 button:hover {
     background-color: var(--bg-secondary);
-    border-color: var(--border-color);
+    border-color: var(--border-color-primary);
+}
+
+button:focus {
+    border-color: var(--border-color-secondary);
 }
 
 button .material-symbols-outlined {
@@ -89,6 +90,6 @@ button .material-symbols-outlined {
 
 .editor-format-controls {
     display: flex;
-    justify-content: left;
     align-content: center;
+    gap: 10px;
 }

@@ -25,19 +25,18 @@ export default function AddCard () {
                 <button>X<sup>2</sup></button>
                 <button>X<sub>2</sub></button>
                 
-                <button>Text Color</button>
-                <button>Highlight</button>
+                <button className="material-symbols-outlined">format_color_text</button>
+                <button className="material-symbols-outlined">ink_highlighter</button>
                 
-                <button>Remove Formatting</button>
+                <button className="material-symbols-outlined">format_clear</button>
 
-                <button>Unordered List</button>
-                <button>Ordered List</button>
-                <button>Remove Formatting</button>
+                <button className="material-symbols-outlined">format_list_numbered</button>
+                <button className="material-symbols-outlined">format_list_bulleted</button>
+                <button className="material-symbols-outlined">format_align_center</button>
 
-                <button>Image</button>
-                <button>Sound</button>
-                <button>Formula</button>
-
+                <button className="material-symbols-outlined">image</button>
+                <button className="material-symbols-outlined">mic</button>
+                <button className="material-symbols-outlined">function</button>
             </div>
 
 

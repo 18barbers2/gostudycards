@@ -15,24 +15,27 @@ export default function AddCard () {
     return(
         <div className="add-card-page">
             <h1 className='page-title'>Add Card</h1>
+            <br />
             <div className='editor-format-controls'>
-                <button><b>B</b></button>
-                <button><i>I</i></button>
-                <button><u>U</u></button>
-                <button><s>S</s></button>
+                <button className='button-left'><b>B</b></button>
+                <button className='button-middle'><i>I</i></button>
+                <button className='button-middle'><u>U</u></button>
+                <button className='button-right'><s>S</s></button>
                 
-                <button>X<sup>2</sup></button>
-                <button>X<sub>2</sub></button>
+                <button className='button-left'>x<sup>2</sup></button>
+                <button className='button-right'>x<sub>2</sub></button>
                 
-                <button><span className="material-symbols-outlined">format_color_text</span></button>
-                <button><span className="material-symbols-outlined">ink_highlighter</span></button>
-                <button><span className="material-symbols-outlined">format_clear</span></button>
-                <button><span className="material-symbols-outlined">format_list_numbered</span></button>
-                <button><span className="material-symbols-outlined">format_list_bulleted</span></button>
-                <button><span className="material-symbols-outlined">format_align_center</span></button>
-                <button><span className="material-symbols-outlined">image</span></button>
-                <button><span className="material-symbols-outlined">mic</span></button>
-                <button><span className="material-symbols-outlined">function</span></button>                
+                <button className='button-left'><span className='material-symbols-outlined'>format_color_text</span></button>
+                <button className='button-middle'><span className='material-symbols-outlined'>ink_highlighter</span></button>
+                <button className='button-right'><span className='material-symbols-outlined'>format_clear</span></button>
+
+                <button className='button-left'><span className='material-symbols-outlined'>format_list_numbered</span></button>
+                <button className='button-middle'><span className='material-symbols-outlined'>format_list_bulleted</span></button>
+                <button className='button-right'><span className='material-symbols-outlined'>format_align_center</span></button>
+                
+                <button className='button-left'><span className='material-symbols-outlined'>image</span></button>
+                <button className='button-middle'><span className='material-symbols-outlined'>mic</span></button>
+                <button className='button-right'><span className='material-symbols-outlined'>function</span></button>                
                 
             </div>
 

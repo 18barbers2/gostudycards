@@ -1,5 +1,28 @@
+
+:root {
+
+    /* Colors */
+    --bg-primary: #222222;
+    --bg-secondary: #303236;
+    --border-secondary: rgb(47, 104, 190);
+    --text-primary: white;
+    --border-color: #555;
+
+    /* Sizes */
+    --button-size: 40px;
+    --icon-size: 16px;
+    --border-radius: 5px;
+    --spacing-sm: 2px;
+    --spacing-md: 10px;
+    --spacing-lg: 80px;
+
+    /* Card colors */
+}
+
+
+
 .add-card-page {
-    background-color: #222222;
+    background-color: var(--bg-primary);
     color: white;
     margin-left: 80px;
     padding: 80px;
@@ -7,31 +30,50 @@
 
 .field-input {
     resize: none;
-    background-color: #303236;
-    color: white;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     border-width: 0;
 }
 
 .field-input:focus {
-    outline: solid rgb(231, 231, 231) 1px;
+    outline: solid var(--border-secondary) 3px;
 }
 
 button {
-    background-color: #303236;
-    color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 5px;
-    margin: 2px;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    width: var(--button-size);
+    height: var(--button-size);
+    /* border-radius: var(--border-radius); */
+    margin: var(--spacing-sm);
     transition: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+.button-left {
+    border-radius: var(--border-radius) 0px 0px var(--border-radius);
+    margin-left: 0px;
+    margin-right: 0px;
+    border-right-width: 0px;
+}
+.button-right {
+    border-radius: 0px var(--border-radius) var(--border-radius) 0px;
+    border-left-width: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.button-middle {
+    margin-left: 0px;
+    margin-right: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+}
 
 button:hover {
-    background-color: #303236;
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
 }
 
 button .material-symbols-outlined {
@@ -40,8 +82,8 @@ button .material-symbols-outlined {
     'wght' 400,
     'GRAD' 0,
     'opsz' 24;
-    color: white;
-    font-size: 16px;
+    color: var(--text-primary);
+    font-size: var(--icon-size);
     pointer-events: none;
 }
 

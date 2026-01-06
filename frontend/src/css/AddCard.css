@@ -38,6 +38,7 @@ button:hover {
     'opsz' 24;
     color: white;
     font-size: 16px;
+    pointer-events: none;
 }
 
 .editor-format-controls {

@@ -19,11 +19,15 @@
 button {
     background-color: #303236;
     color: white;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 5px;
     margin: 2px;
     transition: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 button:hover {

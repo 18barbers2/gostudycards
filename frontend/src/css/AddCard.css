@@ -30,7 +30,7 @@ button:hover {
     background-color: #303236;
 }
 
-.material-symbols-outlined {
+button .material-symbols-outlined {
   font-variation-settings:
     'FILL' 1,
     'wght' 400,

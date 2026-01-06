@@ -9,17 +9,26 @@
     --border-color-secondary: rgb(47, 104, 190);
 
     /* Sizes */
-    --button-size: 40px;
+    --button-size: 50px;
     --icon-size: 16px;
     --border-radius: 20px;
     --spacing-sm: 2px;
     --spacing-md: 10px;
     --spacing-lg: 80px;
+    --font-size-sm: 16px;
+    --font-size-md: 18px;
+    --font-size-lg: 36px;
 
     /* Card colors */
 }
 
+.field-name {
+    font-size: var(--font-size-sm);
+}
 
+.page-title {
+    font-size: var(--font-size-lg);
+}
 
 .add-card-page {
     background-color: var(--bg-primary);

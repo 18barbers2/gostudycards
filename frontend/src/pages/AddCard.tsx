@@ -14,7 +14,6 @@ export default function AddCard () {
 
     return(
         <div className="add-card-page">
-
             <h1 className='page-title'>Add Card</h1>
             <div className='editor-format-controls'>
                 <button><b>B</b></button>
@@ -25,18 +24,16 @@ export default function AddCard () {
                 <button>X<sup>2</sup></button>
                 <button>X<sub>2</sub></button>
                 
-                <button className="material-symbols-outlined">format_color_text</button>
-                <button className="material-symbols-outlined">ink_highlighter</button>
+                <button><span className="material-symbols-outlined">format_color_text</span></button>
+                <button><span className="material-symbols-outlined">ink_highlighter</span></button>
+                <button><span className="material-symbols-outlined">format_clear</span></button>
+                <button><span className="material-symbols-outlined">format_list_numbered</span></button>
+                <button><span className="material-symbols-outlined">format_list_bulleted</span></button>
+                <button><span className="material-symbols-outlined">format_align_center</span></button>
+                <button><span className="material-symbols-outlined">image</span></button>
+                <button><span className="material-symbols-outlined">mic</span></button>
+                <button><span className="material-symbols-outlined">function</span></button>                
                 
-                <button className="material-symbols-outlined">format_clear</button>
-
-                <button className="material-symbols-outlined">format_list_numbered</button>
-                <button className="material-symbols-outlined">format_list_bulleted</button>
-                <button className="material-symbols-outlined">format_align_center</button>
-
-                <button className="material-symbols-outlined">image</button>
-                <button className="material-symbols-outlined">mic</button>
-                <button className="material-symbols-outlined">function</button>
             </div>
 
 

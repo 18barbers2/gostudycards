@@ -5,7 +5,7 @@
     --bg-primary: #222222;
     --bg-secondary: #303236;
     --text-primary: white;
-    --border-color-primary: #555;
+    --border-color-primary: #f6f6f6;
     --border-color-secondary: rgb(47, 104, 190);
 
     /* Sizes */
@@ -54,15 +54,16 @@
 
 button {
     background-color: var(--bg-secondary);
+    border-color: var(--border-color-primary);
     color: var(--text-primary);
     width: var(--button-size);
     height: var(--button-size);
-    margin: 0px;
     transition: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: var(--font-size-sm);
 }
 .button-left {
     border-radius: var(--border-radius) 0px 0px var(--border-radius);

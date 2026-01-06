@@ -39,6 +39,10 @@
     outline: solid var(--border-color-secondary) 3px;
 }
 
+.field-input:hover {
+    outline: solid var(--border-color-secondary) 3px;
+}
+
 button {
     background-color: var(--bg-secondary);
     color: var(--text-primary);

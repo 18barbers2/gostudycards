@@ -14,10 +14,11 @@ function FieldInput({ html, onChange, fieldName } : {html : string; onChange : (
 export default function AddCard () {
 
     return(
-        <div className="add-card-page">
+        <div className='add-card-page'>
             <h1 className='page-title'>Add Card</h1>
             <br />
-            <div className='editor-format-controls'>
+            <div className='input-section'>
+                <div className='editor-format-controls'>
                 <div className='button-group'>
                     <button className='button-left'><b>B</b></button>
                     <button className='button-middle'><i>I</i></button>
@@ -44,8 +45,8 @@ export default function AddCard () {
                     <button className='button-right'><span className='material-symbols-outlined'>function</span></button>
                 </div>
             </div>
-
-
+            </div>
+            <div className='preview-section'>
             <FieldInput html={''} onChange={function (v: string): void {
                 throw new Error('Function not implemented.');
             } } fieldName={'Question'}></FieldInput>
@@ -55,6 +56,7 @@ export default function AddCard () {
             <FieldInput html={''} onChange={function (v: string): void {
                 throw new Error('Function not implemented.');
             } } fieldName={'Hint'}></FieldInput>
+            </div>
         </div>
     );
 }

@@ -20,7 +20,7 @@ function Preview({ html, side, onFlip }: { html: string; srcDoc: string; side: '
                 template={html}
                 data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car", Description: "Description goes here, it's simple just add two together two times. " }}>
             </Card>
-            <button onClick={onFlip} style={{ marginTop: '10px' }}>Flip Card</button>
+            {/* <button onClick={onFlip} style={{ marginTop: '10px' }}>Flip Card</button> */}
         </div>
     );
 }
@@ -74,6 +74,9 @@ export default function AddCard() {
             </div>
             <div className='preview-section'>
                 <Preview html={''} srcDoc={''} side={'front'} onFlip={function (): void {
+                    throw new Error('Function not implemented.');
+                }}></Preview>
+                <Preview html={''} srcDoc={''} side={'back'} onFlip={function (): void {
                     throw new Error('Function not implemented.');
                 }}></Preview>
             </div>

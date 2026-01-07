@@ -1,4 +1,5 @@
 import '../css/AddCard.css';
+import Card from '../components/Card';
 
 function FieldInput({ html, onChange, fieldName }: { html: string; onChange: (v: string) => void; fieldName: string }) {
     return (
@@ -10,15 +11,30 @@ function FieldInput({ html, onChange, fieldName }: { html: string; onChange: (v:
     );
 }
 
+// Card preview for user
+function Preview({ html, side, onFlip }: { html: string; srcDoc: string; side: 'front' | 'back'; onFlip: () => void }) {
+    return (
+        <div className='card-preview'>
+            <p style={{ marginBottom: '10px' }}>Preview - {side === 'front' ? 'Front' : 'Back'}</p>
+            <Card
+                template={html}
+                data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car", Description: "Description goes here, it's simple just add two together two times. " }}>
+            </Card>
+            <button onClick={onFlip} style={{ marginTop: '10px' }}>Flip Card</button>
+        </div>
+    );
+}
+
 
 export default function AddCard() {
 
     return (
         <div className='add-card-page'>
-            <h1 className='page-title'>Add Card</h1>
-            <br />
             <div className='input-section'>
+                <h1 className='page-title'>Add Card</h1>
+                <br />
                 <div className='editor-format-controls'>
+
                     <div className='button-group'>
                         <button className='button-left'><b>B</b></button>
                         <button className='button-middle'><i>I</i></button>
@@ -45,17 +61,21 @@ export default function AddCard() {
                         <button className='button-right'><span className='material-symbols-outlined'>function</span></button>
                     </div>
                 </div>
-                <div className='preview-section'>
-                    <FieldInput html={''} onChange={function (v: string): void {
-                        throw new Error('Function not implemented.');
-                    }} fieldName={'Question'}></FieldInput>
-                    <FieldInput html={''} onChange={function (v: string): void {
-                        throw new Error('Function not implemented.');
-                    }} fieldName={'Answer'}></FieldInput>
-                    <FieldInput html={''} onChange={function (v: string): void {
-                        throw new Error('Function not implemented.');
-                    }} fieldName={'Hint'}></FieldInput>
-                </div>
+                <FieldInput html={''} onChange={function (v: string): void {
+                    throw new Error('Function not implemented.');
+                }} fieldName={'Question'}></FieldInput>
+                <FieldInput html={''} onChange={function (v: string): void {
+                    throw new Error('Function not implemented.');
+                }} fieldName={'Answer'}></FieldInput>
+                <FieldInput html={''} onChange={function (v: string): void {
+                    throw new Error('Function not implemented.');
+                }} fieldName={'Hint'}></FieldInput>
+
+            </div>
+            <div className='preview-section'>
+                <Preview html={''} srcDoc={''} side={'front'} onFlip={function (): void {
+                    throw new Error('Function not implemented.');
+                }}></Preview>
             </div>
         </div>
     );

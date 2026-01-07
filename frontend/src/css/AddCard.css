@@ -35,6 +35,9 @@
     color: white;
     margin-left: 80px;
     padding: 80px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
 }
 
 .field-input {
@@ -112,3 +115,14 @@ button .material-symbols-outlined {
     align-content: center;
     gap: 10px;
 }
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.preview-section {
+    display: flex;
+    flex-direction: column;
+}
+    

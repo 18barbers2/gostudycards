@@ -31,14 +31,3 @@ iframe {
         max-width: 450px;
     }
 }
-
-@media (max-width: 768px) {
-    .card-iframe {
-        font-size: 28px;
-    }
-    
-    iframe {
-        height: 400px;
-        max-width: 100%; /* Full width on tablets */
-    }
-}

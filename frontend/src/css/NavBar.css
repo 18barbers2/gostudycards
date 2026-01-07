@@ -42,7 +42,7 @@ ul {
     transform: scale(1.2);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     ul {
         flex-direction: row;
         position: top;

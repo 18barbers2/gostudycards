@@ -142,7 +142,7 @@ button .material-symbols-outlined {
     min-width: 300px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .add-card-page {
         flex-direction: column;
         margin-left: 0px;

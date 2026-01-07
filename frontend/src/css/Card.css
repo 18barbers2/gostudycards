@@ -18,4 +18,27 @@ iframe {
     height: 500px;
     border-radius: 10px;
     width: 100%;
+    max-width: 500px;
+}
+
+@media (max-width: 1024px) {
+    .card-iframe {
+        font-size: 32px;
+    }
+    
+    iframe {
+        height: 450px;
+        max-width: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-iframe {
+        font-size: 28px;
+    }
+    
+    iframe {
+        height: 400px;
+        max-width: 100%; /* Full width on tablets */
+    }
 }

@@ -45,6 +45,8 @@
     background-color: var(--bg-secondary);
     color: var(--text-primary);
     border-width: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .field-input:focus {
@@ -114,15 +116,38 @@ button .material-symbols-outlined {
     display: flex;
     align-content: center;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .input-section {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .preview-section {
     display: flex;
     flex-direction: column;
 }
-    
+
+@media (max-width: 1024px) {
+    .add-card-page {
+        flex-direction: column;
+        margin-left: 80px;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .editor-format-controls {
+        gap: 5px;
+    }
+
+    button {
+        width: 40px;
+        height: 40px;
+    }
+}

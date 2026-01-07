@@ -1,5 +1,9 @@
+
+import { useState } from 'react';
+
 import '../css/AddCard.css';
 import Card from '../components/Card';
+
 
 function FieldInput({ html, onChange, fieldName }: { html: string; onChange: (v: string) => void; fieldName: string }) {
     return (
@@ -20,13 +24,21 @@ function Preview({ html, side, onFlip }: { html: string; srcDoc: string; side: '
                 template={html}
                 data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car", Description: "Description goes here, it's simple just add two together two times. " }}>
             </Card>
-            {/* <button onClick={onFlip} style={{ marginTop: '10px' }}>Flip Card</button> */}
+            <button onClick={onFlip} style={{ marginTop: '10px' }}>Flip Card</button>
         </div>
     );
 }
 
 
 export default function AddCard() {
+
+    const [previewSide, setPreviewSide] = useState<'front' | 'back'>('front');
+    
+
+        // Handle card flip logic
+    const handleFlip = () => {
+        setPreviewSide((prev: string) => prev === 'front' ? 'back' : 'front');
+    }
 
     return (
         <div className='add-card-page'>
@@ -73,12 +85,7 @@ export default function AddCard() {
 
             </div>
             <div className='preview-section'>
-                <Preview html={''} srcDoc={''} side={'front'} onFlip={function (): void {
-                    throw new Error('Function not implemented.');
-                }}></Preview>
-                <Preview html={''} srcDoc={''} side={'back'} onFlip={function (): void {
-                    throw new Error('Function not implemented.');
-                }}></Preview>
+                <Preview html={''} srcDoc={''} side={'front'} onFlip={handleFlip}></Preview>
             </div>
         </div>
     );

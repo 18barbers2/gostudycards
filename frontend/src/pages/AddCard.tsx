@@ -3,8 +3,9 @@ import '../css/AddCard.css';
 function FieldInput({ html, onChange, fieldName } : {html : string; onChange : (v: string) => void; fieldName : string}) {
     return (
         <div>
+            <span className='material-symbols-outlined'>arrow_drop_down</span>
             <h1 className='field-name'>{fieldName}</h1>
-            <textarea className={`field-input ${fieldName}`} rows={5} cols={100} value={html} onChange={e => onChange(e.target.value) }/>
+            <textarea className={`field-input ${fieldName}`} rows={5} cols={110} value={html} onChange={e => onChange(e.target.value) }/>
         </div>
     );
 }

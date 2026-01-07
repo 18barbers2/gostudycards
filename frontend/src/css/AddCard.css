@@ -64,6 +64,7 @@ button {
     align-items: center;
     justify-content: center;
     font-size: var(--font-size-sm);
+    border-width: 0px;
 }
 .button-left {
     border-radius: var(--border-radius) 0px 0px var(--border-radius);
@@ -85,10 +86,13 @@ button {
 button:hover {
     background-color: var(--bg-secondary);
     border-color: var(--border-color-primary);
+    border-bottom-width: 3px;
+    /* border-bottom-style: unset; */
 }
 
 button:focus {
     border-color: var(--border-color-secondary);
+    border-width: 2px;
 }
 
 button .material-symbols-outlined {

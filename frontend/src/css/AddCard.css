@@ -128,6 +128,18 @@ button .material-symbols-outlined {
 .preview-section {
     display: flex;
     flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: flex-start; /* Align to top */
+    flex: 1; /* Take equal space with input section */
+}
+
+.card-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the card and button */
+    width: 100%;
+    max-width: 500px; /* Limit width on large screens */
+    min-width: 300px;
 }
 
 @media (max-width: 768px) {

@@ -1,19 +1,19 @@
 
 import { useState } from 'react';
-
 import '../css/AddCard.css';
 import Card from '../components/Card';
+import FieldInput from '../components/FieldInput';
 
 
-function FieldInput({ html, onChange, fieldName }: { html: string; onChange: (v: string) => void; fieldName: string }) {
-    return (
-        <div>
-            {/* <span className='material-symbols-outlined'>arrow_drop_down</span> */}
-            <h1 className='field-name'>{fieldName}</h1>
-            <textarea className={`field-input ${fieldName}`} rows={5} cols={110} value={html} onChange={e => onChange(e.target.value)} />
-        </div>
-    );
-}
+// function FieldInput({ html, onChange, fieldName }: { html: string; onChange: (v: string) => void; fieldName: string }) {
+//     return (
+//         <div>
+//             {/* <span className='material-symbols-outlined'>arrow_drop_down</span> */}
+//             <h1 className='field-name'>{fieldName}</h1>
+//             <textarea className={`field-input ${fieldName}`} rows={5} cols={110} value={html} onChange={e => onChange(e.target.value)} />
+//         </div>
+//     );
+// }
 
 // Card preview for user
 function Preview({ html, side, onFlip }: { html: string; srcDoc: string; side: 'front' | 'back'; onFlip: () => void }) {
@@ -73,15 +73,21 @@ export default function AddCard() {
                         <button className='button-right'><span className='material-symbols-outlined'>function</span></button>
                     </div>
                 </div>
-                <FieldInput html={''} onChange={function (v: string): void {
-                    throw new Error('Function not implemented.');
-                }} fieldName={'Question'}></FieldInput>
-                <FieldInput html={''} onChange={function (v: string): void {
-                    throw new Error('Function not implemented.');
-                }} fieldName={'Answer'}></FieldInput>
-                <FieldInput html={''} onChange={function (v: string): void {
-                    throw new Error('Function not implemented.');
-                }} fieldName={'Hint'}></FieldInput>
+                <FieldInput
+                    fieldName={'Question'}
+                    value={'What is 1+1'}
+                    onChange={(v: string) => {}}>
+                </FieldInput>
+                                <FieldInput
+                    fieldName={'Answer'}
+                    value={'4'}
+                    onChange={(v: string) => {}}>
+                </FieldInput>
+                <FieldInput
+                    fieldName={'Hint'}
+                    value={'use your brain buddy'}
+                    onChange={(v: string) => {}}>
+                </FieldInput>
 
             </div>
             <div className='preview-section'>

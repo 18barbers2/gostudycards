@@ -44,11 +44,17 @@ export default function AddCard() {
         // Handle card flip logic
     const handleFlip = () => {
         setPreviewSide((prev: string) => prev === 'front' ? 'back' : 'front');
-    }
+    };
+
+    const handleSaveCard = () => {
+        // Logic to save the card would go here
+        console.log('Card saved:', cardData);
+    };
+
 
     // Templates (would come from database eventually)
-    const frontTemplate = `<div style="text-align: center; padding: 20px"><h2 style="margin-bottom: 10px">{{Question}}</h2><p style="color: white">{{Hint}}</p></div>`;
-    const backTemplate = `<h2>{{Answer}}</h2>`;
+    const frontTemplate = `<div style="padding: 20px; text-align: center;"><h2 style="color: #000000ff; margin-bottom: 10px;">{{Question}}</h2><p style="color: #000000ff; font-style: italic;">Hint: {{Hint}}</p></div>`;
+    const backTemplate = `<div style="padding: 20px; text-align: center;"><h3 style="color: #000000ff; margin-bottom: 15px;">Answer:</h3><p style="color: #000000ff; font-size: 1.2em;">{{Answer}}</p></div>`;
 
     return (
         <div className='add-card-page'>
@@ -98,6 +104,8 @@ export default function AddCard() {
                     value={hint}
                     onChange={setHint}>
                 </FieldInput>
+
+                <button className='save-card-button' onClick={handleSaveCard}>Save Card</button>
             </div>
             <div className='preview-section'>
                 <CardPreview 

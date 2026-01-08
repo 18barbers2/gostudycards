@@ -143,6 +143,19 @@ button .material-symbols-outlined {
     min-width: 300px;
 }
 
+.save-card-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #2a7b9b;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
 @media (max-width: 1024px) {
     .add-card-page {
         flex-direction: column;

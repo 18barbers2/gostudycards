@@ -35,9 +35,9 @@ export default function AddCard() {
     const [hint, setHint] = useState('');
     
     const cardData = {
-        Question: "What is 2+2",
-        Answer: "it equals 4 you dummy",
-        Hint: "count how many wheels on a car",
+        Question: question,
+        Answer: answer,
+        Hint: hint,
         ...Object.fromEntries(customFields.map(f => [f.name, f.value]))
     };
 

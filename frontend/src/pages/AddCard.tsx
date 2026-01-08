@@ -47,8 +47,8 @@ export default function AddCard() {
     }
 
     // Templates (would come from database eventually)
-    const frontTemplate = '<h2>{{Question}}</h2><p><em>{{Hint}}</em></p>';
-    const backTemplate = '<h2>Answer:</h2><p>{{Answer}}</p>';
+    const frontTemplate = `<div style="text-align: center; padding: 20px"><h2 style="margin-bottom: 10px">{{Question}}</h2><p style="color: white">{{Hint}}</p></div>`;
+    const backTemplate = `<h2>{{Answer}}</h2>`;
 
     return (
         <div className='add-card-page'>

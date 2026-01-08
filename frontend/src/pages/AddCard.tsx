@@ -27,6 +27,13 @@ export default function AddCard() {
     const [customFields, setCustomFields] = useState<{ id: string; name: string; value: string }[]>([]);
 
     const [previewSide, setPreviewSide] = useState<'front' | 'back'>('front');
+
+
+    // Standard fields
+    const [question, setQuestion] = useState('');
+    const [answer, setAnswer] = useState('');
+    const [hint, setHint] = useState('');
+    
     const cardData = {
         Question: "What is 2+2",
         Answer: "it equals 4 you dummy",
@@ -78,20 +85,19 @@ export default function AddCard() {
                 </div>
                 <FieldInput
                     fieldName={'Question'}
-                    value={'What is 1+1'}
-                    onChange={(v: string) => {}}>
+                    value={question}
+                    onChange={setQuestion}>
                 </FieldInput>
-                                <FieldInput
+                <FieldInput
                     fieldName={'Answer'}
-                    value={'4'}
-                    onChange={(v: string) => {}}>
+                    value={answer}
+                    onChange={setAnswer}>
                 </FieldInput>
                 <FieldInput
                     fieldName={'Hint'}
-                    value={'use your brain buddy'}
-                    onChange={(v: string) => {}}>
+                    value={hint}
+                    onChange={setHint}>
                 </FieldInput>
-
             </div>
             <div className='preview-section'>
                 <CardPreview 

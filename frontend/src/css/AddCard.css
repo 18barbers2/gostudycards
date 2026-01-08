@@ -156,6 +156,14 @@ button .material-symbols-outlined {
     transition: background-color 0.2s;
 }
 
+.save-card-button:hover {
+    background-color: #1f5f7a;
+}
+
+.save-card-button:active {
+    background-color: #164a5f;
+}
+
 @media (max-width: 1024px) {
     .add-card-page {
         flex-direction: column;

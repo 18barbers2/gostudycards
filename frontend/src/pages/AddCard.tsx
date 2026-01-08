@@ -3,42 +3,45 @@ import { useState } from 'react';
 import '../css/AddCard.css';
 import Card from '../components/Card';
 import FieldInput from '../components/FieldInput';
+import CardPreview from '../components/CardPreview';
 
 
-// function FieldInput({ html, onChange, fieldName }: { html: string; onChange: (v: string) => void; fieldName: string }) {
+// // Card preview for user
+// function Preview({ html, side, onFlip }: { html: string; srcDoc: string; side: 'front' | 'back'; onFlip: () => void }) {
 //     return (
-//         <div>
-//             {/* <span className='material-symbols-outlined'>arrow_drop_down</span> */}
-//             <h1 className='field-name'>{fieldName}</h1>
-//             <textarea className={`field-input ${fieldName}`} rows={5} cols={110} value={html} onChange={e => onChange(e.target.value)} />
+//         <div className='card-preview'>
+//             <p style={{ marginBottom: '10px' }}>Preview - {side === 'front' ? 'Front' : 'Back'}</p>
+//             <Card
+//                 template={html}
+//                 data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car", Description: "Description goes here, it's simple just add two together two times. " }}>
+//             </Card>
+//             <button onClick={onFlip} style={{ marginTop: '10px' }}>Flip Card</button>
 //         </div>
 //     );
 // }
 
-// Card preview for user
-function Preview({ html, side, onFlip }: { html: string; srcDoc: string; side: 'front' | 'back'; onFlip: () => void }) {
-    return (
-        <div className='card-preview'>
-            <p style={{ marginBottom: '10px' }}>Preview - {side === 'front' ? 'Front' : 'Back'}</p>
-            <Card
-                template={html}
-                data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car", Description: "Description goes here, it's simple just add two together two times. " }}>
-            </Card>
-            <button onClick={onFlip} style={{ marginTop: '10px' }}>Flip Card</button>
-        </div>
-    );
-}
-
 
 export default function AddCard() {
 
+    // Custom fields
+    const [customFields, setCustomFields] = useState<{ id: string; name: string; value: string }[]>([]);
+
     const [previewSide, setPreviewSide] = useState<'front' | 'back'>('front');
-    
+    const cardData = {
+        Question: "What is 2+2",
+        Answer: "it equals 4 you dummy",
+        Hint: "count how many wheels on a car",
+        ...Object.fromEntries(customFields.map(f => [f.name, f.value]))
+    };
 
         // Handle card flip logic
     const handleFlip = () => {
         setPreviewSide((prev: string) => prev === 'front' ? 'back' : 'front');
     }
+
+    // Templates (would come from database eventually)
+    const frontTemplate = '<h2>{{Question}}</h2><p><em>{{Hint}}</em></p>';
+    const backTemplate = '<h2>Answer:</h2><p>{{Answer}}</p>';
 
     return (
         <div className='add-card-page'>
@@ -91,7 +94,11 @@ export default function AddCard() {
 
             </div>
             <div className='preview-section'>
-                <Preview html={''} srcDoc={''} side={'front'} onFlip={handleFlip}></Preview>
+                <CardPreview 
+                    data={cardData}
+                    template={previewSide === 'front' ? frontTemplate : backTemplate}
+                    side={'front'}
+                    onFlip={handleFlip}></CardPreview>
             </div>
         </div>
     );

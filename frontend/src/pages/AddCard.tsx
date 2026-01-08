@@ -1,7 +1,6 @@
 
 import { useState } from 'react';
 import '../css/AddCard.css';
-import Card from '../components/Card';
 import FieldInput from '../components/FieldInput';
 import CardPreview from '../components/CardPreview';
 
@@ -49,6 +48,12 @@ export default function AddCard() {
     const handleSaveCard = () => {
         // Logic to save the card would go here
         console.log('Card saved:', cardData);
+        setQuestion('');
+        setAnswer('');
+        setHint('');
+        setCustomFields([]);
+        setPreviewSide('front');
+        alert('Card saved successfully!');
     };
 
 

@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useRef} from 'react';
 import '../css/AddCard.css';
 import FieldInput from '../components/FieldInput';
 import CardPreview from '../components/CardPreview';
@@ -12,11 +12,28 @@ export default function AddCard() {
 
     const [previewSide, setPreviewSide] = useState<'front' | 'back'>('front');
 
-
     // Standard fields
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
     const [hint, setHint] = useState('');
+
+    const [activeField, setActiveField] = useState<'question' | 'answer' | 'hint'>('question');
+
+    const questionRef = useRef<any>(null);
+    const answerRef = useRef<any>(null);
+    const hintRef = useRef<any>(null);  
+
+
+    const handleFormat = (format: string) => {
+        if(activeField === 'question' && questionRef.current) {
+            questionRef.current.applyFormat(format);
+        } else if (activeField === 'answer' && answerRef.current) {
+            answerRef.current.applyFormat(format);
+        } else if (activeField === 'hint' && hintRef.current) { 
+            hintRef.current.applyFormat(format);
+        }  
+    };
+
     
     const cardData = {
         Question: question,
@@ -54,10 +71,10 @@ export default function AddCard() {
                 <div className='editor-format-controls'>
 
                     <div className='button-group'>
-                        <button className='button-left'><b>B</b></button>
-                        <button className='button-middle'><i>I</i></button>
-                        <button className='button-middle'><u>U</u></button>
-                        <button className='button-right'><s>S</s></button>
+                        <button className='button-left' onClick={() => handleFormat('bold')}><b>B</b></button>
+                        <button className='button-middle' onClick={() => handleFormat('italic')}><i>I</i></button>
+                        <button className='button-middle' onClick={() => handleFormat('underline')}><u>U</u></button>
+                        <button className='button-right' onClick={() => handleFormat('strikethrough')}><s>S</s></button>
                     </div>
                     <div className='button-group'>
                         <button className='button-left'>x<sup>2</sup></button>
@@ -79,21 +96,28 @@ export default function AddCard() {
                         <button className='button-right'><span className='material-symbols-outlined'>function</span></button>
                     </div>
                 </div>
-                <FieldInput
-                    fieldName={'Question'}
-                    value={question}
-                    onChange={setQuestion}>
-                </FieldInput>
+
+                <div onFocus={() => setActiveField('question')}>
+                    <FieldInput
+                        fieldName={'Question'}
+                        value={question}
+                        onChange={setQuestion}>
+                    </FieldInput>
+                </div>
+                <div onFocus={() => setActiveField('answer')}>
                 <FieldInput
                     fieldName={'Answer'}
                     value={answer}
                     onChange={setAnswer}>
                 </FieldInput>
+                </div>
+                <div onFocus={() => setActiveField('hint')}>
                 <FieldInput
                     fieldName={'Hint'}
                     value={hint}
                     onChange={setHint}>
                 </FieldInput>
+                </div>
 
                 <button className='save-card-button' onClick={handleSaveCard}>Save Card</button>
             </div>

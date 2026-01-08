@@ -37,7 +37,7 @@
     padding: 80px;
     display: flex;
     flex-direction: row;
-    gap: 30px;
+    /* gap: 10px; */
 }
 
 .field-input {
@@ -47,6 +47,7 @@
     border-width: 0;
     width: 100%;
     box-sizing: border-box;
+
 }
 
 .field-input:focus {

@@ -2,6 +2,7 @@
 import { useState, useRef} from 'react';
 import '../css/AddCard.css';
 import FieldInput from '../components/FieldInput';
+import type { FieldInputHandle } from '../components/FieldInput';
 import CardPreview from '../components/CardPreview';
 
 
@@ -19,9 +20,9 @@ export default function AddCard() {
 
     const [activeField, setActiveField] = useState<'question' | 'answer' | 'hint'>('question');
 
-    const questionRef = useRef<any>(null);
-    const answerRef = useRef<any>(null);
-    const hintRef = useRef<any>(null);  
+    const questionRef = useRef<FieldInputHandle>(null);
+    const answerRef = useRef<FieldInputHandle>(null);
+    const hintRef = useRef<FieldInputHandle>(null);  
 
 
     const handleFormat = (format: string) => {
@@ -99,6 +100,7 @@ export default function AddCard() {
 
                 <div onFocus={() => setActiveField('question')}>
                     <FieldInput
+                        ref = {questionRef}
                         fieldName={'Question'}
                         value={question}
                         onChange={setQuestion}>
@@ -106,6 +108,7 @@ export default function AddCard() {
                 </div>
                 <div onFocus={() => setActiveField('answer')}>
                 <FieldInput
+                    ref = {answerRef}
                     fieldName={'Answer'}
                     value={answer}
                     onChange={setAnswer}>
@@ -113,6 +116,7 @@ export default function AddCard() {
                 </div>
                 <div onFocus={() => setActiveField('hint')}>
                 <FieldInput
+                    ref = {hintRef}
                     fieldName={'Hint'}
                     value={hint}
                     onChange={setHint}>

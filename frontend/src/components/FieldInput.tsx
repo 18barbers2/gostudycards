@@ -1,5 +1,6 @@
-import { useRef } from "react";
+import { forwardRef, useRef, useImperativeHandle } from "react";
 
+// Props for FieldInput component
 interface FieldInputProps {
     value: string;
     onChange: (value: string) => void;
@@ -8,12 +9,16 @@ interface FieldInputProps {
     onFormat?: (format: string) => void;
 }
 
+// Which methods the parent can call on the FieldInput component
+export interface FieldInputHandle {
+    applyFormat: (format: string) => void;
+}
 
-export function FieldInput({ value, onChange, fieldName, onDelete , onFormat}: FieldInputProps) {
-
+export const FieldInput = forwardRef<FieldInputHandle, FieldInputProps>(({ value, onChange, fieldName, onDelete, onFormat }, ref) => {
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+    // Method to apply formatting to selected text
     const applyFormat = (format: string) => {
         const textArea = textareaRef.current;
         if (!textArea) return;
@@ -43,13 +48,17 @@ export function FieldInput({ value, onChange, fieldName, onDelete , onFormat}: F
         const newValue = textArea.value.substring(0, start) + formattedText + textArea.value.substring(end);
         onChange(newValue);
 
-
+    
         // Restore focus and cursor position
         setTimeout(() => {
             textArea.focus();
             textArea.setSelectionRange(start + formattedText.length, start + formattedText.length);
         }, 0);
     }
+
+    useImperativeHandle(ref, () => ({
+        applyFormat,
+    }));
 
     return (
         <div className='field-container'>
@@ -72,5 +81,8 @@ export function FieldInput({ value, onChange, fieldName, onDelete , onFormat}: F
         </div>
     );
 }
+);
+
+FieldInput.displayName = 'FieldInput';
 
 export default FieldInput

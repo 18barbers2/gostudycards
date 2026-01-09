@@ -164,6 +164,11 @@ button .material-symbols-outlined {
     background-color: #164a5f;
 }
 
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 @media (max-width: 1024px) {
     .add-card-page {
         flex-direction: column;

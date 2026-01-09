@@ -41,6 +41,27 @@ export const FieldInput = forwardRef<FieldInputHandle, FieldInputProps>(({ value
             case 'strikethrough':
                 formattedText = `<s>${selectedText}</s>`;
                 break;
+            case 'superscript':
+                formattedText = `<sup>${selectedText}</sup>`;
+                break;
+            case 'subscript':
+                formattedText = `<sub>${selectedText}</sub>`;
+                break;
+            case 'ordered_list':
+                formattedText = `<ol><li>${selectedText}</li></ol>`;
+                break;
+            case 'unordered_list':
+                formattedText = `<ul><li>${selectedText}</li></ul>`;
+                break;
+            case 'center_align':
+                formattedText = `<div style="text-align:center;">${selectedText}</div>`;
+                break;
+            case 'highlight':
+                formattedText = `<mark>${selectedText}</mark>`;
+                break;
+            case 'clear':
+                formattedText = selectedText;
+                break;
             default:
                 formattedText = selectedText;
         }

@@ -92,9 +92,9 @@ export default function AddCard() {
                         <button className='button-right' onClick={() => handleFormat('center_align')}><span className='material-symbols-outlined'>format_align_center</span></button>
                     </div>
                     <div className='button-group'>
-                        <button className='button-left'><span className='material-symbols-outlined'>image</span></button>
-                        <button className='button-middle'><span className='material-symbols-outlined'>mic</span></button>
-                        <button className='button-right'><span className='material-symbols-outlined'>function</span></button>
+                        <button className='button-left disabled'><span className='material-symbols-outlined'>image</span></button>
+                        <button className='button-middle disabled'><span className='material-symbols-outlined'>mic</span></button>
+                        <button className='button-right disabled'><span className='material-symbols-outlined'>function</span></button>
                     </div>
                 </div>
 

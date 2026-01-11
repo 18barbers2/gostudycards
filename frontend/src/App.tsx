@@ -7,7 +7,6 @@ function App() {
 
   return (
     <div className="app">
-      <h1>TEST - App is workgin!</h1>
       <NavBar/>
 
       <Routes>

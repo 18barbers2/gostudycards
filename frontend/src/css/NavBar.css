@@ -2,7 +2,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    height: 100vh;
+    height: 100%;
     width: 80px;
     background-color: #303236;
     z-index: 100;
@@ -40,4 +40,22 @@ ul {
     color: white;
     font-size: 32px;
     transform: scale(1.2);
+}
+
+@media (max-width: 1024px) {
+    ul {
+        flex-direction: row;
+        position: top;
+
+    }
+
+    .navbar {
+        left: 0;
+        top: 0;
+        height: 80px;
+        width: 100%;
+        background-color: #303236;
+        z-index: 100;
+    }
+
 }

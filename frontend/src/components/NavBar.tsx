@@ -7,21 +7,18 @@ export default function NavBar() {
         <nav className='navbar'>
             <ul>
                 <a href='#'>
-                    <span className="material-symbols-outlined">
-                    dataset
-                    </span>
+                    <span className="material-symbols-outlined">dataset</span>
                 </a>
-                <span className="material-symbols-outlined">
-                    clear_all
-                </span>
-                <span className="material-symbols-outlined">
-                    cards_stack
-                </span>
-                <span className="material-symbols-outlined">
-                    contacts_product
-                </span>
+                <a href="#">
+                    <span className="material-symbols-outlined">timer</span>
+                </a>
+                <a href='#'>
+                    <span className="material-symbols-outlined">cards_stack</span>
+                </a>
+                <a href='#'>
+                    <span className="material-symbols-outlined">school</span>
+                </a>
             </ul>
-            
         </nav>
     );
 }

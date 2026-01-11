@@ -1,14 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import CardBuilder from './pages/CardBuilder.tsx';
-import NavBar from './components/NavBar.tsx';
-import AddCard from './pages/AddCard.tsx';
+import App from './App.tsx';
+import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {/* <App /> */}
-    <NavBar></NavBar>
-    {/* <CardBuilder /> */}
-    <AddCard></AddCard>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </StrictMode>,
 )

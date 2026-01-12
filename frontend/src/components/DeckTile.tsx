@@ -20,7 +20,7 @@ export function DeckTile({ title, createdBy, deckId, onMenuClick }: DeckTileProp
             <button className='deck-menu' onClick={() => onMenuClick && deckId && onMenuClick(deckId)}>⋯</button>
             <div className='deck-content'>
                 <h3 className='deck-title'>{ title }</h3>
-                <p>Number of Cards: 42</p>
+                {/* <p>Number of Cards: 42</p> */}
                 <p className='created-by'>created by: samuel barber</p>
             </div>
         </div>

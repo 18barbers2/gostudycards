@@ -1,0 +1,14 @@
+.deck-tile {
+    width: 200px;
+    height: 320px;
+    background-color: #303236;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-left-width: 20px;
+    border-left-color: green;
+    border-left-style: solid;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}

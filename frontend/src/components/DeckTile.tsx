@@ -1,3 +1,6 @@
+import '../css/DeckTile.css';
+
+
 export function DeckTile() {
     return (
         <div className='deck-tile'>

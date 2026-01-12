@@ -1,4 +1,4 @@
-interface DeckProps {
+export interface DeckProps {
     id: string;
     name: string;
     cardIds: string[];

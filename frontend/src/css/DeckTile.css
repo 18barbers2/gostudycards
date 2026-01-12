@@ -7,8 +7,24 @@
     justify-content: center;
     align-items: center;
     border-left-width: 20px;
-    border-left-color: green;
+    border-left-color: rgb(124, 124, 124);
     border-left-style: solid;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
+}
+.deck-menu {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+.deck-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.created-by {
+    color: rgb(139, 139, 139);
 }

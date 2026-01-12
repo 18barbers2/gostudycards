@@ -5,3 +5,6 @@ export function Decks() {
         </div>
     );
 }
+
+
+export default Decks;

@@ -1,7 +1,7 @@
 import '../css/Decks.css';
 import DeckTile from '../components/DeckTile.tsx';
 import { useState } from 'react';
-import { DeckProps } from '../components/Deck.tsx';
+import type { DeckProps } from '../components/Deck.tsx';
 
 
 
@@ -86,8 +86,12 @@ export function Decks() {
         <div className='decks-page'>
             <h2>Decks</h2>
             <p>This is the Decks page. Here you will be able to view and manage your decks of cards.</p>
-            <DeckTile/>
-            
+            {decks.map((deck) => (
+                <DeckTile
+                    key={deck.id}
+                    title={deck.name}
+                />
+            ))}
         </div>
     );
 }

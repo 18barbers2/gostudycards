@@ -8,7 +8,7 @@ export interface DeckProps {
     updatedAt?: string;
     
 }
-export function Deck({  }: DeckProps) {
+export function Deck({ }: DeckProps) {
     return (<div>This is a Deck</div>);
 }
 

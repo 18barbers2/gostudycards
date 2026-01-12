@@ -48,4 +48,6 @@
 
 .created-by {
     color: rgb(139, 139, 139);
+    position: absolute;
+    bottom: 0px;
 }

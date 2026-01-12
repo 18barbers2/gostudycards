@@ -27,6 +27,12 @@ export function NavBar() {
                         <span className="material-symbols-outlined">school</span>
                     </Link>
                 </li> */}
+                <li>
+                    <Link to={'/decks'}>
+                        <span className="material-symbols-outlined">stacks</span>
+                    </Link>
+                </li>
+
             </ul>
         </nav>
     );

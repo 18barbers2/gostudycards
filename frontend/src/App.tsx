@@ -2,6 +2,7 @@ import { Routes, Route} from "react-router-dom";
 import NavBar from './components/NavBar.tsx';
 import CardBuilder from './pages/CardBuilder.tsx';
 import AddCard from './pages/AddCard.tsx';
+import Decks from './pages/Decks.tsx';
 
 function App() {
 
@@ -13,6 +14,8 @@ function App() {
         <Route path="/" element={<div><h2>Home Page</h2></div>}/>
         <Route path="/add-card" element={<AddCard/>}/>
         <Route path="/card-builder" element={<CardBuilder/>}/>
+        <Route path="/decks" element={<Decks/>}/>
+
       </Routes>
 
     </div>

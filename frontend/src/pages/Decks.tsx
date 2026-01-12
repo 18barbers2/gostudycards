@@ -86,12 +86,14 @@ export function Decks() {
         <div className='decks-page'>
             <h2>Decks</h2>
             <p>This is the Decks page. Here you will be able to view and manage your decks of cards.</p>
-            {decks.map((deck) => (
-                <DeckTile
-                    key={deck.id}
-                    title={deck.name}
-                />
-            ))}
+            <div className='decks'>
+                {decks.map((deck) => (
+                    <DeckTile
+                        key={deck.id}
+                        title={deck.name}
+                    />
+                ))}
+            </div>
         </div>
     );
 }

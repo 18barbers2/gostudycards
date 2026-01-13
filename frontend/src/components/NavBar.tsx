@@ -9,7 +9,7 @@ export function NavBar() {
             <ul>
                 <li>
                     <Link to={'/'}>
-                        <span className="material-symbols-outlined">timer</span>
+                        <span className="material-symbols-outlined">home</span>
                     </Link>
                 </li>
                 <li>

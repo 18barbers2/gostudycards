@@ -3,6 +3,13 @@ import '../css/Card.css'
 //TODO: add in an interface for CardProps
 import { parseTemplate } from "../utils/templateParser";
 
+interface CardProps {
+    id: string;
+    deckId: string;
+    template: string;
+    data: Record<string, string>;
+}
+
 // TODO: replace props with the template and data props
 function Card( props : any) {
 

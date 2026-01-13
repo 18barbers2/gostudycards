@@ -9,12 +9,12 @@ export function NavBar() {
             <ul>
                 <li>
                     <Link to={'/'}>
-                        <span className="material-symbols-outlined">dataset</span>
+                        <span className="material-symbols-outlined">home</span>
                     </Link>
                 </li>
                 <li>
                     <Link to={'/add-card'}>
-                        <span className="material-symbols-outlined">timer</span>
+                        <span className="material-symbols-outlined">add_card</span>
                     </Link>
                 </li>
                 <li>
@@ -27,6 +27,12 @@ export function NavBar() {
                         <span className="material-symbols-outlined">school</span>
                     </Link>
                 </li> */}
+                <li>
+                    <Link to={'/decks'}>
+                        <span className="material-symbols-outlined">stacks</span>
+                    </Link>
+                </li>
+
             </ul>
         </nav>
     );

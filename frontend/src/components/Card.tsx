@@ -11,7 +11,7 @@ interface CardProps {
 }
 
 // TODO: replace props with the template and data props
-function Card( props : any) {
+function Card( props : CardProps) {
 
     const html = parseTemplate(props.template, props.data);
 

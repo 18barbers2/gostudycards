@@ -21,7 +21,7 @@ export function DeckTile({ title, createdBy, deckId, onMenuClick }: DeckTileProp
             <div className='deck-content'>
                 <h3 className='deck-title'>{ title }</h3>
                 {/* <p>Number of Cards: 42</p> */}
-                <p className='created-by'>created by: samuel barber</p>
+                <p className='created-by'>{createdBy}</p>
             </div>
         </div>
     );

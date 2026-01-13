@@ -91,6 +91,7 @@ export function Decks() {
                     <DeckTile
                         key={deck.id}
                         title={deck.name}
+                        createdBy={deck.ownerId}
                     />
                 ))}
             </div>

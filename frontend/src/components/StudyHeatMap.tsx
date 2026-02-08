@@ -1,4 +1,3 @@
-import HeatMap from 'react-heatmap-grid';
 
 export function StudyHeatMap() {
     const xLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -14,10 +13,6 @@ export function StudyHeatMap() {
         <div className='heatmap'>
             <h2>Study Heatmap</h2>
             <p>Heatmap visualization goes here.</p>
-            <HeatMap
-                xLabels={xLabels}
-                yLabels={yLabels}
-                data={data}></HeatMap>
         </div>
     );
 }

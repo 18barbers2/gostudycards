@@ -43,13 +43,12 @@
 
 .quick-actions {
     grid-area: quick-actions;
-    /* background-color: rgb(96, 166, 177);
+    background-color: rgb(96, 166, 177);
     padding: 30px;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center; */
+    align-items: center;
 }
 
 .mastery-distribution {
@@ -61,4 +60,15 @@
     display: flex;
     justify-content: center;
     align-items: center; */
+}
+
+button {
+    background-color: #cdcdcd;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 80%;
 }

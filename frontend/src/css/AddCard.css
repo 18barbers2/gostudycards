@@ -33,11 +33,8 @@
 .add-card-page {
     background-color: var(--bg-primary);
     color: white;
-    margin-left: 80px;
-    padding: 80px;
     display: flex;
     flex-direction: row;
-    /* gap: 10px; */
 }
 
 .field-input {

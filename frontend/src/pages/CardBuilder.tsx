@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../css/CardBuilder.css';
 import Card from '../components/Card';
+import { Layout } from '../components/Layout/Layout';
 
 function createDoc ( userHtml: string ) {
 
@@ -49,7 +50,7 @@ function Preview({html, side, onFlip} : { html: string; srcDoc : string ; side: 
             <p style={{marginBottom: '10px'}}>Preview - {side === 'front' ?  'Front' : 'Back'}</p>
             <Card 
                 template={html}
-                data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car", Description: "Description goes here, it's simple just add two together two times. "}}>
+                data={{ Question: "What is 2+2", Answer: "it equals 4 you dummy", Hint: "count how many wheels on a car", Description: "Description goes here, it's simple just add two together two times. " }} id={''} deckId={''}>
             </Card>
             <button onClick={onFlip} style={{marginTop: '10px'}}>Flip Card</button>
         </div>
@@ -102,31 +103,34 @@ export default function CardBuilder() {
 
     // Card Builder Page
     return (
-        <div className='card-builder-page'>
-            <h1 className='page-title'>Card Builder</h1>
-            <div className='editor-controls'>
-                <button className={cardTextInputMode === 'front' ? 'active' : ''} onClick={() => handleTabChange('front')}>Front</button>
-                <button className={cardTextInputMode === 'back' ? 'active' : ''} onClick={() => handleTabChange('back')}>Back</button>
-                <button className={cardTextInputMode === 'style' ? 'active' : ''} onClick={() => handleTabChange('style')}>Style</button>
-            </div>
-            <div className='editor-format-controls'>
-                <button><b>B</b></button>
-                <button><i>I</i></button>
-                <button><u>U</u></button>
-                <button><s>S</s></button>
-            </div>
-            <div className='card-builder'>
-                <Editor html={currentHtml} onChange={handleHtmlChange}></Editor>
-                <Preview 
-                    html={previewHtml}
-                    srcDoc={doc}
-                    side={previewSide}
-                    onFlip={handleFlip}
-                >
-                </Preview>
-            </div>
 
-        </div>
+        <Layout>
+            <div className='card-builder-page'>
+                <h1 className='page-title'>Card Builder</h1>
+                <div className='editor-controls'>
+                    <button className={cardTextInputMode === 'front' ? 'active' : ''} onClick={() => handleTabChange('front')}>Front</button>
+                    <button className={cardTextInputMode === 'back' ? 'active' : ''} onClick={() => handleTabChange('back')}>Back</button>
+                    <button className={cardTextInputMode === 'style' ? 'active' : ''} onClick={() => handleTabChange('style')}>Style</button>
+                </div>
+                <div className='editor-format-controls'>
+                    <button><b>B</b></button>
+                    <button><i>I</i></button>
+                    <button><u>U</u></button>
+                    <button><s>S</s></button>
+                </div>
+                <div className='card-builder'>
+                    <Editor html={currentHtml} onChange={handleHtmlChange}></Editor>
+                    <Preview 
+                        html={previewHtml}
+                        srcDoc={doc}
+                        side={previewSide}
+                        onFlip={handleFlip}
+                    >
+                    </Preview>
+                </div>
+
+            </div>
+        </Layout>
     );
 }
 

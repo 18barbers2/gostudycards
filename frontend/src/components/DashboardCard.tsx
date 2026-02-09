@@ -1,11 +1,9 @@
 import '../css/DashboardCard.css';
 
-
 interface DashboardCardProps {
     title: string;
-    colorGradient: [string, string];
-    gridSpan?: number;
     children: React.ReactNode;
+    className?: string;
 }
 
 export function GreetingCardContent( {userName, deckCount, cardCount}: { userName: string; deckCount: number; cardCount: number }) {
@@ -17,10 +15,20 @@ export function GreetingCardContent( {userName, deckCount, cardCount}: { userNam
     );
 }
 
-
-export function DashboardCard({ title, colorGradient, gridSpan, children}: DashboardCardProps) {
+export function StudyProgressCardContent({ dueCards, totalCards }: { dueCards: number; totalCards: number }) {
+    const progressPercentage = totalCards > 0 ? Math.round((dueCards / totalCards) * 100) : 0;
     return (
-        <div className='dashboard-card'>
+        <div>
+            <p>You have {dueCards} cards due for review out of {totalCards} total cards.</p>
+            <p>Your current study progress is {progressPercentage}%.</p>
+        </div>
+    );
+}
+
+export function DashboardCard({ title, children, className}: DashboardCardProps) {
+    return (
+        // Adding a classname prop allows us to apply specific styles to different cards if needed
+        <div className={`dashboard-card ${className || ''}`}>
             <h2>{title}</h2>
             {children}
         </div>

@@ -37,7 +37,7 @@
     grid-area: card-piechart;
 }
 
-button {
+.home-page button {
     background-color: #cdcdcd;
     color: black;
     border: none;
@@ -48,7 +48,7 @@ button {
     width: 80%;
 }
 
-button:hover {
+.home-page button:hover {
     background-color: #131313;
     transition: background-color 0.1s ease;
     color: white

@@ -22,12 +22,6 @@ export function Home() {
                 <DashboardCard className='quick-actions' title='Quick Actions'>
                     <QuickActionsContent />
                 </DashboardCard>
-                {/* <div className='card-piechart-section'>Pie Chart Goes Here</div> */}
-                {/* <div className='heatmap-section'>Heatmap goes here</div> */}
-                {/* <div className='quick-actions-section'>
-                    <button>Study Now</button>
-                    <button>Add New Card</button>
-                </div> */}
             </div>
             
         </div>

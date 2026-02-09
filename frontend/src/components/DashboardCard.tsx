@@ -25,6 +25,32 @@ export function StudyProgressCardContent({ dueCards, totalCards }: { dueCards: n
     );
 }
 
+export function WeeklyActivityCardContent() {
+    return (
+        <div>
+            <p>Your weekly activity graph will be displayed here.</p>
+        </div>
+    );
+}
+
+export function PieChartCardContent() {
+    return (
+        <div>
+            <p>Your pie chart showing card distribution will be displayed here.</p>
+        </div>
+    );
+}
+
+export function QuickActionsContent() {
+    return (
+        <div>
+            <button>Study Now</button>
+            <button>Add New Card</button>
+        </div>
+    );
+
+}
+
 export function DashboardCard({ title, children, className}: DashboardCardProps) {
     return (
         // Adding a classname prop allows us to apply specific styles to different cards if needed

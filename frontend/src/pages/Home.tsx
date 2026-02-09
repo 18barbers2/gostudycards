@@ -1,5 +1,5 @@
 import '../css/Home.css';
-import { DashboardCard, GreetingCardContent, StudyProgressCardContent} from '../components/DashboardCard';
+import { DashboardCard, GreetingCardContent, StudyProgressCardContent, WeeklyActivityCardContent, PieChartCardContent, QuickActionsContent} from '../components/DashboardCard';
 
 export function Home() {
     return (
@@ -13,15 +13,21 @@ export function Home() {
                 <DashboardCard className='study-progress' title='Study Progress'>
                     <StudyProgressCardContent dueCards={42} totalCards={120} />
                 </DashboardCard>
-                <DashboardCard className='weekly-activity' title='Study Progress'>
-                        <p>Weekly activity graph goes here</p>
+                <DashboardCard className='weekly-activity' title='Weekly Activity'>
+                    <WeeklyActivityCardContent />
+                </DashboardCard>
+                <DashboardCard className='mastery-distribution' title='Mastery Distribution'>
+                    <PieChartCardContent />
+                </DashboardCard>
+                <DashboardCard className='quick-actions' title='Quick Actions'>
+                    <QuickActionsContent />
                 </DashboardCard>
                 {/* <div className='card-piechart-section'>Pie Chart Goes Here</div> */}
                 {/* <div className='heatmap-section'>Heatmap goes here</div> */}
-                <div className='quick-actions-section'>
+                {/* <div className='quick-actions-section'>
                     <button>Study Now</button>
                     <button>Add New Card</button>
-                </div>
+                </div> */}
             </div>
             
         </div>

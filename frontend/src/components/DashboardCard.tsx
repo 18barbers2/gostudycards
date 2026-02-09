@@ -16,11 +16,11 @@ export function GreetingCardContent( {userName, deckCount, cardCount}: { userNam
 }
 
 export function StudyProgressCardContent({ dueCards, totalCards }: { dueCards: number; totalCards: number }) {
-    const progressPercentage = totalCards > 0 ? Math.round((dueCards / totalCards) * 100) : 0;
+    const progressPercentage = totalCards > 0 ? 100 - Math.round((dueCards / totalCards) * 100) : (100 - 0);
     return (
         <div>
             <p>You have {dueCards} cards due for review out of {totalCards} total cards.</p>
-            <p>Your current study progress is {progressPercentage}%.</p>
+            <p>Your current study progress is <b style={progressPercentage >= 75 ? {color: 'green'} : {color: 'red'}}>{progressPercentage}%</b>.</p>
         </div>
     );
 }

@@ -4,6 +4,7 @@ import '../css/AddCard.css';
 import FieldInput from '../components/FieldInput';
 import type { FieldInputHandle } from '../components/FieldInput';
 import CardPreview from '../components/CardPreview';
+import { Layout } from '../components/Layout/Layout';
 
 
 export default function AddCard() {
@@ -65,73 +66,77 @@ export default function AddCard() {
     const backTemplate = `<div style="padding: 20px; text-align: center;"><h3 style="color: #000000ff; margin-bottom: 15px;">Answer:</h3><p style="color: #000000ff; font-size: 1.2em;">{{Answer}}</p></div>`;
 
     return (
-        <div className='add-card-page'>
-            <div className='input-section'>
-                <h1 className='page-title'>Add Card</h1>
-                <br />
-                <div className='editor-format-controls'>
 
-                    <div className='button-group'>
-                        <button className='button-left' onClick={() => handleFormat('bold')}><b>B</b></button>
-                        <button className='button-middle' onClick={() => handleFormat('italic')}><i>I</i></button>
-                        <button className='button-middle' onClick={() => handleFormat('underline')}><u>U</u></button>
-                        <button className='button-right' onClick={() => handleFormat('strikethrough')}><s>S</s></button>
-                    </div>
-                    <div className='button-group'>
-                        <button className='button-left' onClick={() => handleFormat('superscript')}>x<sup>2</sup></button>
-                        <button className='button-right' onClick={() => handleFormat('subscript')}>x<sub>2</sub></button>
-                    </div>
-                    <div className='button-group'>
-                        <button className='button-left'><span className='material-symbols-outlined'>format_color_text</span></button>
-                        <button className='button-middle' onClick={() => handleFormat('highlight')}><span className='material-symbols-outlined'>ink_highlighter</span></button>
-                        <button className='button-right' onClick={() => handleFormat('clear')}><span className='material-symbols-outlined'>format_clear</span></button>
-                    </div>
-                    <div className='button-group'>
-                        <button className='button-left' onClick={() => handleFormat('ordered_list')}><span className='material-symbols-outlined'>format_list_numbered</span></button>
-                        <button className='button-middle' onClick={() => handleFormat('unordered_list')}><span className='material-symbols-outlined'>format_list_bulleted</span></button>
-                        <button className='button-right' onClick={() => handleFormat('center_align')}><span className='material-symbols-outlined'>format_align_center</span></button>
-                    </div>
-                    <div className='button-group'>
-                        <button className='button-left disabled'><span className='material-symbols-outlined'>image</span></button>
-                        <button className='button-middle disabled'><span className='material-symbols-outlined'>mic</span></button>
-                        <button className='button-right disabled'><span className='material-symbols-outlined'>function</span></button>
-                    </div>
-                </div>
+        <Layout>
 
-                <div onFocus={() => setActiveField('question')}>
+            <div className='add-card-page'>
+                <div className='input-section'>
+                    <h1 className='page-title'>Add Card</h1>
+                    <br />
+                    <div className='editor-format-controls'>
+
+                        <div className='button-group'>
+                            <button className='button-left' onClick={() => handleFormat('bold')}><b>B</b></button>
+                            <button className='button-middle' onClick={() => handleFormat('italic')}><i>I</i></button>
+                            <button className='button-middle' onClick={() => handleFormat('underline')}><u>U</u></button>
+                            <button className='button-right' onClick={() => handleFormat('strikethrough')}><s>S</s></button>
+                        </div>
+                        <div className='button-group'>
+                            <button className='button-left' onClick={() => handleFormat('superscript')}>x<sup>2</sup></button>
+                            <button className='button-right' onClick={() => handleFormat('subscript')}>x<sub>2</sub></button>
+                        </div>
+                        <div className='button-group'>
+                            <button className='button-left'><span className='material-symbols-outlined'>format_color_text</span></button>
+                            <button className='button-middle' onClick={() => handleFormat('highlight')}><span className='material-symbols-outlined'>ink_highlighter</span></button>
+                            <button className='button-right' onClick={() => handleFormat('clear')}><span className='material-symbols-outlined'>format_clear</span></button>
+                        </div>
+                        <div className='button-group'>
+                            <button className='button-left' onClick={() => handleFormat('ordered_list')}><span className='material-symbols-outlined'>format_list_numbered</span></button>
+                            <button className='button-middle' onClick={() => handleFormat('unordered_list')}><span className='material-symbols-outlined'>format_list_bulleted</span></button>
+                            <button className='button-right' onClick={() => handleFormat('center_align')}><span className='material-symbols-outlined'>format_align_center</span></button>
+                        </div>
+                        <div className='button-group'>
+                            <button className='button-left disabled'><span className='material-symbols-outlined'>image</span></button>
+                            <button className='button-middle disabled'><span className='material-symbols-outlined'>mic</span></button>
+                            <button className='button-right disabled'><span className='material-symbols-outlined'>function</span></button>
+                        </div>
+                    </div>
+
+                    <div onFocus={() => setActiveField('question')}>
+                        <FieldInput
+                            ref = {questionRef}
+                            fieldName={'Question'}
+                            value={question}
+                            onChange={setQuestion}>
+                        </FieldInput>
+                    </div>
+                    <div onFocus={() => setActiveField('answer')}>
                     <FieldInput
-                        ref = {questionRef}
-                        fieldName={'Question'}
-                        value={question}
-                        onChange={setQuestion}>
+                        ref = {answerRef}
+                        fieldName={'Answer'}
+                        value={answer}
+                        onChange={setAnswer}>
                     </FieldInput>
-                </div>
-                <div onFocus={() => setActiveField('answer')}>
-                <FieldInput
-                    ref = {answerRef}
-                    fieldName={'Answer'}
-                    value={answer}
-                    onChange={setAnswer}>
-                </FieldInput>
-                </div>
-                <div onFocus={() => setActiveField('hint')}>
-                <FieldInput
-                    ref = {hintRef}
-                    fieldName={'Hint'}
-                    value={hint}
-                    onChange={setHint}>
-                </FieldInput>
-                </div>
+                    </div>
+                    <div onFocus={() => setActiveField('hint')}>
+                    <FieldInput
+                        ref = {hintRef}
+                        fieldName={'Hint'}
+                        value={hint}
+                        onChange={setHint}>
+                    </FieldInput>
+                    </div>
 
-                <button className='save-card-button' onClick={handleSaveCard}>Save Card</button>
+                    <button className='save-card-button' onClick={handleSaveCard}>Save Card</button>
+                </div>
+                <div className='preview-section'>
+                    <CardPreview 
+                        data={cardData}
+                        template={previewSide === 'front' ? frontTemplate : backTemplate}
+                        side={'front'}
+                        onFlip={handleFlip}></CardPreview>
+                </div>
             </div>
-            <div className='preview-section'>
-                <CardPreview 
-                    data={cardData}
-                    template={previewSide === 'front' ? frontTemplate : backTemplate}
-                    side={'front'}
-                    onFlip={handleFlip}></CardPreview>
-            </div>
-        </div>
+        </Layout>
     );
 }

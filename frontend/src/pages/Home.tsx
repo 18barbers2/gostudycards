@@ -11,7 +11,7 @@ export function Home() {
                     <GreetingCardContent userName='Sam' deckCount={5} cardCount={120} />
                 </DashboardCard>
                 <DashboardCard className='study-progress' title='Study Progress'>
-                    <StudyProgressCardContent dueCards={42} totalCards={120} />
+                    <StudyProgressCardContent dueCards={1} totalCards={100} />
                 </DashboardCard>
                 <DashboardCard className='weekly-activity' title='Weekly Activity'>
                     <WeeklyActivityCardContent />

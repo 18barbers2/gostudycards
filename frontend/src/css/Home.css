@@ -13,7 +13,7 @@
     grid-template-rows: auto auto;
     gap: 20px;
 }
-.welcome-section {
+.welcome {
     grid-area: welcome;
     background-color: red;
     padding: 30px;
@@ -21,44 +21,44 @@
     min-height: 150px;
 }
 
-.cards-due-section {
+.study-progress {
     grid-area: cards-due;
-    background-color: blue;
+    /* background-color: blue;
     padding: 30px;
     border-radius: 12px;
     align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     min-height: 200px;
 }
 
-.heatmap-section {
+.weekly-activity {
     grid-area: heatmap;
-    background-color: green;
+    /* background-color: green;
     padding: 30px;
-    border-radius: 12px;
+    border-radius: 12px; */
     min-height: 260px;
 }
 
-.quick-actions-section {
+.quick-actions {
     grid-area: quick-actions;
-    background-color: rgb(96, 166, 177);
+    /* background-color: rgb(96, 166, 177);
     padding: 30px;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
 }
 
-.card-piechart-section {
+.mastery-distribution {
     grid-area: card-piechart;
-    background-color: purple;
+    /* background-color: purple;
     padding: 30px;
     border-radius: 12px;
     align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 }

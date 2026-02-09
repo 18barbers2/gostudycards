@@ -13,53 +13,28 @@
     grid-template-rows: auto auto;
     gap: 20px;
 }
+
 .welcome {
     grid-area: welcome;
-    background-color: red;
-    padding: 30px;
-    border-radius: 12px;
     min-height: 150px;
 }
 
 .study-progress {
     grid-area: cards-due;
-    /* background-color: blue;
-    padding: 30px;
-    border-radius: 12px;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    align-items: center; */
     min-height: 200px;
 }
 
 .weekly-activity {
     grid-area: heatmap;
-    /* background-color: green;
-    padding: 30px;
-    border-radius: 12px; */
     min-height: 260px;
 }
 
 .quick-actions {
     grid-area: quick-actions;
-    background-color: rgb(96, 166, 177);
-    padding: 30px;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .mastery-distribution {
     grid-area: card-piechart;
-    /* background-color: purple;
-    padding: 30px;
-    border-radius: 12px;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    align-items: center; */
 }
 
 button {
@@ -71,4 +46,17 @@ button {
     cursor: pointer;
     font-size: 16px;
     width: 80%;
+}
+
+button:hover {
+    background-color: #131313;
+    transition: background-color 0.1s ease;
+    color: white
+}
+
+.quick-action-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }

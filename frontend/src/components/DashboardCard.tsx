@@ -43,7 +43,7 @@ export function PieChartCardContent() {
 
 export function QuickActionsContent() {
     return (
-        <div>
+        <div className='quick-action-buttons'>
             <button>Study Now</button>
             <button>Add New Card</button>
         </div>

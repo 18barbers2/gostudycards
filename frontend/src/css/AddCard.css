@@ -58,7 +58,7 @@
     outline: solid var(--border-color-secondary) 3px;
 } */
 
-button {
+.add-card-page button {
     background-color: var(--bg-secondary);
     border-color: var(--border-color-primary);
     color: var(--text-primary);
@@ -89,9 +89,10 @@ button {
     gap: 0px;
 }
 
-button:hover {
+.add-card-page button:hover {
     background-color: var(--bg-secondary);
     border-color: var(--border-color-primary);
+    background-color: #131313;
     /* border-bottom-width: 3px; */
     /* box-shadow: 0px 3px green; */
     /* border-bottom-style: unset; */
@@ -102,7 +103,7 @@ button:focus {
     border-width: 2px;
 }
 
-button .material-symbols-outlined {
+.add-card-page button .material-symbols-outlined {
   font-variation-settings:
     'FILL' 1,
     'wght' 400,
@@ -186,7 +187,7 @@ button .material-symbols-outlined {
         gap: 5px;
     }
 
-    button {
+    .add-card-page button {
         width: 40px;
         height: 40px;
     }

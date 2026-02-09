@@ -29,7 +29,9 @@
     top: 0px;
     font-size: 36px;
     background-color: transparent;
+    border-width: 0px;
     font-weight: bold;
+    color: white;
 }
 .deck-menu:hover {
     cursor: pointer;

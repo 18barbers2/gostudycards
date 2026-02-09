@@ -26,10 +26,6 @@
     font-size: var(--font-size-sm);
 }
 
-.page-title {
-    font-size: var(--font-size-lg);
-}
-
 .add-card-page {
     background-color: var(--bg-primary);
     color: white;

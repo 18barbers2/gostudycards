@@ -1,9 +1,12 @@
+import { Layout } from "../components/Layout/Layout.tsx";
 
 export function Study() {
     return (
-        <div className="study">
-            <h1>Study</h1>
-        </div>
+        <Layout>
+            <div className="study">
+                <h1>Study</h1>
+            </div>
+        </Layout>
     );
 }
 

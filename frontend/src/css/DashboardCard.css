@@ -1,0 +1,7 @@
+.dashboard-card {
+    grid-area: welcome;
+    background-color: #303236;
+    padding: 30px;
+    border-radius: 12px;
+    min-height: 150px;
+}

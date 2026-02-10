@@ -47,13 +47,16 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
         <div className="study-interface">
 
             {/* Header with deck name and progress */}
-            <div className="study-title">
-                <h1>Study</h1>
-                <div className="deck-name">{deck.name}</div>
-            </div>
-            <div className="study-progress">
-                <span>Card <strong>{currentCardIndex + 1}</strong> of <strong>{deck.cardsDue}</strong></span>
-                <span><strong>{cardsRemaining}</strong> remaining</span>
+            <div className="study-header">
+                <div className="study-title">
+                    <h1>Study</h1>
+                    <div className="deck-name">{deck.name}</div>
+                </div>
+                <div className="study-progress">
+                    <span>Card <strong>{currentCardIndex + 1}</strong> of <strong>{deck.cardsDue}</strong></span>
+                    <span><strong>{cardsRemaining}</strong> remaining</span>
+                </div>
+
             </div>
 
             {/* Flashcard display */}
@@ -61,12 +64,12 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
                 <div className={`flashcard ${isFlipped ? 'flipped' : ''}`} onClick={flipCard}>
                     <div className="card-face card-front">
                         <div className="card-label">FLASHCARD (FRONT)</div>
-                        <div className="card-label">What is the capital of france?</div>
+                        <div className="card-content">What is the capital of france?</div>
                         <div className="card-hint">Click to reveal answer</div>
                     </div>
                     <div className="card-face card-back">
                         <div className="card-label">FLASHCARD (BACK)</div>
-                        <div className="card-label">Paris</div>
+                        <div className="card-content">Paris</div>
                         <div className="card-hint">Rate your answer below</div>
                     </div>
                 </div>
@@ -76,17 +79,35 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
             <div className="difficulty-section">
                 <div className="difficulty-label">How well did you know this?</div>
                 <div className="difficulty-buttons">
-                    <button className="difficulty-button button-retry" onClick={() => rateCard('retry')}>RETRY</button>
-                    <button className="difficulty-button button-hard" onClick={() => rateCard('hard')}>HARD</button>
-                    <button className="difficulty-button button-medium" onClick={() => rateCard('medium')}>MEDIUM</button>
-                    <button className="difficulty-button button-easy" onClick={() => rateCard('easy')}>EASY</button>
+                    <button 
+                        className="difficulty-button button-retry" 
+                        onClick={() => rateCard('retry')}
+                        disabled={!isFlipped}
+                    >
+                        RETRY
+                    </button>
+                    <button 
+                        className="difficulty-button button-hard" 
+                        onClick={() => rateCard('hard')}
+                        disabled={!isFlipped}
+                    >
+                        HARD
+                    </button>
+                    <button 
+                        className="difficulty-button button-medium" 
+                        onClick={() => rateCard('medium')}
+                        disabled={!isFlipped}
+                    >
+                        MEDIUM
+                    </button>
+                    <button 
+                        className="difficulty-button button-easy" 
+                        onClick={() => rateCard('easy')}
+                        disabled={!isFlipped}
+                    >
+                        EASY
+                    </button>
                 </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="action-buttons">
-                <button className="action-button button-exit" onClick={onExit}>End Session</button>
-                <button className="action-button button-skip" onClick={onExit}>Skip Card</button>
             </div>
 
         </div>
@@ -132,11 +153,7 @@ export function Study() {
                 </div>
             )}
             {selectedDeck && (
-                <div className="study-session">
-                    <h1>Studying: {selectedDeck.name}</h1>
-                    <p>{selectedDeck.cardsDue} cards to review</p>
-                    <button onClick={exitStudy}>Back to Decks</button>
-                </div>
+                <StudyInterface deck={selectedDeck} onExit={exitStudy} />
             )}
        
         </Layout>

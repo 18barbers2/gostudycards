@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "name": "Japanese JLPT N5 Vocabulary",
+    "description": "Basic Japanese vocabulary for beginners",
+    "totalCards": 487,
+    "cardsdue": 42
+  },
+  {
+    "id": "2",
+    "name": "World Capitals",
+    "description": "Capital cities from around the globe",
+    "totalCards": 195,
+    "cardsDue": 15
+  },
+  {
+    "id": "3",
+    "name": "Python Programming Basics",
+    "description": "Core Python concepts and syntax",
+    "totalCards": 320,
+    "cardsDue": 28
+  }
+]

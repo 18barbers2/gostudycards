@@ -1,5 +1,4 @@
 import { Layout } from "../components/Layout/Layout.tsx";
-import Card from "../components/Card.tsx";
 
 
 export function Study() {
@@ -7,13 +6,9 @@ export function Study() {
         <Layout>
             <div className='study-page'>  
                 <h1>Study</h1>
+                <h2 className='subtitle'>Choose a deck to study</h2>
                 <div className="study-page-container">
-                    <Card
-                        id="1"
-                        deckId="1"
-                        template="<div>{{front}}</div>"
-                        data={{ front: "What is the capital of France?" }}
-                    />
+
                 </div>
             </div>
         </Layout>

@@ -1,9 +1,18 @@
 import { Layout } from "../components/Layout/Layout.tsx";
 import testDecks from '../data/testDecks.json';
 import '../css/Study.css';
+import { useState } from "react";
 
 
-export function DeckOption( {id, name, description, cardsDue} : {id: string, name: string, description: string, cardsDue: number} ) {
+
+export interface DeckStudyInfo {
+    id: string;
+    name: string;
+    description?: string;
+    cardsDue: number;
+}
+
+export function DeckOption( {id, name, description, cardsDue} : DeckStudyInfo) {
     return (
         <div className="deck-option">
             <div className="deck-info">
@@ -20,13 +29,21 @@ export function DeckOption( {id, name, description, cardsDue} : {id: string, nam
 
 
 export function Study() {
+
+    const [decks] = useState<DeckStudyInfo[]>(
+        testDecks.filter(deck => deck.cardsDue > 0) as DeckStudyInfo[]
+    );
+
+
+
     return (
         <Layout>
             <h1>Study</h1>
             <h2 className='subtitle'>Choose a deck to study</h2>
             <div className="deck-selection">
-                {testDecks.map((deck) => (
+                {decks.map((deck) => (
                     <DeckOption
+                        key={deck.id}
                         id={deck.id}
                         name={deck.name}
                         description={deck.description || "No description"}

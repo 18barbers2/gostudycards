@@ -19,5 +19,68 @@
     "description": "Core Python concepts and syntax",
     "totalCards": 320,
     "cardsDue": 28
+  },
+  {
+    "id": "4",
+    "name": "Medical Terminology",
+    "description": "Essential medical terms and definitions",
+    "totalCards": 856,
+    "cardsDue": 67
+  },
+  {
+    "id": "5",
+    "name": "Spanish Verbs - Present Tense",
+    "description": "Common Spanish verb conjugations",
+    "totalCards": 234,
+    "cardsDue": 0
+  },
+  {
+    "id": "6",
+    "name": "Biology: Cell Structure",
+    "description": "Parts and functions of cells",
+    "totalCards": 145,
+    "cardsDue": 23
+  },
+  {
+    "id": "7",
+    "name": "React Hooks & Patterns",
+    "description": "Modern React development techniques",
+    "totalCards": 78,
+    "cardsDue": 12
+  },
+  {
+    "id": "8",
+    "name": "Classical Music Composers",
+    "description": "Major composers and their famous works",
+    "totalCards": 167,
+    "cardsDue": 8
+  },
+  {
+    "id": "9",
+    "name": "German Articles & Cases",
+    "description": "Der, die, das and declension patterns",
+    "totalCards": 289,
+    "cardsDue": 54
+  },
+  {
+    "id": "10",
+    "name": "Chemistry: Periodic Table",
+    "description": "Elements, symbols, and atomic numbers",
+    "totalCards": 118,
+    "cardsDue": 31
+  },
+  {
+    "id": "11",
+    "name": "AWS Solutions Architect",
+    "description": "AWS services and certification prep",
+    "totalCards": 412,
+    "cardsDue": 89
+  },
+  {
+    "id": "12",
+    "name": "French Food Vocabulary",
+    "description": "Restaurant and cooking terms",
+    "totalCards": 203,
+    "cardsDue": 19
   }
 ]

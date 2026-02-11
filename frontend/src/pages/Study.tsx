@@ -158,6 +158,11 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
                 </div>
             </div>
 
+            <div className="study-session-controls">
+                <button className="end-session-button">End Session</button>
+                <button className="skip-card-button">Skip Card</button>
+            </div>
+
         </div>
     )
 }

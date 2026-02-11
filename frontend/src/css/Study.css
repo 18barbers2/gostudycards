@@ -248,36 +248,38 @@
     margin-top: 40px;
 }
 .end-session-button {
-    background: #747474;
+    background: transparent;
     color: white;
     padding: 15px 30px;
-    border: none;
+    border-width: 2px;
+    border-color: #575757;
     border-radius: 5px;
     font-size: 1rem;
-    font-weight: 600;
     cursor: pointer;
-    /* transition: all 0.3s ease; */
+    transition: all 0.5s ease;
 
 }
 
 .end-session-button:hover {
-    background: #5e5e5e;
+    border-color: #e20b03;
+    background-color: #303030;
 }   
 
 .skip-card-button {
-    background: #747474;
+    background: transparent;
     color: white;
     padding: 15px 30px;
-    border: none;
+    border-width: 2px;
+    border-color: #575757;
     border-radius: 5px;
     font-size: 1rem;
-    font-weight: 600;
     cursor: pointer;
-    /* transition: all 0.3s ease; */
+    transition: all 0.5s ease;
 }
 
 .skip-card-button:hover {
-    background: #5e5e5e;
+    border-color: #4a9eff;
+    background-color: #303030;
 }   
 
 /* Additional Styling */

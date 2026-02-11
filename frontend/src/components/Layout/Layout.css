@@ -45,6 +45,6 @@
     .main-content {
         margin-left: 0;        /* Remove left margin */
         margin-top: 80px;      /* Add top margin for navbar */
-        padding: 20px 0;       /* Less padding on mobile */
+        padding: 20px 10px;    /* Less padding on mobile - TODO: Update Later */
     }
 }

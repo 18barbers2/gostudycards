@@ -2,6 +2,7 @@ import { Layout } from "../components/Layout/Layout.tsx";
 import testDecks from '../data/testDecks.json';
 import '../css/Study.css';
 import { useState } from "react";
+import Card from "../components/Card.tsx";
 
 
 
@@ -10,6 +11,41 @@ export interface DeckStudyInfo {
     name: string;
     description?: string;
     cardsDue: number;
+}
+
+interface StudyCardData {
+    id: string;
+    deckId: string;
+    frontTemplate: string;
+    frontData: Record<string, string>
+    backTemplate: string;
+    backData: Record<string, string>
+}
+
+function StudyCard( { card, isFlipped, onFlip }: { card: StudyCardData; isFlipped: boolean; onFlip: () => void }) {
+    return (
+    <div 
+      className={`flashcard ${isFlipped ? 'flipped' : ''}`} 
+      onClick={onFlip}
+    >
+      <div className="card-face card-front">
+        <Card 
+          template={card.frontTemplate} 
+          data={card.frontData}
+          id={card.id}
+          deckId={card.deckId}
+        />
+      </div>
+      <div className="card-face card-back">
+        <Card 
+          template={card.backTemplate} 
+          data={card.backData}
+          id={card.id}
+          deckId={card.deckId}
+        />
+      </div>
+    </div>
+  );
 }
 
 function DeckOption( {id, name, description, cardsDue, onClick } : DeckStudyInfo & { onClick: () => void }) {
@@ -31,6 +67,29 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
     const [currentCardIndex, setCurrentCardIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
     const [cardsRemaining, setCardsRemaining] = useState(deck.cardsDue);
+
+    // ADD THIS: Sample card data (later this will come from database)
+    const sampleCards: StudyCardData[] = [
+        {
+            id: "1",
+            deckId: deck.id,
+            frontTemplate: "<div>{{question}}</div>",
+            frontData: { question: "What is the capital of France?" },
+            backTemplate: "<div>{{answer}}</div>",
+            backData: { answer: "Paris" }
+        },
+        {
+            id: "2",
+            deckId: deck.id,
+            frontTemplate: "<div>{{question}}</div>",
+            frontData: { question: "What is 2 + 2?" },
+            backTemplate: "<div>{{answer}}</div>",
+            backData: { answer: "4" }
+        }
+    ];
+
+    // Set current card based on index (in real app, this would be fetched from backend based on deck and due cards)
+    const currentCard = sampleCards[currentCardIndex % sampleCards.length];
 
     const flipCard = () => {
         setIsFlipped(!isFlipped);
@@ -61,7 +120,7 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
 
             {/* Flashcard display */}
             <div className="flashcard-container">
-                <div className={`flashcard ${isFlipped ? 'flipped' : ''}`} onClick={flipCard}>
+                {/* <div className={`flashcard ${isFlipped ? 'flipped' : ''}`} onClick={flipCard}>
                     <div className="card-face card-front">
                         <div className="card-label">FLASHCARD (FRONT)</div>
                         <div className="card-content">What is the capital of france?</div>
@@ -72,7 +131,8 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
                         <div className="card-content">Paris</div>
                         <div className="card-hint">Rate your answer below</div>
                     </div>
-                </div>
+                </div> */}
+                <StudyCard card={currentCard} isFlipped={isFlipped} onFlip={flipCard}/>
             </div>
 
             {/* Controls for card */}

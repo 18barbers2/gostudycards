@@ -161,12 +161,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #2a2a2a;
-    border-width: 3px;
-    border-style: solid;
-    /* border-image: linear-gradient(45deg, #4a9eff, #2a2a2a) 1; */
-    border-radius: 8px;
-    border-color: #888;
+
 }
 
 .card-back {

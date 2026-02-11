@@ -23,7 +23,7 @@ function Card( props : CardProps) {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Card Document</title>
                 <style>
-                    html, body { margin:0; padding:0; }
+                    html, body { margin:0; padding:0; overflow: hidden; }
                     body {
                         font-size: 25px;
                         display: flex;

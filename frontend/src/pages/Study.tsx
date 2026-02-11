@@ -102,6 +102,16 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
     setIsFlipped(false);
     };
 
+    function handleOnSessionEnd(event: React.MouseEvent<HTMLButtonElement>): void {
+        alert("Session ended. Returning to deck selection.");
+    }
+
+    function handleSkip(event: React.MouseEvent<HTMLButtonElement>): void {
+        setCurrentCardIndex(currentCardIndex + 1);
+        setCardsRemaining(cardsRemaining - 1);
+        setIsFlipped(false);
+    }
+
     return (
         <div className="study-interface">
 
@@ -159,8 +169,8 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
             </div>
 
             <div className="study-session-controls">
-                <button className="end-session-button">End Session</button>
-                <button className="skip-card-button">Skip Card</button>
+                <button className="end-session-button" onClick={handleOnSessionEnd}>End Session</button>
+                <button className="skip-card-button" onClick={handleSkip}>Skip Card</button>
             </div>
 
         </div>

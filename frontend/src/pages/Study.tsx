@@ -120,18 +120,6 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
 
             {/* Flashcard display */}
             <div className="flashcard-container">
-                {/* <div className={`flashcard ${isFlipped ? 'flipped' : ''}`} onClick={flipCard}>
-                    <div className="card-face card-front">
-                        <div className="card-label">FLASHCARD (FRONT)</div>
-                        <div className="card-content">What is the capital of france?</div>
-                        <div className="card-hint">Click to reveal answer</div>
-                    </div>
-                    <div className="card-face card-back">
-                        <div className="card-label">FLASHCARD (BACK)</div>
-                        <div className="card-content">Paris</div>
-                        <div className="card-hint">Rate your answer below</div>
-                    </div>
-                </div> */}
                 <StudyCard card={currentCard} isFlipped={isFlipped} onFlip={flipCard}/>
             </div>
 

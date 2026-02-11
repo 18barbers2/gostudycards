@@ -11,6 +11,20 @@
     width: 80px;
     background-color: #1a1a1a;
     z-index: 100;
+    box-shadow: #1a1a1a 0px 0px 10px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    row-gap: 1.0em;
 }
 
 .main-content {
@@ -40,7 +54,21 @@
         width: 100%;       /* Full width */
         height: 80px;      /* Fixed height */
         z-index: 100;
+        box-shadow: #1a1a1a 0px 0px 10px;
     }
+
+    .navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    row-gap: 2.0em;
+}
 
     .main-content {
         margin-left: 0;        /* Remove left margin */

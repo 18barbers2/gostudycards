@@ -239,3 +239,14 @@
     background: #e74c3c;
     color: white;
 }
+
+/* Additional Styling */
+
+.study-progress strong {
+    color: #4a9eff;
+    
+}
+
+.study-progress span {
+    margin: 0px 10px;
+}

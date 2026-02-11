@@ -10,8 +10,22 @@
     align-items: center;
     width: 100%;
     min-height: calc(100vh - 80px);
-    
 }
+
+.study-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+}
+
+.study-header.study-progress {
+    font-size: 1rem;
+    color: #aaa;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}   
 
 .deck-selection {
     display: flex;

@@ -47,9 +47,9 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
         <div className="study-interface">
 
             {/* Header with deck name and progress */}
+            <h1>Study</h1>
             <div className="study-header">
                 <div className="study-title">
-                    <h1>Study</h1>
                     <div className="deck-name">{deck.name}</div>
                 </div>
                 <div className="study-progress">

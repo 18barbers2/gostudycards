@@ -33,7 +33,7 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     return (
         <div className="code-editor">
             <div className="code-editor-header">
-                <div className="code-editor-dot">dot goes here</div>
+                <div className="code-editor-dot"></div>
                 <span className="code-editor-filename">{filename}</span>
                 <span className="code-editor-hint">Use {'{{variable}}'} for dynamic fields</span>
             </div>

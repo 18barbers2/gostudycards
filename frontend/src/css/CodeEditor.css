@@ -1,0 +1,113 @@
+:root {
+    --bg-app:        #18181c;
+    --bg-panel:      #222228;
+    --bg-editor:     #1c1c22;
+    --bg-hover:      #2a2a32;
+    --bg-tab-active: #2e2e38;
+    --text-primary:  #ededf2;
+    --text-dim:      #707088;
+    --accent:        #8b72ff;
+    --accent-glow:   rgba(139, 114, 255, 0.25);
+    --accent-soft:   rgba(139, 114, 255, 0.12);
+    --border:        rgba(255,255,255,0.07);
+    --border-bright: rgba(255,255,255,0.13);
+    --radius-sm:     6px;
+    --radius-md:     10px;
+    --radius-lg:     14px;
+    --radius-pill:   999px;
+    --btn-size:      32px;
+    --font-ui:       'DM Sans', sans-serif;
+    --font-mono:     'DM Mono', monospace;
+}
+
+.code-editor {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: black;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    border: 1px solid gray;
+    border-radius: 10px;
+    width: 50%;
+}
+
+.code-editor-header {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid gray;
+    flex-shrink: 0;
+}
+
+.code-editor-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgb(153, 0, 255);
+    opacity: 0.7
+}
+
+.code-editor-filename {
+    font-size: 16px;
+    color: rgb(245, 245, 245);
+}
+
+.code-editor-hint {
+    margin-left: auto;
+    font-size: 10px;
+    color: rgb(255, 255, 255);
+    opacity: 0.5;
+}
+
+.code-editor-body {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.code-editor-line-numbers {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 38px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0;
+    border-right: 1px solid rgb(145, 56, 56);
+    background: rgba(143, 31, 31, 0.12);
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.line-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgb(255, 255, 255);
+    opacity: 0.35;
+    text-align: right;
+    padding-right: 8px;
+    line-height: 21px;
+    flex-shrink: 0;
+}
+
+.code-editor-textarea {
+    /* position: absolute; */
+    top: 0; left: 38px; right: 0; bottom: 0;
+    background: transparent;
+    border: none;
+    color: rgb(80, 80, 80);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 21px;
+    padding: 16px 14px;
+    resize: none;
+    outline: none;
+    caret-color: var(--accent);
+    tab-size: 2;
+}
+.code-editor-textarea::placeholder {
+    color: var(--text-dim);
+    opacity: 0.4;
+}

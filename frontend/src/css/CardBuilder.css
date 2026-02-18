@@ -1,20 +1,12 @@
-.card-builder-page {
-    background-color: #222222;
-    color: white;
-}
 
+/* 
 .card-input {
     background-color: #303236;
     color: white;
     resize: none;
     width: 50%;
     border-width: 0;
-}
-
-body {
-    margin: 0px;
-    background-color: #222222;
-}
+} */
 
 .card-builder {
     display: flex;

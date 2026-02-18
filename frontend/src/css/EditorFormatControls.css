@@ -1,0 +1,65 @@
+
+.editor-format-controls {
+    display: flex;
+    align-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+}
+
+.editor-format-controls button {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color-primary);
+    color: var(--text-primary);
+    width: var(--button-size);
+    height: var(--button-size);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+    border-width: 0px;
+    transition: none;
+}
+
+.editor-format-controls button:hover {
+    background-color: #131313;
+}
+
+.editor-format-controls button:focus {
+    border-color: var(--border-color-secondary);
+    border-width: 2px;
+}
+
+.editor-format-controls button .material-symbols-outlined {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    color: var(--text-primary);
+    font-size: var(--icon-size);
+    pointer-events: none;
+}
+
+.button-left {
+    border-radius: var(--border-radius) 0px 0px var(--border-radius);
+    border-right-width: 0px;
+}
+.button-right {
+    border-radius: 0px var(--border-radius) var(--border-radius) 0px;
+    border-left-width: 0px;
+}
+.button-middle {
+    border-radius: 0px;
+}
+
+.button-group {
+    display: flex;
+    gap: 0px;
+}
+
+@media (max-width: 1024px) {
+    .editor-format-controls button {
+        width: 40px;
+        height: 40px;
+    }
+}

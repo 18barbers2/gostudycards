@@ -1,26 +1,5 @@
 
-:root {
 
-    /* Colors */
-    --bg-primary: #222222;
-    --bg-secondary: #303236;
-    --text-primary: white;
-    --border-color-primary: #f6f6f6;
-    --border-color-secondary: rgb(47, 104, 190);
-
-    /* Sizes */
-    --button-size: 50px;
-    --icon-size: 16px;
-    --border-radius: 20px;
-    --spacing-sm: 2px;
-    --spacing-md: 10px;
-    --spacing-lg: 80px;
-    --font-size-sm: 16px;
-    --font-size-md: 18px;
-    --font-size-lg: 36px;
-
-    /* Card colors */
-}
 
 .field-name {
     font-size: var(--font-size-sm);
@@ -41,75 +20,6 @@
     width: 100%;
     box-sizing: border-box;
 
-}
-
-.field-input:focus {
-    outline: solid var(--border-color-secondary) 3px;
-}
-
-/* .field-input:hover {
-    outline: solid var(--border-color-secondary) 3px;
-} */
-
-.add-card-page button {
-    background-color: var(--bg-secondary);
-    border-color: var(--border-color-primary);
-    color: var(--text-primary);
-    width: var(--button-size);
-    height: var(--button-size);
-    transition: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--font-size-sm);
-    border-width: 0px;
-}
-.button-left {
-    border-radius: var(--border-radius) 0px 0px var(--border-radius);
-    border-right-width: 0px;
-}
-.button-right {
-    border-radius: 0px var(--border-radius) var(--border-radius) 0px;
-    border-left-width: 0px;
-}
-.button-middle {
-    border-radius: 0px;
-}
-
-.button-group {
-    display: flex;
-    gap: 0px;
-}
-
-.add-card-page button:hover {
-    background-color: var(--bg-secondary);
-    border-color: var(--border-color-primary);
-    background-color: #131313;
-
-}
-
-button:focus {
-    border-color: var(--border-color-secondary);
-    border-width: 2px;
-}
-
-.add-card-page button .material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
-    color: var(--text-primary);
-    font-size: var(--icon-size);
-    pointer-events: none;
-}
-
-.editor-format-controls {
-    display: flex;
-    align-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
 }
 
 .input-section {

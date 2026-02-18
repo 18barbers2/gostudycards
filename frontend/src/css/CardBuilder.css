@@ -11,10 +11,7 @@
     border-width: 0;
 }
 
-body {
-    margin: 0px;
-    background-color: #222222;
-}
+
 
 .card-builder {
     display: flex;

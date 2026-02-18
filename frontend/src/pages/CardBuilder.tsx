@@ -2,6 +2,7 @@ import { useState } from 'react';
 import '../css/CardBuilder.css';
 import Card from '../components/Card';
 import { Layout } from '../components/Layout/Layout';
+import { EditorFormatControls } from '../components/EditorFormatControls';
 
 function createDoc ( userHtml: string ) {
 
@@ -107,17 +108,7 @@ export default function CardBuilder() {
         <Layout>
             <div className='card-builder-page'>
                 <h1 className='page-title'>Card Builder</h1>
-                <div className='editor-controls'>
-                    <button className={cardTextInputMode === 'front' ? 'active' : ''} onClick={() => handleTabChange('front')}>Front</button>
-                    <button className={cardTextInputMode === 'back' ? 'active' : ''} onClick={() => handleTabChange('back')}>Back</button>
-                    <button className={cardTextInputMode === 'style' ? 'active' : ''} onClick={() => handleTabChange('style')}>Style</button>
-                </div>
-                <div className='editor-format-controls'>
-                    <button><b>B</b></button>
-                    <button><i>I</i></button>
-                    <button><u>U</u></button>
-                    <button><s>S</s></button>
-                </div>
+                <EditorFormatControls handleFormat={() => {}} />
                 <div className='card-builder'>
                     <Editor html={currentHtml} onChange={handleHtmlChange}></Editor>
                     <Preview 

@@ -1,4 +1,4 @@
-
+import '../css/EditorFormatControls.css';
 
 
 export function EditorFormatControls({ handleFormat }: { handleFormat: (format: string) => void }) {

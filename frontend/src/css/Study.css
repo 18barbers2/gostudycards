@@ -222,6 +222,13 @@
     transform: translateY(-1px);
 }
 
+.difficulty-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+    box-shadow: none;
+}
+
 .button-easy {
     background: #27ae60;
     color: white;

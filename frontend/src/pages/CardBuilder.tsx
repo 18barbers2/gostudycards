@@ -4,7 +4,7 @@ import Card from '../components/Card';
 import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
 import { FieldInput } from '../components/FieldInput';
-import { CodeEditor } from '../components/CodeEditor';
+import CodeEditor from '../components/CodeEditor.tsx';
 
 // const testHtml = `<div class='card' style='background-color: white'>User's HTML goes here</div>`;
 const iFrameStyle = {backgroundColor: '#e5e5e5ff', border: '0', width: '60%', height: '500px', borderRadius: '10px'};
@@ -81,7 +81,9 @@ export default function CardBuilder() {
             <div className='card-builder-page'>
                 <h1 className='page-title'>Card Builder</h1>
                 {/* <EditorFormatControls handleFormat={() => {}} /> */}
-                
+                <CodeEditor value={''} onChange={function (v: string): void {
+                    throw new Error('Function not implemented.');
+                } }></CodeEditor>
             </div>
         </Layout>
     );

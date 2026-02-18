@@ -1,4 +1,5 @@
 import { useRef, useState, useImperativeHandle, forwardRef } from 'react';
+import '../css/CodeEditor.css';
 
 
 export interface CodeEditorHandle {

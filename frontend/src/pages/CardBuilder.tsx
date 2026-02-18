@@ -81,9 +81,12 @@ export default function CardBuilder() {
             <div className='card-builder-page'>
                 <h1 className='page-title'>Card Builder</h1>
                 {/* <EditorFormatControls handleFormat={() => {}} /> */}
-                <CodeEditor value={''} onChange={function (v: string): void {
-                    throw new Error('Function not implemented.');
-                } }></CodeEditor>
+                <div className='workspace'>
+                    <CodeEditor value={''} onChange={function (v: string): void {
+                        throw new Error('Function not implemented.');
+                    } }></CodeEditor>
+                    
+                </div>
             </div>
         </Layout>
     );

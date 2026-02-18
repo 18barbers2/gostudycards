@@ -14,7 +14,7 @@ export function CardPreview({ data, template, side, onFlip}: CardPreviewProps) {
             <p>
                 Preview - {side === 'front' ? 'Front' : 'Back'}
             </p>
-            <Card template={template} data={data}></Card>
+            <Card template={template} data={data} id={''} deckId={''}></Card>
             <button onClick={onFlip}>
                 Flip Card
             </button>

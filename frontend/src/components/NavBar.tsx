@@ -22,11 +22,11 @@ export function NavBar() {
                         <span className="material-symbols-outlined">cards_stack</span>
                     </Link>
                 </li>
-                {/* <li>
-                    <Link to={'/'}>
+                <li>
+                    <Link to={'/study'}>
                         <span className="material-symbols-outlined">school</span>
                     </Link>
-                </li> */}
+                </li>
                 <li>
                     <Link to={'/decks'}>
                         <span className="material-symbols-outlined">stacks</span>

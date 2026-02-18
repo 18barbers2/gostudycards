@@ -1,8 +1,6 @@
 .home-page {
     background-color: #222222;
     color: white;
-    margin-left: 80px;
-    padding: 80px;
 }
 
 .home-page-container {
@@ -19,7 +17,7 @@
     min-height: 150px;
 }
 
-.study-progress {
+.home-page-container.study-progress {
     grid-area: cards-due;
     min-height: 200px;
 }

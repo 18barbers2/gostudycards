@@ -2,7 +2,7 @@ import '../css/Decks.css';
 import DeckTile from '../components/DeckTile.tsx';
 import { useState } from 'react';
 import type { DeckProps } from '../components/Deck.tsx';
-
+import { Layout } from '../components/Layout/Layout.tsx';
 
 
 export function Decks() {
@@ -83,19 +83,22 @@ export function Decks() {
 
 
     return (
-        <div className='decks-page'>
-            <h2>Decks</h2>
-            <p>This is the Decks page. Here you will be able to view and manage your decks of cards.</p>
-            <div className='decks'>
-                {decks.map((deck) => (
-                    <DeckTile
-                        key={deck.id}
-                        title={deck.name}
-                        createdBy={deck.ownerId}
-                    />
-                ))}
+
+        <Layout>
+            <div className='decks-page'>
+                <h1>Decks</h1>
+                <p>This is the Decks page. Here you will be able to view and manage your decks of cards.</p>
+                <div className='decks'>
+                    {decks.map((deck) => (
+                        <DeckTile
+                            key={deck.id}
+                            title={deck.name}
+                            createdBy={deck.ownerId}
+                        />
+                    ))}
+                </div>
             </div>
-        </div>
+        </Layout>
     );
 }
 

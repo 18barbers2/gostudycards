@@ -26,18 +26,11 @@
     font-size: var(--font-size-sm);
 }
 
-.page-title {
-    font-size: var(--font-size-lg);
-}
-
 .add-card-page {
     background-color: var(--bg-primary);
     color: white;
-    margin-left: 80px;
-    padding: 80px;
     display: flex;
     flex-direction: row;
-    /* gap: 10px; */
 }
 
 .field-input {
@@ -93,9 +86,7 @@
     background-color: var(--bg-secondary);
     border-color: var(--border-color-primary);
     background-color: #131313;
-    /* border-bottom-width: 3px; */
-    /* box-shadow: 0px 3px green; */
-    /* border-bottom-style: unset; */
+
 }
 
 button:focus {
@@ -142,6 +133,7 @@ button:focus {
     width: 100%;
     max-width: 500px; /* Limit width on large screens */
     min-width: 300px;
+    height: 100%;
 }
 
 .save-card-button {

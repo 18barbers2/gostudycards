@@ -21,3 +21,19 @@
     width: 500px;
 }
 
+.workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+}
+
+.card-builder-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* padding: 28px 32px; */
+    gap: 16px;
+    overflow: hidden;
+}

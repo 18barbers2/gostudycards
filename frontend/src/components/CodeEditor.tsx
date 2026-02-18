@@ -17,7 +17,9 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const lineNumRef = useRef<HTMLDivElement>(null);
-    const [lineCount, setLineCount] = useState(1);
+    // const [lineCount, setLineCount] = useState(1);
+    const lineCount = (value.split('\n').length);
+
 
     useImperativeHandle(ref, () => ({
         insertAtCursor: (text: string) => { /* ... */ }
@@ -25,7 +27,6 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         onChange(e.target.value);
-        setLineCount(e.target.value.split('\n').length);
     };
 
     const handleScroll = () => { /* sync lineNumRef.scrollTop to textarea */ };

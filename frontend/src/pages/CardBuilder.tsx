@@ -82,9 +82,7 @@ export default function CardBuilder() {
                 <h1 className='page-title'>Card Builder</h1>
                 {/* <EditorFormatControls handleFormat={() => {}} /> */}
                 <div className='workspace'>
-                    <CodeEditor value={''} onChange={function (v: string): void {
-                        throw new Error('Function not implemented.');
-                    } }></CodeEditor>
+                    <CodeEditor value={frontHtml} onChange={setFrontHtml}></CodeEditor>
                     
                 </div>
             </div>

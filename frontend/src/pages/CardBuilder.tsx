@@ -26,6 +26,18 @@ function Preview({html, side, onFlip} : { html: string; srcDoc : string ; side: 
     );
 }
 
+export function Tabs({ activeTab, onClick}: {activeTab: CardTextInputMode; onClick: (mode: CardTextInputMode) => void}) {
+
+    return (
+        <div className='tab-group'>
+            <button className={`tab-button ${activeTab === 'front' ? 'active' : ''}`} onClick={() => onClick('front')}>Front</button>
+            <button className={`tab-button ${activeTab === 'back' ? 'active' : ''}`} onClick={() => onClick('back')}>Back</button>
+            <button className={`tab-button ${activeTab === 'style' ? 'active' : ''}`} onClick={() => onClick('style')}>Style</button>
+        </div>
+
+    );
+}
+
 export default function CardBuilder() {
     
     
@@ -73,6 +85,7 @@ export default function CardBuilder() {
 
     };
 
+    const filename = cardTextInputMode === 'style' ? 'style.css' : `${cardTextInputMode}.html`;
 
     // Card Builder Page
     return (
@@ -80,10 +93,12 @@ export default function CardBuilder() {
         <Layout>
             <div className='card-builder-page'>
                 <h1 className='page-title'>Card Builder</h1>
-                {/* <EditorFormatControls handleFormat={() => {}} /> */}
+                <div className='controls'>
+                    <Tabs activeTab={cardTextInputMode} onClick={handleTabChange}></Tabs>
+                    <EditorFormatControls handleFormat={() => {}} />
+                </div>
                 <div className='workspace'>
-                    <CodeEditor value={frontHtml} onChange={setFrontHtml}></CodeEditor>
-                    
+                    <CodeEditor value={currentHtml} onChange={handleHtmlChange} filename={filename}></CodeEditor>
                 </div>
             </div>
         </Layout>

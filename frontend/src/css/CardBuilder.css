@@ -19,36 +19,45 @@
 
 .controls {
     display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 /** Front, Back, Style Tabs **/
 
 .tab-group {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    background-color: var(--bg-secondary);
-    margin: 20px 10px 20px 0;
-    border-radius: var(--border-radius);
+    gap: 0;
 }
 
 .tab-button {
+    background-color: var(--bg-secondary);
     border: none;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    background-color: transparent;
     color: var(--text-primary);
+    width: var(--button-size);
+    height: var(--button-size);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: none;
+}
+
+.tab-button:first-child {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.tab-button:last-child {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
 .tab-button:hover {
-    background-color: color-mix(in srgb, var(--bg-secondary) 80%, white);
+    background-color: #131313;
 }
 
 .tab-button.active {
-    background-color: var(--bg-secondary);
+    background-color: #131313;
     color: var(--text-primary);
-    font-weight: 500;
 }

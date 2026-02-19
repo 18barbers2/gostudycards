@@ -44,22 +44,26 @@ export default function CardBuilder() {
     // Which version side of the card is displayed (HTML)
     const [frontHtml, setFrontHtml] = useState('');
     const [backHtml, setBackHtml] = useState('');
+    const [styleHtml, setStyleHtml] = useState('');
     const [cardTextInputMode, setCardTextInputMode]= useState<CardTextInputMode>('front')
     const [previewSide, setPreviewSide] = useState<'front' | 'back'>('front');
     
     // Which HTML to show in editor based on mode
-    const currentHtml = cardTextInputMode === 'front' ? frontHtml : backHtml;
+    const currentHtml = cardTextInputMode === 'front' ? frontHtml : cardTextInputMode === 'back' ? backHtml : styleHtml;
     
     // Which HTML to show in the preview
     const previewHtml = previewSide === 'front' ? frontHtml : backHtml;
 
     // Handle the HTML update
     const handleHtmlChange = (newHtml: string) => {
-        if (cardTextInputMode === 'front') {
+        if (cardTextInputMode === 'front'){
             setFrontHtml(newHtml);
         }
-        else {
+        else if (cardTextInputMode === 'back'){
             setBackHtml(newHtml);
+        }
+        else {
+            setStyleHtml(newHtml);
         }
     }
 

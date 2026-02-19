@@ -13,7 +13,9 @@ function PreviewPanel({ side, template, data, onFlip, onInsert} : PreviewPanelPr
                 <span className='preview-label'>Live Preview</span>
                 <span className='preview-side-badge'>{side}</span>
             </div>
-            
+
         </div>
     );
 }
+
+export default PreviewPanel;

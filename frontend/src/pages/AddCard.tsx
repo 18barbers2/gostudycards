@@ -109,18 +109,19 @@ export default function AddCard() {
     return (
         <Layout>
             <div className='add-card-page'>
-                <h1 className='page-title'>Add Card</h1>
-
-                {/* Deck selector — card-level setting, sits on its own row */}
-                <select
-                    className='deck-selector'
-                    value={selectedDeckId}
-                    onChange={e => setSelectedDeckId(e.target.value)}
-                >
-                    {MOCK_DECKS.map(deck => (
-                        <option key={deck.id} value={deck.id}>{deck.name}</option>
-                    ))}
-                </select>
+                {/* Title row — page title on the left, deck selector on the right */}
+                <div className='page-title-row'>
+                    <h1 className='page-title'>Add Card</h1>
+                    <select
+                        className='deck-selector'
+                        value={selectedDeckId}
+                        onChange={e => setSelectedDeckId(e.target.value)}
+                    >
+                        {MOCK_DECKS.map(deck => (
+                            <option key={deck.id} value={deck.id}>{deck.name}</option>
+                        ))}
+                    </select>
+                </div>
 
                 {/* Formatting toolbar — field-level editing tools, sits on its own row */}
                 <EditorFormatControls handleFormat={handleFormat} />

@@ -16,7 +16,9 @@ export function Decks() {
 
         <Layout>
             <div className='decks-page'>
-                <h1 className='page-title'>Decks</h1>
+                <div className='page-title-row'>
+                    <h1 className='page-title'>Decks</h1>
+                </div>
                 <p>This is the Decks page. Here you will be able to view and manage your decks of cards.</p>
                 <div className='decks'>
                     {decks.map((deck) => (

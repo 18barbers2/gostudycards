@@ -116,7 +116,7 @@ function StudyInterface( { deck, onExit }: { deck: DeckStudyInfo; onExit: () => 
         <div className="study-interface">
 
             {/* Header with deck name and progress */}
-            <h1>Study</h1>
+            <h1 className='page-title'>Study</h1>
             <div className="study-header">
                 <div className="study-title">
                     <div className="deck-name">{deck.name}</div>
@@ -201,7 +201,7 @@ export function Study() {
         <Layout>
             {!selectedDeck && (
                 <div className="deck-selection">
-                    <h1>Study</h1>
+                    <h1 className='page-title'>Study</h1>
                     <h2 className='subtitle'>Choose a deck to study</h2>
                     {decks.map((deck) => (
                         <DeckOption

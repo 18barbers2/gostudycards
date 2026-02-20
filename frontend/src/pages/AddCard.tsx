@@ -3,7 +3,7 @@ import { useState, useRef} from 'react';
 import '../css/AddCard.css';
 import FieldInput from '../components/FieldInput';
 import type { FieldInputHandle } from '../components/FieldInput';
-import CardPreview from '../components/CardPreview';
+import PreviewPanel from '../components/PreviewPanel';
 import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
 import { MOCK_DECKS } from '../data/decks';
@@ -27,7 +27,7 @@ export default function AddCard() {
 
     const questionRef = useRef<FieldInputHandle>(null);
     const answerRef = useRef<FieldInputHandle>(null);
-    const hintRef = useRef<FieldInputHandle>(null);  
+    const hintRef = useRef<FieldInputHandle>(null);
 
 
     const handleFormat = (format: string) => {
@@ -35,12 +35,12 @@ export default function AddCard() {
             questionRef.current.applyFormat(format);
         } else if (activeField === 'answer' && answerRef.current) {
             answerRef.current.applyFormat(format);
-        } else if (activeField === 'hint' && hintRef.current) { 
+        } else if (activeField === 'hint' && hintRef.current) {
             hintRef.current.applyFormat(format);
-        }  
+        }
     };
 
-    
+
     const cardData = {
         Question: question,
         Answer: answer,
@@ -48,13 +48,11 @@ export default function AddCard() {
         ...Object.fromEntries(customFields.map(f => [f.name, f.value]))
     };
 
-        // Handle card flip logic
     const handleFlip = () => {
-        setPreviewSide((prev: string) => prev === 'front' ? 'back' : 'front');
+        setPreviewSide(prev => prev === 'front' ? 'back' : 'front');
     };
 
     const handleSaveCard = () => {
-        // Logic to save the card would go here
         console.log('Card saved:', { deckId: selectedDeckId, ...cardData });
         setQuestion('');
         setAnswer('');
@@ -64,18 +62,16 @@ export default function AddCard() {
         alert('Card saved successfully!');
     };
 
-
     // Templates (would come from database eventually)
-    const frontTemplate = `<div style="padding: 20px; text-align: center;"><h2 style="color: #000000ff; margin-bottom: 10px;">{{Question}}</h2><p style="color: #000000ff; font-style: italic;">Hint: {{Hint}}</p></div>`;
-    const backTemplate = `<div style="padding: 20px; text-align: center;"><h3 style="color: #000000ff; margin-bottom: 15px;">Answer:</h3><p style="color: #000000ff; font-size: 1.2em;">{{Answer}}</p></div>`;
+    const frontTemplate = `<div style="padding: 20px; text-align: center;"><h2 style="color: #ffffff; margin-bottom: 10px;">{{Question}}</h2><p style="color: rgba(255,255,255,0.7); font-style: italic;">{{Hint}}</p></div>`;
+    const backTemplate = `<div style="padding: 20px; text-align: center;"><p style="color: rgba(255,255,255,0.6); font-size: 0.8em; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em;">Answer</p><p style="color: #ffffff; font-size: 1.2em;">{{Answer}}</p></div>`;
+    const previewTemplate = previewSide === 'front' ? frontTemplate : backTemplate;
 
     return (
-
         <Layout>
-
             <div className='add-card-page'>
-                <div className='input-section'>
-                    <h1 className='page-title'>Add Card</h1>
+                <h1 className='page-title'>Add Card</h1>
+                <div className='add-card-controls'>
                     <select
                         className='deck-selector'
                         value={selectedDeckId}
@@ -86,39 +82,44 @@ export default function AddCard() {
                         ))}
                     </select>
                     <EditorFormatControls handleFormat={handleFormat} />
-                    <div onFocus={() => setActiveField('question')}>
-                        <FieldInput
-                            ref = {questionRef}
-                            fieldName={'Question'}
-                            value={question}
-                            onChange={setQuestion}>
-                        </FieldInput>
-                    </div>
-                    <div onFocus={() => setActiveField('answer')}>
-                    <FieldInput
-                        ref = {answerRef}
-                        fieldName={'Answer'}
-                        value={answer}
-                        onChange={setAnswer}>
-                    </FieldInput>
-                    </div>
-                    <div onFocus={() => setActiveField('hint')}>
-                    <FieldInput
-                        ref = {hintRef}
-                        fieldName={'Hint'}
-                        value={hint}
-                        onChange={setHint}>
-                    </FieldInput>
-                    </div>
-
-                    <button className='save-card-button' onClick={handleSaveCard}>Save Card</button>
                 </div>
-                <div className='preview-section'>
-                    <CardPreview 
+                <div className='workspace'>
+                    <div className='input-section'>
+                        <div onFocus={() => setActiveField('question')}>
+                            <FieldInput
+                                ref={questionRef}
+                                fieldName={'Question'}
+                                value={question}
+                                onChange={setQuestion}
+                            />
+                        </div>
+                        <div onFocus={() => setActiveField('answer')}>
+                            <FieldInput
+                                ref={answerRef}
+                                fieldName={'Answer'}
+                                value={answer}
+                                onChange={setAnswer}
+                            />
+                        </div>
+                        <div onFocus={() => setActiveField('hint')}>
+                            <FieldInput
+                                ref={hintRef}
+                                fieldName={'Hint'}
+                                value={hint}
+                                onChange={setHint}
+                            />
+                        </div>
+                        <button className='save-card-button' onClick={handleSaveCard}>Save Card</button>
+                    </div>
+                    <PreviewPanel
+                        side={previewSide}
+                        template={previewTemplate}
+                        style=''
                         data={cardData}
-                        template={previewSide === 'front' ? frontTemplate : backTemplate}
-                        side={'front'}
-                        onFlip={handleFlip}></CardPreview>
+                        onFlip={handleFlip}
+                        onInsert={() => {}}
+                        showInsertBar={false}
+                    />
                 </div>
             </div>
         </Layout>

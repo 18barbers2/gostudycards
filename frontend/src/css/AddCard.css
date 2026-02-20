@@ -1,15 +1,53 @@
-
-
-
 .field-name {
     font-size: var(--font-size-sm);
 }
 
 .add-card-page {
-    background-color: var(--bg-primary);
-    color: white;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    height: 100vh;
+    gap: 16px;
+    overflow: hidden;
+}
+
+.add-card-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.deck-selector {
+    height: var(--button-size);
+    padding: 0 36px 0 12px;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23aaa' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    min-width: 0;
+    max-width: 240px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.deck-selector:focus {
+    outline: none;
+    background-color: #131313;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    min-height: 0;
 }
 
 .field-input {
@@ -19,73 +57,27 @@
     border-width: 0;
     width: 100%;
     box-sizing: border-box;
-
-}
-
-.input-section {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-}
-
-.preview-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center horizontally */
-    justify-content: flex-start; /* Align to top */
-    flex: 1; /* Take equal space with input section */
-}
-
-.card-preview {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center the card and button */
-    width: 100%;
-    max-width: 500px; /* Limit width on large screens */
-    min-width: 300px;
-    height: 100%;
-}
-
-.deck-selector {
-    width: 100%;
-    padding: 8px 12px;
-    margin-bottom: 12px;
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--border-radius);
-    font-size: var(--font-size-sm);
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23aaa' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-}
-
-.deck-selector:focus {
-    outline: none;
-    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .save-card-button {
     width: 100%;
-    margin-top: 20px;
-    padding: 15px;
-    font-size: 18px;
-    background-color: #2a7b9b;
+    margin-top: 4px;
+    padding: 12px;
+    font-size: var(--font-size-sm);
+    background-color: var(--bg-secondary);
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     cursor: pointer;
     transition: background-color 0.2s;
 }
 
 .save-card-button:hover {
-    background-color: #1f5f7a;
+    background-color: #131313;
 }
 
 .save-card-button:active {
-    background-color: #164a5f;
+    background-color: #0a0a0a;
 }
 
 .disabled {
@@ -95,23 +87,15 @@
 
 @media (max-width: 1024px) {
     .add-card-page {
-        flex-direction: column;
-        margin-left: 0px;
-        margin-top: 80px;
-        padding: 20px;
-        gap: 20px;
+        overflow-y: auto;
+        height: auto;
     }
 
-    .page-title {
-        font-size: 24px;
+    .workspace {
+        grid-template-columns: 1fr;
     }
 
-    .editor-format-controls {
-        gap: 5px;
-    }
-
-    .add-card-page button {
-        width: 40px;
-        height: 40px;
+    .deck-selector {
+        max-width: 100%;
     }
 }

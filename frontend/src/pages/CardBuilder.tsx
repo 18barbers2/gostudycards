@@ -19,9 +19,9 @@ export function Tabs({ activeTab, onClick }: { activeTab: CardTextInputMode; onC
 }
 
 export default function CardBuilder() {
-    const [frontHtml, setFrontHtml] = useState('');
-    const [backHtml, setBackHtml] = useState('');
-    const [styleHtml, setStyleHtml] = useState('');
+    const [frontHtml, setFrontHtml] = useState('<h1>Front of Card</h1>');
+    const [backHtml, setBackHtml] = useState('<h1>Back of Card</h1>');
+    const [styleHtml, setStyleHtml] = useState('h1 {\n    color: white;\n    font-family: sans-serif;\n}');
     const [cardTextInputMode, setCardTextInputMode] = useState<CardTextInputMode>('front');
     const [previewSide, setPreviewSide] = useState<'front' | 'back'>('front');
 
@@ -61,7 +61,7 @@ export default function CardBuilder() {
                 </div>
                 <div className='workspace'>
                     <CodeEditor value={currentHtml} onChange={handleHtmlChange} filename={filename} />
-                    <PreviewPanel side={previewSide} template={previewTemplate} data={{}} onFlip={handleFlip} onInsert={handleInsert} />
+                    <PreviewPanel side={previewSide} template={previewTemplate} style={styleHtml} data={{}} onFlip={handleFlip} onInsert={handleInsert} />
                 </div>
             </div>
         </Layout>

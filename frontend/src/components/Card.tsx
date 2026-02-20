@@ -8,6 +8,7 @@ interface CardProps {
     deckId: string;
     template: string;
     data: Record<string, string>;
+    style?: string;
 }
 
 // TODO: replace props with the template and data props
@@ -38,6 +39,7 @@ function Card( props : CardProps) {
                         background: #3F5EFB;
                         background: linear-gradient(62deg,rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
                     }
+                    ${props.style ?? ''}
                 </style>
             </head>
             <body>${html}</body>

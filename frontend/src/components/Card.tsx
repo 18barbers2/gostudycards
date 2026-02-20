@@ -34,10 +34,9 @@ function Card( props : CardProps) {
                         white-space: pre-wrap;
                         background-color: #e5e5e5ff;
                         border-width: 0;
-                        height: 500px;
-                        border-radius: 10px;
-                        background: #3F5EFB;
-                        background: linear-gradient(62deg,rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+                        min-height: 100vh;
+                        background: #0f1b35;
+                        background: linear-gradient(135deg, #0f1b35 0%, #1a3a6b 50%, #0d2d55 100%);
                     }
                     ${props.style ?? ''}
                 </style>

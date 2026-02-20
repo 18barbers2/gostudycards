@@ -1,10 +1,12 @@
-import { forwardRef, useRef, useImperativeHandle } from "react";
+import { forwardRef, useRef, useImperativeHandle, useState } from "react";
+import '../css/FieldInput.css';
 
 // Props for FieldInput component
 interface FieldInputProps {
     value: string;
     onChange: (value: string) => void;
     fieldName: string;
+    maxLength?: number;
     onDelete?: () => void;
     onFormat?: (format: string) => void;
 }
@@ -14,9 +16,10 @@ export interface FieldInputHandle {
     applyFormat: (format: string) => void;
 }
 
-export const FieldInput = forwardRef<FieldInputHandle, FieldInputProps>(({ value, onChange, fieldName, onDelete, onFormat }, ref) => {
+export const FieldInput = forwardRef<FieldInputHandle, FieldInputProps>(({ value, onChange, fieldName, maxLength = 500, onDelete: _onDelete, onFormat: _onFormat }, ref) => {
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const [focused, setFocused] = useState(false);
 
     // Method to apply formatting to selected text
     const applyFormat = (format: string) => {
@@ -69,7 +72,6 @@ export const FieldInput = forwardRef<FieldInputHandle, FieldInputProps>(({ value
         const newValue = textArea.value.substring(0, start) + formattedText + textArea.value.substring(end);
         onChange(newValue);
 
-    
         // Restore focus and cursor position
         setTimeout(() => {
             textArea.focus();
@@ -81,29 +83,30 @@ export const FieldInput = forwardRef<FieldInputHandle, FieldInputProps>(({ value
         applyFormat,
     }));
 
+    const atLimit = value.length >= maxLength;
+
     return (
-        <div className='field-container'>
+        <div className={`field-container ${focused ? 'field-container--focused' : ''}`}>
             <div className='field-header'>
-                <h1 className='field-name'>{fieldName}</h1>
-                {onDelete &&
-                    <button className='delete-field-button' onClick={onDelete}>
-                        <span>
-                            <span className='material-symbols-outlined'>delete</span>
-                        </span>
-                    </button>
-                }
+                <span className={`field-name ${focused ? 'field-name--focused' : ''}`}>{fieldName}</span>
+                <span className={`field-char-count ${atLimit ? 'field-char-count--limit' : ''}`}>
+                    {value.length} / {maxLength}
+                </span>
             </div>
             <textarea
                 ref={textareaRef}
-                className={`field-input ${fieldName}`}
-                rows={5}
+                className='field-input'
+                rows={4}
                 value={value}
-                onChange={e => onChange(e.target.value)}></textarea>
+                maxLength={maxLength}
+                onChange={e => onChange(e.target.value)}
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
+            />
         </div>
     );
-}
-);
+});
 
 FieldInput.displayName = 'FieldInput';
 
-export default FieldInput
+export default FieldInput;

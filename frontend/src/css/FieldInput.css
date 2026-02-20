@@ -1,0 +1,58 @@
+.field-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius);
+    padding: 10px 14px 12px;
+    transition: border-color 0.15s;
+    background-color: var(--bg-secondary);
+}
+
+.field-container--focused {
+    border-color: var(--border-color-secondary);
+}
+
+.field-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.field-name {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.35);
+    transition: color 0.15s;
+}
+
+.field-name--focused {
+    color: var(--border-color-secondary);
+}
+
+.field-char-count {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.25);
+    font-variant-numeric: tabular-nums;
+    transition: color 0.15s;
+}
+
+.field-char-count--limit {
+    color: #e05252;
+}
+
+.field-input {
+    resize: none;
+    background: transparent;
+    color: var(--text-primary);
+    border: none;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: var(--font-size-sm);
+    font-family: inherit;
+    line-height: 1.5;
+    padding: 0;
+}

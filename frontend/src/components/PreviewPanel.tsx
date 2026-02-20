@@ -27,12 +27,7 @@ function PreviewPanel({ side, template, style, data, onFlip, onInsert }: Preview
                 </button>
             </div>
             <div className='preview-insert-bar'>
-                <span className='preview-insert-label'>Insert variable:</span>
-                {variables.map(v => (
-                    <button key={v} className='preview-insert-chip' onClick={() => onInsert(`{{${v}}}`)}>
-                        {`{{${v}}}`}
-                    </button>
-                ))}
+                <span className='preview-insert-label'>Insert variable (TODO: ADD FUNCTINALITY HERE SO IT PULLS EACH VARIABLE):</span>
             </div>
         </div>
     );

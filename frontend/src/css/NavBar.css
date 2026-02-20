@@ -1,51 +1,95 @@
 .navbar ul {
-    list-style-type: none;
+    list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    height: 100%;
-    row-gap: 1.0em;
+    padding-top: 16px;
+}
+
+.navbar li {
+    width: 100%;
+    border-left: 3px solid transparent;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.navbar li a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #a0aec0;
+    font-size: 0.875rem;
+    transition: color 0.15s ease;
+}
+
+/* Active state */
+.navbar li.active {
+    border-left-color: #6366f1;
+    background-color: rgba(99, 102, 241, 0.12);
+}
+
+.navbar li.active a {
+    color: #ffffff;
+}
+
+/* Hover state */
+.navbar li:hover:not(.active) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.navbar li:hover a {
+    color: #ffffff;
 }
 
 .material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
-    color: white;
-    font-size: 32px;
-    transition: transform 0.1s ease;
-}
-.material-symbols-outlined:hover {
     font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
-    color: white;
-    font-size: 32px;
-    transform: scale(1.2);
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+    font-size: 24px;
+    color: inherit;
+    flex-shrink: 0;
+    transition: color 0.15s ease;
 }
 
+/* Mobile — top bar */
 @media (max-width: 1024px) {
-    ul {
+    .navbar ul {
         flex-direction: row;
-        position: top;
-
+        justify-content: space-around;
+        align-items: stretch;
+        height: 100%;
+        padding-top: 0;
     }
 
-    .navbar {
-        left: 0;
-        top: 0;
-        height: 80px;
+    .navbar li {
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        flex: 1;
+        display: flex;
+        align-items: stretch;
+    }
+
+    .navbar li.active {
+        border-bottom-color: #6366f1;
+        background-color: rgba(99, 102, 241, 0.12);
+    }
+
+    .navbar li a {
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        padding: 6px 4px;
         width: 100%;
-        background-color: #303236;
-        z-index: 100;
+        font-size: 0.7rem;
     }
 
+    .material-symbols-outlined {
+        font-size: 22px;
+    }
 }

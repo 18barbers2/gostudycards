@@ -1,38 +1,35 @@
 import '../css/NavBar.css';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export function NavBar() {
+    const location = useLocation()
 
+    type NavItem = {
+        to: string;
+        icon: string;
+        label: string;
+    }
+
+    {/** Store the information for each navitem */}
+    const navItems: NavItem[] = [
+        { to: '/', icon: 'home', label: 'Home' },
+        { to: '/add-card', icon: 'add_card', label: 'Add Card' },
+        { to: '/card-builder', icon: 'cards_stack', label: 'Card Builder' },
+        { to: '/study', icon: 'school', label: 'Study' },
+        { to: '/decks', icon: 'stacks', label: 'Decks' },
+    ]
 
     return (
         <nav className='navbar'>
             <ul>
-                <li>
-                    <Link to={'/'}>
-                        <span className="material-symbols-outlined">home</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link to={'/add-card'}>
-                        <span className="material-symbols-outlined">add_card</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link to={'/card-builder'}>
-                        <span className="material-symbols-outlined">cards_stack</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link to={'/study'}>
-                        <span className="material-symbols-outlined">school</span>
-                    </Link>
-                </li>
-                <li>
-                    <Link to={'/decks'}>
-                        <span className="material-symbols-outlined">stacks</span>
-                    </Link>
-                </li>
-
+                {navItems.map((item: NavItem) => (
+                    <li key={item.to} className={location.pathname === item.to ? 'active' : ''}>
+                        <Link to={item.to}>
+                            <span className="material-symbols-outlined">{item.icon}</span>
+                            <span className="nav-label">{item.label}</span>
+                        </Link>
+                    </li>
+                ))}
             </ul>
         </nav>
     );

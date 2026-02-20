@@ -47,7 +47,6 @@
 
 .preview-card-wrapper {
     width: 100%;
-    max-width: 480px;
     aspect-ratio: 3 / 2;
     max-height: 100%;
     border-radius: 12px;

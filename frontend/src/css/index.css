@@ -29,6 +29,35 @@
     flex-shrink: 0;
 }
 
+/* Custom scrollbar — applies site-wide */
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-secondary) var(--bg-primary);
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 12px; /* wider to give room for the border spacing */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    border: 3px solid var(--bg-primary); /* solid border matching track = gap effect */
+    background-clip: padding-box;        /* keeps background behind the border transparent */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-color-secondary);
+    background-clip: padding-box;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

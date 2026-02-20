@@ -21,6 +21,68 @@
     /* Card colors */
 }
 
+.page-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Ghost style for the deck selector when it lives in the title row */
+.page-title-row .deck-selector {
+    background-color: transparent;
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    transition: border-color 0.15s, background-color 0.15s;
+}
+
+.page-title-row .deck-selector:hover {
+    border-color: rgba(255, 255, 255, 0.35);
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.page-title-row .deck-selector:focus {
+    border-color: var(--border-color-secondary);
+    background-color: transparent;
+}
+
+.page-title {
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+}
+
+/* Custom scrollbar — applies site-wide */
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-secondary) var(--bg-primary);
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+    width: 12px; /* wider to give room for the border spacing */
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--bg-secondary);
+    border-radius: var(--border-radius);
+    border: 3px solid var(--bg-primary); /* solid border matching track = gap effect */
+    background-clip: padding-box;        /* keeps background behind the border transparent */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--border-color-secondary);
+    background-clip: padding-box;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

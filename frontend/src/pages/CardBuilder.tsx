@@ -4,6 +4,7 @@ import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
 import CodeEditor from '../components/CodeEditor.tsx';
 import PreviewPanel from '../components/PreviewPanel.tsx';
+import { MOCK_DECKS } from '../data/decks';
 
 // Track which side of the card the user is editing
 type CardTextInputMode = 'front' | 'back' | 'style';
@@ -19,6 +20,7 @@ export function Tabs({ activeTab, onClick }: { activeTab: CardTextInputMode; onC
 }
 
 export default function CardBuilder() {
+    const [selectedDeckId, setSelectedDeckId] = useState<string>(MOCK_DECKS[0]?.id ?? '');
     const [frontHtml, setFrontHtml] = useState('<h1>Front of Card</h1>');
     const [backHtml, setBackHtml] = useState('<h1>Back of Card</h1>');
     const [styleHtml, setStyleHtml] = useState('h1 {\n    color: white;\n    font-family: sans-serif;\n}');
@@ -54,8 +56,22 @@ export default function CardBuilder() {
     return (
         <Layout>
             <div className='card-builder-page'>
-                <h1 className='page-title'>Card Builder</h1>
-                <div className='controls'>
+                {/* Title row — page title on the left, deck selector on the right */}
+                <div className='page-title-row'>
+                    <h1 className='page-title'>Card Builder</h1>
+                    <select
+                        className='deck-selector'
+                        value={selectedDeckId}
+                        onChange={e => setSelectedDeckId(e.target.value)}
+                    >
+                        {MOCK_DECKS.map(deck => (
+                            <option key={deck.id} value={deck.id}>{deck.name}</option>
+                        ))}
+                    </select>
+                </div>
+
+                {/* Editor controls — tabs and format toolbar are both editor-level tools */}
+                <div className='editor-controls'>
                     <Tabs activeTab={cardTextInputMode} onClick={handleTabChange} />
                     <EditorFormatControls handleFormat={() => {}} />
                 </div>

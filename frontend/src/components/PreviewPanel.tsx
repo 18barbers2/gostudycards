@@ -8,8 +8,9 @@ interface PreviewPanelProps {
     data: Record<string, string>;
     onFlip: () => void;
     onInsert: (text: string) => void;
+    showInsertBar?: boolean;
 }
-function PreviewPanel({ side, template, style, data, onFlip, onInsert }: PreviewPanelProps) {
+function PreviewPanel({ side, template, style, data, onFlip, onInsert, showInsertBar = true }: PreviewPanelProps) {
     const variables = [...new Set([...template.matchAll(/\{\{(\w+)\}\}/g)].map(m => m[1]))];
 
     return (
@@ -26,9 +27,11 @@ function PreviewPanel({ side, template, style, data, onFlip, onInsert }: Preview
                     <span className='preview-flip-icon'>&#9737;</span> Click card to flip
                 </button>
             </div>
-            <div className='preview-insert-bar'>
-                <span className='preview-insert-label'>Insert variable (TODO: ADD FUNCTINALITY HERE SO IT PULLS EACH VARIABLE):</span>
-            </div>
+            {showInsertBar && (
+                <div className='preview-insert-bar'>
+                    <span className='preview-insert-label'>Insert variable (TODO: ADD FUNCTINALITY HERE SO IT PULLS EACH VARIABLE):</span>
+                </div>
+            )}
         </div>
     );
 }

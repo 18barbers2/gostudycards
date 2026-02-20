@@ -6,9 +6,12 @@ import type { FieldInputHandle } from '../components/FieldInput';
 import CardPreview from '../components/CardPreview';
 import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
+import { MOCK_DECKS } from '../data/decks';
 
 
 export default function AddCard() {
+
+    const [selectedDeckId, setSelectedDeckId] = useState<string>(MOCK_DECKS[0]?.id ?? '');
 
     // Custom fields
     const [customFields, setCustomFields] = useState<{ id: string; name: string; value: string }[]>([]);
@@ -52,7 +55,7 @@ export default function AddCard() {
 
     const handleSaveCard = () => {
         // Logic to save the card would go here
-        console.log('Card saved:', cardData);
+        console.log('Card saved:', { deckId: selectedDeckId, ...cardData });
         setQuestion('');
         setAnswer('');
         setHint('');
@@ -73,7 +76,15 @@ export default function AddCard() {
             <div className='add-card-page'>
                 <div className='input-section'>
                     <h1 className='page-title'>Add Card</h1>
-                    <br />
+                    <select
+                        className='deck-selector'
+                        value={selectedDeckId}
+                        onChange={e => setSelectedDeckId(e.target.value)}
+                    >
+                        {MOCK_DECKS.map(deck => (
+                            <option key={deck.id} value={deck.id}>{deck.name}</option>
+                        ))}
+                    </select>
                     <EditorFormatControls handleFormat={handleFormat} />
                     <div onFocus={() => setActiveField('question')}>
                         <FieldInput

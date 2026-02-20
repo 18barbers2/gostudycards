@@ -57,17 +57,20 @@ export default function CardBuilder() {
         <Layout>
             <div className='card-builder-page'>
                 <h1 className='page-title'>Card Builder</h1>
-                <div className='controls'>
+                {/* Deck selector — card-level setting, sits on its own row */}
+                <select
+                    className='deck-selector'
+                    value={selectedDeckId}
+                    onChange={e => setSelectedDeckId(e.target.value)}
+                >
+                    {MOCK_DECKS.map(deck => (
+                        <option key={deck.id} value={deck.id}>{deck.name}</option>
+                    ))}
+                </select>
+
+                {/* Editor controls — tabs and format toolbar are both editor-level tools */}
+                <div className='editor-controls'>
                     <Tabs activeTab={cardTextInputMode} onClick={handleTabChange} />
-                    <select
-                        className='deck-selector'
-                        value={selectedDeckId}
-                        onChange={e => setSelectedDeckId(e.target.value)}
-                    >
-                        {MOCK_DECKS.map(deck => (
-                            <option key={deck.id} value={deck.id}>{deck.name}</option>
-                        ))}
-                    </select>
                     <EditorFormatControls handleFormat={() => {}} />
                 </div>
                 <div className='workspace'>

@@ -111,22 +111,19 @@ export default function AddCard() {
             <div className='add-card-page'>
                 <h1 className='page-title'>Add Card</h1>
 
-                <div className='add-card-controls'>
-                    {/* Deck selector — lets the user choose which deck this card is saved to */}
-                    <select
-                        className='deck-selector'
-                        value={selectedDeckId}
-                        onChange={e => setSelectedDeckId(e.target.value)}
-                    >
-                        {MOCK_DECKS.map(deck => (
-                            <option key={deck.id} value={deck.id}>{deck.name}</option>
-                        ))}
-                    </select>
+                {/* Deck selector — card-level setting, sits on its own row */}
+                <select
+                    className='deck-selector'
+                    value={selectedDeckId}
+                    onChange={e => setSelectedDeckId(e.target.value)}
+                >
+                    {MOCK_DECKS.map(deck => (
+                        <option key={deck.id} value={deck.id}>{deck.name}</option>
+                    ))}
+                </select>
 
-                    {/* Formatting toolbar (bold, italic, underline, etc.).
-                        Passes handleFormat so clicking a button routes to the active field. */}
-                    <EditorFormatControls handleFormat={handleFormat} />
-                </div>
+                {/* Formatting toolbar — field-level editing tools, sits on its own row */}
+                <EditorFormatControls handleFormat={handleFormat} />
 
                 <div className='workspace'>
                     <div className='input-section'>

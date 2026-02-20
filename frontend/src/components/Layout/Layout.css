@@ -45,32 +45,23 @@
         flex-direction: column;  /* Stack vertically */
     }
 
-    .navbar {
+    /* Override collapsed width — specificity must match .navbar.navbar--collapsed */
+    .navbar,
+    .navbar.navbar--collapsed {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;       /* Full width */
-        height: 80px;      /* Fixed height */
+        width: 100%;
+        height: 80px;
         z-index: 100;
         box-shadow: #1a1a1a 0px 0px 10px;
     }
 
-    .navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    row-gap: 2.0em;
-}
-
-    .main-content {
-        margin-left: 0;        /* Remove left margin */
-        margin-top: 80px;      /* Add top margin for navbar */
-        padding: 20px 10px;    /* Less padding on mobile - TODO: Update Later */
+    /* Override collapsed sibling margin — must beat .navbar.navbar--collapsed ~ .main-content */
+    .main-content,
+    .navbar.navbar--collapsed ~ .main-content {
+        margin-left: 0;
+        margin-top: 80px;
+        padding: 20px 10px;
     }
 }

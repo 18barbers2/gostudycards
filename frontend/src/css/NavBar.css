@@ -115,12 +115,16 @@
         display: none;
     }
 
+    /* Always show labels on mobile regardless of collapsed state */
+    .navbar--collapsed .nav-label {
+        display: inline;
+    }
+
     .navbar ul {
+        flex: 1;
         flex-direction: row;
         justify-content: space-around;
         align-items: stretch;
-        height: 100%;
-        flex: unset;
     }
 
     .navbar li {

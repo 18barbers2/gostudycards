@@ -1,0 +1,97 @@
+.code-editor {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: border-color 0.2s;
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    min-height: 0;
+    height: 100%;
+}
+
+.code-editor:focus-within {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.code-editor-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    background: var(--bg-secondary);
+    flex-shrink: 0;
+    border-radius: 12px 12px 0 0;
+}
+
+.code-editor-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border-color-secondary);
+    opacity: 0.8;
+}
+
+.code-editor-filename {
+    font-size: 13px;
+    color: #aaa;
+    letter-spacing: 0.04em;
+}
+
+.code-editor-hint {
+    margin-left: auto;
+    font-size: 11px;
+    color: #888;
+    opacity: 0.6;
+}
+
+.code-editor-body {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.code-editor-line-numbers {
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 38px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.line-num {
+    font-size: 11px;
+    color: #888;
+    opacity: 0.6;
+    text-align: right;
+    padding-right: 8px;
+    line-height: 21px;
+    flex-shrink: 0;
+}
+
+.code-editor-textarea {
+    position: absolute;
+    top: 0; left: 38px; right: 0; bottom: 0;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 13px;
+    line-height: 21px;
+    padding: 16px 14px;
+    resize: none;
+    outline: none;
+    caret-color: var(--text-primary);
+    tab-size: 2;
+    width: 100%;
+}
+
+.code-editor-textarea::placeholder {
+    color: #888;
+    opacity: 0.5;
+}

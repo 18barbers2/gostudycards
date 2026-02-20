@@ -1,23 +1,63 @@
 
-/* 
-.card-input {
-    background-color: #303236;
-    color: white;
-    resize: none;
-    width: 50%;
-    border-width: 0;
-} */
-
-.card-builder {
+.card-builder-page {
     display: flex;
-    gap: 1%;
-}
-
-.card-preview {
-    display: flex; 
-    justify-content: center;
-    align-content: center;
     flex-direction: column;
-    width: 500px;
+    height: 100vh;
+    gap: 16px;
+    overflow: hidden;
 }
 
+.workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+}
+
+/** Controls **/
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/** Front, Back, Style Tabs **/
+
+.tab-group {
+    display: flex;
+    gap: 0;
+}
+
+.tab-button {
+    background-color: var(--bg-secondary);
+    border: none;
+    color: var(--text-primary);
+    width: var(--button-size);
+    height: var(--button-size);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: none;
+}
+
+.tab-button:first-child {
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.tab-button:last-child {
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.tab-button:hover {
+    background-color: #131313;
+}
+
+.tab-button.active {
+    background-color: #131313;
+    color: var(--text-primary);
+}

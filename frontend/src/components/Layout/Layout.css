@@ -30,6 +30,7 @@
 .main-content {
     margin-left: 80px;
     padding: 80px; /** Adjust for the fixed navbar height **/
+    padding-top: 20px;
     flex: 1;
     overflow-y: auto;
 }

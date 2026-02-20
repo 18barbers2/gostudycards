@@ -12,6 +12,11 @@
     background-color: #1a1a1a;
     z-index: 100;
     box-shadow: #1a1a1a 0px 0px 10px;
+    transition: width 0.2s ease;
+}
+
+.navbar.navbar--collapsed {
+    width: 64px;
 }
 
 .main-content {
@@ -20,6 +25,11 @@
     padding-top: 20px;
     flex: 1;
     overflow-y: auto;
+    transition: margin-left 0.2s ease;
+}
+
+.navbar.navbar--collapsed ~ .main-content {
+    margin-left: 64px;
 }
 
 .subtitle {

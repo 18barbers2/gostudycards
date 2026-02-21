@@ -11,7 +11,6 @@ export function Home() {
                 <div className='page-title-row'>
                     <h1 className='page-title'>Welcome to GoStudyCards!</h1>
                 </div>
-                <p>This is the home page. Use the navigation bar to explore the app.</p>
                 <div className='home-page-container'>
                     <DashboardCard className='welcome' title='Welcome back!'>
                         <GreetingCardContent userName='Sam' deckCount={5} cardCount={120} />

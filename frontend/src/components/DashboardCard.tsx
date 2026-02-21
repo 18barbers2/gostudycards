@@ -6,21 +6,33 @@ interface DashboardCardProps {
     className?: string;
 }
 
-export function GreetingCardContent( {userName, deckCount, cardCount}: { userName: string; deckCount: number; cardCount: number }) {
+export function GreetingCardContent({ userName, deckCount, cardCount }: { userName: string; deckCount: number; cardCount: number }) {
     return (
         <div>
-            <p>Hi {userName}, welcome back to GoStudyCards! Ready to review your flashcards?</p>
-            <p>You have {deckCount} decks and {cardCount} cards waiting for you to study.</p>
+            <p className="greeting-text">Hi {userName}, ready to continue studying?</p>
+            <div className="greeting-stats">
+                <div className="stat">
+                    <span className="stat-number">{deckCount}</span>
+                    <span className="stat-label">Decks</span>
+                </div>
+                <div className="stat">
+                    <span className="stat-number">{cardCount}</span>
+                    <span className="stat-label">Cards</span>
+                </div>
+            </div>
         </div>
     );
 }
 
 export function StudyProgressCardContent({ dueCards, totalCards }: { dueCards: number; totalCards: number }) {
-    const progressPercentage = totalCards > 0 ? 100 - Math.round((dueCards / totalCards) * 100) : (100 - 0);
+    const progressPercentage = totalCards > 0 ? 100 - Math.round((dueCards / totalCards) * 100) : 100;
     return (
         <div>
-            <p>You have {dueCards} cards due for review out of {totalCards} total cards.</p>
-            <p>Your current study progress is <b style={progressPercentage >= 75 ? {color: 'green'} : {color: 'red'}}>{progressPercentage}%</b>.</p>
+            <div className="progress-value">{progressPercentage}%</div>
+            <div className="progress-bar-track">
+                <div className="progress-bar-fill" style={{ width: `${progressPercentage}%` }} />
+            </div>
+            <p className="progress-label">{dueCards} card{dueCards !== 1 ? 's' : ''} due for review</p>
         </div>
     );
 }
@@ -28,7 +40,7 @@ export function StudyProgressCardContent({ dueCards, totalCards }: { dueCards: n
 export function WeeklyActivityCardContent() {
     return (
         <div>
-            <p>Your weekly activity graph will be displayed here.</p>
+            <p className="card-placeholder">Activity graph coming soon.</p>
         </div>
     );
 }
@@ -36,7 +48,7 @@ export function WeeklyActivityCardContent() {
 export function PieChartCardContent() {
     return (
         <div>
-            <p>Your pie chart showing card distribution will be displayed here.</p>
+            <p className="card-placeholder">Mastery distribution coming soon.</p>
         </div>
     );
 }
@@ -44,16 +56,14 @@ export function PieChartCardContent() {
 export function QuickActionsContent() {
     return (
         <div className='quick-action-buttons'>
-            <button>Study Now</button>
-            <button>Add New Card</button>
+            <button className="quick-action-btn">Study Now</button>
+            <button className="quick-action-btn">Add New Card</button>
         </div>
     );
-
 }
 
-export function DashboardCard({ title, children, className}: DashboardCardProps) {
+export function DashboardCard({ title, children, className }: DashboardCardProps) {
     return (
-        // Adding a classname prop allows us to apply specific styles to different cards if needed
         <div className={`dashboard-card ${className || ''}`}>
             <h2>{title}</h2>
             {children}

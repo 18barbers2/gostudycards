@@ -11,7 +11,7 @@
 }
 
 .code-editor:focus-within {
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--border-color-secondary);
 }
 
 .code-editor-header {

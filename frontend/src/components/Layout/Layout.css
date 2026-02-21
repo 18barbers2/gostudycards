@@ -1,6 +1,6 @@
 .app-container {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 .navbar {
@@ -26,6 +26,8 @@
     flex: 1;
     overflow-y: auto;
     transition: margin-left 0.2s ease;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .navbar.navbar--collapsed ~ .main-content {

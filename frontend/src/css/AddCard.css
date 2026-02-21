@@ -1,7 +1,7 @@
 .add-card-page {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     gap: 16px;
     overflow: hidden;
 }

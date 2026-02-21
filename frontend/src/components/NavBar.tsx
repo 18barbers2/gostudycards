@@ -25,7 +25,7 @@ export function NavBar() {
     const navItems: NavItem[] = [
         { to: '/', icon: 'home', label: 'Home' },
         { to: '/add-card', icon: 'add_card', label: 'Add Card' },
-        { to: '/card-builder', icon: 'cards_stack', label: 'Card Builder' },
+        { to: '/card-builder', icon: 'design_services', label: 'Card Builder' },
         { to: '/study', icon: 'school', label: 'Study' },
         { to: '/decks', icon: 'stacks', label: 'Decks' },
     ];

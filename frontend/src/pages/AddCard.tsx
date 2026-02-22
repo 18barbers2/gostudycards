@@ -8,8 +8,8 @@ import PreviewPanel from '../components/PreviewPanel';
 import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
 import { getDecks, createDeck } from '../api/decks';
-import { getTemplate, createTemplate } from '../api/templates';
-import { createCard } from '../api/cards';
+import { getTemplate, createTemplate, updateTemplate } from '../api/templates';
+import { getCards, createCard } from '../api/cards';
 import type { Deck, CardTemplate } from '../types';
 
 const TEMP_USER_ID = 'test-user-1';
@@ -60,6 +60,10 @@ export default function AddCard() {
     // Save feedback
     const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
     const [saveMessage, setSaveMessage] = useState('');
+
+    // Delete-field confirmation: fieldName waiting for confirmation, and how many cards use it
+    const [pendingDeleteField, setPendingDeleteField] = useState<string | null>(null);
+    const [deleteWarningCount, setDeleteWarningCount] = useState(0);
 
     // Refs give us a handle into each FieldInput so we can call applyFormat() from the toolbar
     const questionRef = useRef<FieldInputHandle>(null);
@@ -128,6 +132,51 @@ export default function AddCard() {
         customFieldRefs.current.delete(id);
     };
 
+    // Initiates deletion of a template-based (extra) field.
+    // If existing cards have data for this field, shows a confirmation warning first.
+    const handleDeleteExtraField = (fieldName: string) => {
+        if (!template || !selectedDeckId) return;
+        getCards(selectedDeckId)
+            .then(cards => {
+                const count = cards.filter(c => c.data[fieldName]?.trim()).length;
+                if (count > 0) {
+                    // Surface a warning before removing a field that has card data
+                    setPendingDeleteField(fieldName);
+                    setDeleteWarningCount(count);
+                } else {
+                    removeExtraField(fieldName);
+                }
+            })
+            .catch(err => console.error(err));
+    };
+
+    // Executes the deletion after the user confirms the warning dialog
+    const confirmDeleteExtraField = () => {
+        if (pendingDeleteField) removeExtraField(pendingDeleteField);
+        setPendingDeleteField(null);
+    };
+
+    const cancelDeleteExtraField = () => setPendingDeleteField(null);
+
+    // Removes a field from the template and syncs local state
+    const removeExtraField = (fieldName: string) => {
+        if (!template) return;
+        const updatedFields = template.fields
+            .filter(f => f.name !== fieldName)
+            .map(f => ({ name: f.name, isDefault: f.isDefault }));
+        updateTemplate(template.id, updatedFields)
+            .then(updated => {
+                setTemplate(updated);
+                setExtraFieldValues(prev => {
+                    const next = { ...prev };
+                    delete next[fieldName];
+                    return next;
+                });
+                extraFieldRefs.current.delete(fieldName);
+            })
+            .catch(err => console.error(err));
+    };
+
     const handleFieldNameChange = (id: string, name: string) => {
         setCustomFields(prev => prev.map(f => f.id === id ? { ...f, name } : f));
     };
@@ -175,11 +224,29 @@ export default function AddCard() {
         }
 
         try {
+            // Persist any new custom fields to the template so they survive across cards
+            const newCustomFieldDefs = customFields
+                .filter(cf => !DEFAULT_FIELD_NAMES.includes(cf.name))
+                .map(cf => ({ name: cf.name, isDefault: false }));
+
+            if (newCustomFieldDefs.length > 0) {
+                const allFields = [
+                    ...activeTemplate.fields.map(f => ({ name: f.name, isDefault: f.isDefault })),
+                    ...newCustomFieldDefs
+                ];
+                activeTemplate = await updateTemplate(activeTemplate.id, allFields);
+                // Updating the template triggers the extraFields seeding effect,
+                // which will surface the new fields as persistent extra fields
+                setTemplate(activeTemplate);
+            }
+
             await createCard(activeTemplate.id, selectedDeckId, cardData);
             setQuestion('');
             setAnswer('');
             setHint('');
+            // Clear values only — the fields themselves persist via the template
             setExtraFieldValues(prev => Object.fromEntries(Object.keys(prev).map(k => [k, ''])));
+            // Custom fields are now in the template; clear the ephemeral list
             setCustomFields([]);
             setPreviewSide('front');
             setSaveStatus('saved');
@@ -273,6 +340,7 @@ export default function AddCard() {
                                     fieldName={field.name}
                                     value={extraFieldValues[field.name] ?? ''}
                                     onChange={val => setExtraFieldValues(prev => ({ ...prev, [field.name]: val }))}
+                                    onDelete={() => handleDeleteExtraField(field.name)}
                                 />
                             </div>
                         ))}
@@ -322,6 +390,27 @@ export default function AddCard() {
                     />
                 </div>
             </div>
+
+            {/* Warning dialog shown when deleting a field that has data in existing cards */}
+            {pendingDeleteField && (
+                <div className='delete-field-overlay'>
+                    <div className='delete-field-modal'>
+                        <p className='delete-field-modal__message'>
+                            <strong>{deleteWarningCount} card{deleteWarningCount !== 1 ? 's' : ''}</strong> already
+                            have data for &ldquo;{pendingDeleteField}&rdquo;. Removing this field won&apos;t delete
+                            that data, but the field won&apos;t appear when adding new cards.
+                        </p>
+                        <div className='delete-field-modal__actions'>
+                            <button className='delete-field-modal__confirm' onClick={confirmDeleteExtraField}>
+                                Remove Field
+                            </button>
+                            <button className='delete-field-modal__cancel' onClick={cancelDeleteExtraField}>
+                                Keep Field
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </Layout>
     );
 }

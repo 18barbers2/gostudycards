@@ -26,4 +26,23 @@ router.post('/', async (req, res) => {
   res.json(template)
 })
 
+// PATCH update the fields of an existing template.
+// Accepts the complete desired fields array and replaces the existing ones.
+// This is used when the user adds or removes custom fields on the Add Card page.
+router.patch('/:id', async (req, res) => {
+  const { id } = req.params
+  const { fields } = req.body // Array<{ name: string; isDefault: boolean }>
+  const template = await prisma.cardTemplate.update({
+    where: { id },
+    data: {
+      fields: {
+        deleteMany: {}, // remove all existing field rows
+        create: fields  // recreate with the new list
+      }
+    },
+    include: { fields: true }
+  })
+  res.json(template)
+})
+
 export default router

@@ -54,3 +54,46 @@
     position: absolute;
     bottom: 0px;
 }
+
+.deck-menu-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+}
+
+.deck-menu-dropdown {
+    position: absolute;
+    top: 36px;
+    right: 5px;
+    z-index: 11;
+    background: #3a3a3f;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    min-width: 120px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.deck-menu-item {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+}
+
+.deck-menu-item:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.deck-menu-item:disabled {
+    color: rgba(255, 255, 255, 0.3);
+    cursor: default;
+}
+
+.deck-menu-item--danger:hover {
+    color: #ff6b6b;
+}

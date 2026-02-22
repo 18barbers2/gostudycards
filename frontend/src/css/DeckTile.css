@@ -97,3 +97,72 @@
 .deck-menu-item--danger:hover {
     color: #ff6b6b;
 }
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 100;
+}
+
+.modal-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 101;
+    background: #2c2c30;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 28px;
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.modal-body {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.5;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.modal-btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+}
+
+.modal-btn--cancel {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.modal-btn--cancel:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.modal-btn--danger {
+    background: #c0392b;
+    color: white;
+}
+
+.modal-btn--danger:hover {
+    background: #e74c3c;
+}

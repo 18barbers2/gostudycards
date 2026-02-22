@@ -99,11 +99,31 @@
     color: var(--text-primary);
 }
 
+/* Two-column layout: scrollable fields on the left, preview on the right */
+.workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Left column: stretches to fill, lets input-section scroll while save button stays fixed */
+.input-column {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    gap: 12px;
+}
+
 .input-section {
     display: flex;
     flex-direction: column;
     gap: 12px;
     overflow-y: auto;
+    flex: 1; /* fill remaining space, pushing save button to the bottom */
     min-height: 0;
     padding-right: 8px;
 }
@@ -268,6 +288,15 @@
 
     .workspace {
         grid-template-columns: 1fr;
+    }
+
+    /* On mobile, input-column can grow freely since the page itself scrolls */
+    .input-column {
+        overflow: visible;
+    }
+
+    .input-section {
+        overflow-y: visible;
     }
 
     .deck-selector {

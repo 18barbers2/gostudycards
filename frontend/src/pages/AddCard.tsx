@@ -324,6 +324,8 @@ export default function AddCard() {
                 <EditorFormatControls handleFormat={handleFormat} />
 
                 <div className='workspace'>
+                    {/* input-column keeps the scrollable fields and the fixed save button together */}
+                    <div className='input-column'>
                     <div className='input-section'>
                         {/* Fixed default fields — always shown */}
                         <div onFocus={() => setActiveField('question')}>
@@ -367,19 +369,21 @@ export default function AddCard() {
                             <span className='material-symbols-outlined'>add</span>
                             Add Field
                         </button>
+                    </div>
 
-                        <div className='save-card-row'>
-                            <button
-                                className='save-card-button'
-                                onClick={handleSaveCard}
-                                disabled={!selectedDeckId || saveStatus === 'saving'}
-                            >
-                                {saveStatus === 'saving' ? 'Saving…' : 'Save Card'}
-                            </button>
-                            {saveStatus !== 'idle' && saveStatus !== 'saving' && (
-                                <span className={`save-status save-status--${saveStatus}`}>{saveMessage}</span>
-                            )}
-                        </div>
+                    {/* Save row sits outside the scrollable area — always visible at the bottom */}
+                    <div className='save-card-row'>
+                        <button
+                            className='save-card-button'
+                            onClick={handleSaveCard}
+                            disabled={!selectedDeckId || saveStatus === 'saving'}
+                        >
+                            {saveStatus === 'saving' ? 'Saving…' : 'Save Card'}
+                        </button>
+                        {saveStatus !== 'idle' && saveStatus !== 'saving' && (
+                            <span className={`save-status save-status--${saveStatus}`}>{saveMessage}</span>
+                        )}
+                    </div>
                     </div>
 
                     {/* Live card preview — updates as the user types */}

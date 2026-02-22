@@ -31,3 +31,16 @@
 .dashboard-card.weekly-activity   { border-top-color: var(--card-accent-activity); }
 .dashboard-card.mastery-distribution { border-top-color: var(--card-accent-mastery); }
 .dashboard-card.quick-actions     { border-top-color: var(--card-accent-actions); }
+
+@media (max-width: 768px) {
+    .home-page-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas:
+            'welcome'
+            'study-progress'
+            'quick-actions'
+            'weekly-activity'
+            'mastery-distribution';
+    }
+}

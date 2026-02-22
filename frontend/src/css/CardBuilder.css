@@ -84,3 +84,22 @@
     background-color: var(--bg-active);
     color: var(--text-primary);
 }
+
+@media (max-width: 768px) {
+    .card-builder-page {
+        height: auto;
+        overflow: visible;
+    }
+
+    /* Tabs appear above format controls on narrow screens */
+    .editor-controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .workspace {
+        grid-template-columns: 1fr;
+        grid-template-rows: 360px 360px;
+        flex: none;
+    }
+}

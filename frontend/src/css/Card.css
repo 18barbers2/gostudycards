@@ -24,7 +24,7 @@ iframe {
     }
     
     iframe {
-        height: 450px;
-        max-width: 450px;
+        height: 100%;
+        max-width: 100%;
     }
 }

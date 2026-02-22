@@ -293,3 +293,38 @@
 .study-progress span {
     margin: 0px 10px;
 }
+
+@media (max-width: 768px) {
+    /* Flashcard scales to fit the screen width */
+    .flashcard {
+        width: 100%;
+        max-width: 650px;
+        height: auto;
+        aspect-ratio: 650 / 450;
+    }
+
+    /* Difficulty buttons wrap into a 2x2 grid */
+    .difficulty-buttons {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .difficulty-button {
+        flex: 1 1 calc(50% - 5px);
+        width: auto;
+        min-width: 0;
+        padding: 12px 8px;
+        font-size: 0.85rem;
+    }
+
+    .study-session-controls {
+        margin-top: 20px;
+        gap: 12px;
+    }
+
+    .end-session-button,
+    .skip-card-button {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+}

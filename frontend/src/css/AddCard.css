@@ -32,6 +32,73 @@
     background-color: var(--bg-active);
 }
 
+/* Wrapper row for the deck selector + "+ New Deck" button */
+.deck-selector-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Small secondary button to open the inline deck creation form */
+.new-deck-btn {
+    height: var(--button-size);
+    padding: 0 12px;
+    background-color: var(--bg-secondary);
+    color: var(--text-muted);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.15s, background-color 0.15s;
+}
+
+.new-deck-btn:hover {
+    background-color: var(--bg-active);
+    color: var(--text-primary);
+}
+
+/* Compact inline form that replaces the selector when creating a new deck */
+.inline-deck-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.inline-deck-input {
+    height: var(--button-size);
+    padding: 0 12px;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    outline: none;
+    min-width: 160px;
+}
+
+.inline-deck-input:focus {
+    border-color: var(--border-hover);
+}
+
+/* Shared style for Create / Cancel buttons inside the inline form */
+.inline-deck-form button {
+    height: var(--button-size);
+    padding: 0 12px;
+    background-color: var(--bg-secondary);
+    color: var(--text-muted);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: color 0.15s, background-color 0.15s;
+}
+
+.inline-deck-form button:hover {
+    background-color: var(--bg-active);
+    color: var(--text-primary);
+}
+
 .input-section {
     display: flex;
     flex-direction: column;

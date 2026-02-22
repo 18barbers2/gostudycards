@@ -8,7 +8,6 @@ import { Layout } from '../components/Layout/Layout.tsx';
 const TEMP_USER_ID = 'test-user-1'; // Temporary until guest/auth is implemented
 
 export function Decks() {
-
     const [decks, setDecks] = useState<Deck[]>([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
@@ -39,7 +38,7 @@ export function Decks() {
                 <div className='page-title-row'>
                     <h1 className='page-title'>Decks</h1>
                 </div>
-                <p>This is the Decks page. Here you will be able to view and manage your decks of cards.</p>
+<p>This is the Decks page. Here you will be able to view and manage your decks of cards.</p>
                 <div className='decks'>
                     {decks.map((deck) => (
                         <DeckTile

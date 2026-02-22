@@ -1,12 +1,13 @@
 
 import { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../css/AddCard.css';
 import FieldInput from '../components/FieldInput';
 import type { FieldInputHandle } from '../components/FieldInput';
 import PreviewPanel from '../components/PreviewPanel';
 import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
-import { getDecks } from '../api/decks';
+import { getDecks, createDeck } from '../api/decks';
 import { getTemplate, createTemplate } from '../api/templates';
 import { createCard } from '../api/cards';
 import type { Deck, CardTemplate } from '../types';
@@ -26,8 +27,15 @@ const DEFAULT_TEMPLATE_FIELDS = DEFAULT_FIELD_NAMES.map(name => ({ name, isDefau
 type ActiveField = 'question' | 'answer' | 'hint' | string;
 
 export default function AddCard() {
+    // Read navigation state — future deck detail page can pass a pre-selected deckId
+    const location = useLocation();
+
     const [decks, setDecks] = useState<Deck[]>([]);
     const [selectedDeckId, setSelectedDeckId] = useState<string>('');
+
+    // Inline deck creation form (shown when user clicks "+ New Deck")
+    const [showNewDeckForm, setShowNewDeckForm] = useState(false);
+    const [newDeckName, setNewDeckName] = useState('');
 
     // Template for the selected deck (null = no template, undefined = still loading)
     const [template, setTemplate] = useState<CardTemplate | null | undefined>(undefined);
@@ -61,12 +69,17 @@ export default function AddCard() {
     // A Map from custom field ID → FieldInputHandle for toolbar routing
     const customFieldRefs = useRef<Map<string, FieldInputHandle>>(new Map());
 
-    // Load decks on mount
+    // Load decks on mount; if a deckId was passed via nav state, pre-select it
     useEffect(() => {
         getDecks(TEMP_USER_ID)
             .then(data => {
                 setDecks(data);
-                if (data.length > 0) setSelectedDeckId(data[0].id);
+                const preselected = location.state?.deckId;
+                if (preselected && data.some((d: { id: string }) => d.id === preselected)) {
+                    setSelectedDeckId(preselected);
+                } else if (data.length > 0) {
+                    setSelectedDeckId(data[0].id);
+                }
             })
             .catch(err => console.error(err));
     }, []);
@@ -91,6 +104,19 @@ export default function AddCard() {
             setExtraFieldValues(extra);
         }
     }, [template]);
+
+    // Creates a new deck inline and auto-selects it so the user can save cards immediately
+    const handleCreateDeck = (e: React.FormEvent) => {
+        e.preventDefault();
+        createDeck(newDeckName, undefined, TEMP_USER_ID)
+            .then(deck => {
+                setDecks(prev => [...prev, deck]);
+                setSelectedDeckId(deck.id);
+                setNewDeckName('');
+                setShowNewDeckForm(false);
+            })
+            .catch(err => console.error(err));
+    };
 
     const handleAddField = () => {
         const id = crypto.randomUUID();
@@ -185,16 +211,42 @@ export default function AddCard() {
                 {/* Title row — page title on the left, deck selector on the right */}
                 <div className='page-title-row'>
                     <h1 className='page-title'>Add Card</h1>
-                    <select
-                        className='deck-selector'
-                        value={selectedDeckId}
-                        onChange={e => setSelectedDeckId(e.target.value)}
-                    >
-                        {decks.length === 0 && <option value=''>No decks yet</option>}
-                        {decks.map(deck => (
-                            <option key={deck.id} value={deck.id}>{deck.name}</option>
-                        ))}
-                    </select>
+                    {showNewDeckForm ? (
+                        // Inline mini-form to create a deck without leaving the page
+                        <form className='inline-deck-form' onSubmit={handleCreateDeck}>
+                            <input
+                                className='inline-deck-input'
+                                placeholder='Deck name'
+                                value={newDeckName}
+                                onChange={e => setNewDeckName(e.target.value)}
+                                required
+                                autoFocus
+                            />
+                            <button type='submit'>Create</button>
+                            <button type='button' onClick={() => setShowNewDeckForm(false)}>Cancel</button>
+                        </form>
+                    ) : (
+                        <div className='deck-selector-row'>
+                            <select
+                                className='deck-selector'
+                                value={selectedDeckId}
+                                onChange={e => setSelectedDeckId(e.target.value)}
+                            >
+                                {decks.length === 0 && <option value=''>No decks yet</option>}
+                                {decks.map(deck => (
+                                    <option key={deck.id} value={deck.id}>{deck.name}</option>
+                                ))}
+                            </select>
+                            {/* Always visible — lets user create a deck without leaving Add Card */}
+                            <button
+                                className='new-deck-btn'
+                                type='button'
+                                onClick={() => setShowNewDeckForm(true)}
+                            >
+                                + New Deck
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 {/* Formatting toolbar — field-level editing tools */}

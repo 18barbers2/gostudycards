@@ -24,4 +24,11 @@ router.post('/', async (req, res) => {
     res.json(deck);
 });
 
+// DELETE a deck
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    await prisma.deck.delete({ where: { id } });
+    res.status(204).send();
+});
+
 export default router

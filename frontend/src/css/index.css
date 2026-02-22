@@ -1,11 +1,55 @@
 :root {
 
-    /* Colors */
+    /* Backgrounds */
     --bg-primary: #222222;
     --bg-secondary: #303236;
+    --bg-tertiary: #3a3a3f;
+    --bg-active: #131313;
+    --bg-overlay: rgba(0, 0, 0, 0.6);
+
+    /* Text */
     --text-primary: white;
+    --text-secondary: rgba(255, 255, 255, 0.65);
+    --text-muted: rgba(255, 255, 255, 0.35);
+    --text-disabled: rgba(255, 255, 255, 0.3);
+
+    /* Borders */
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-default: rgba(255, 255, 255, 0.15);
+    --border-hover: rgba(255, 255, 255, 0.35);
     --border-color-primary: #f6f6f6;
     --border-color-secondary: rgb(47, 104, 190);
+
+    /* Accents */
+    --accent-blue: #4a9eff;
+    --accent-nav: #6366f1;
+    --accent-nav-subtle: rgba(99, 102, 241, 0.12);
+    --accent-nav-subtle-hover: rgba(99, 102, 241, 0.22);
+    --accent-nav-border: rgba(99, 102, 241, 0.25);
+    --accent-nav-border-hover: rgba(99, 102, 241, 0.5);
+    --accent-nav-text: #c7d2fe;
+    --accent-nav-text-hover: #e0e7ff;
+
+    /* Hover backgrounds */
+    --bg-hover: rgba(255, 255, 255, 0.05);
+
+    /* Text labels (small uppercase headings) */
+    --text-label: #718096;
+
+    /* Dashboard card accent borders */
+    --card-border-default: #4a4b50;
+    --card-accent-welcome: #6366f1;
+    --card-accent-progress: #10b981;
+    --card-accent-activity: #3b82f6;
+    --card-accent-mastery: #f59e0b;
+    --card-accent-actions: #ec4899;
+
+    /* Semantic colors */
+    --color-danger: #c0392b;
+    --color-danger-hover: #e74c3c;
+    --color-success: #27ae60;
+    --color-warning-hard: #f39c12;
+    --color-warning-medium: #f1c40f;
 
     /* Sizes */
     --button-size: 50px;
@@ -19,6 +63,7 @@
     --font-size-lg: 36px;
 
     /* Card colors */
+    --card-iframe-bg: #0f1b35;
 }
 
 .page-title-row {
@@ -27,19 +72,19 @@
     justify-content: space-between;
     flex-shrink: 0;
     padding-bottom: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 /* Ghost style for the deck selector when it lives in the title row */
 .page-title-row .deck-selector {
     background-color: transparent;
-    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border: 1.5px solid var(--border-default);
     transition: border-color 0.15s, background-color 0.15s;
 }
 
 .page-title-row .deck-selector:hover {
-    border-color: rgba(255, 255, 255, 0.35);
-    background-color: rgba(255, 255, 255, 0.04);
+    border-color: var(--border-hover);
+    background-color: var(--bg-hover);
 }
 
 .page-title-row .deck-selector:focus {
@@ -92,7 +137,7 @@ body {
     font-size: 16px;
     line-height: 1.5;
     font-weight: 400;
-    color: white;
+    color: var(--text-primary);
     margin: 0px;
-    background-color: #222222
+    background-color: var(--bg-primary)
 }

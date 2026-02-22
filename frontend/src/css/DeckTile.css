@@ -1,13 +1,13 @@
 .deck-tile {
     width: 200px;
     height: 320px;
-    background-color: #303236;
+    background-color: var(--bg-secondary);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border-left-width: 10px;
-    border-left-color: rgb(124, 124, 124);
+    border-left-color: var(--text-label);
     border-left-style: solid;
     border-radius: 5px;
     position: relative;
@@ -16,7 +16,6 @@
 
 .deck-tile:hover {
     cursor: pointer;
-    /* background-color: #3a3a3f; */
     transform: scale(0.95);
     transition: transform 0.05s ease-in-out;
 }
@@ -29,13 +28,12 @@
     background-color: transparent;
     border-width: 0px;
     font-weight: bold;
-    color: white;
+    color: var(--text-primary);
 }
 .deck-menu:hover {
     cursor: pointer;
-    color: white;
+    color: var(--text-primary);
     background-color: transparent;
-
 }
 .deck-menu:active {
     transform: scale(0.9);
@@ -50,7 +48,7 @@
 }
 
 .created-by {
-    color: rgb(139, 139, 139);
+    color: var(--text-label);
     position: absolute;
     bottom: 0px;
 }
@@ -66,8 +64,8 @@
     top: 36px;
     right: 5px;
     z-index: 11;
-    background: #3a3a3f;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-subtle);
     border-radius: 6px;
     min-width: 120px;
     overflow: hidden;
@@ -78,7 +76,7 @@
 .deck-menu-item {
     background: transparent;
     border: none;
-    color: white;
+    color: var(--text-primary);
     padding: 10px 14px;
     text-align: left;
     cursor: pointer;
@@ -86,22 +84,22 @@
 }
 
 .deck-menu-item:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--border-subtle);
 }
 
 .deck-menu-item:disabled {
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-disabled);
     cursor: default;
 }
 
 .deck-menu-item--danger:hover {
-    color: #ff6b6b;
+    color: var(--color-danger-hover);
 }
 
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--bg-overlay);
     z-index: 100;
 }
 
@@ -111,8 +109,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 101;
-    background: #2c2c30;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-subtle);
     border-radius: 10px;
     padding: 28px;
     width: 340px;
@@ -124,13 +122,13 @@
 .modal-title {
     margin: 0;
     font-size: 1.1rem;
-    color: white;
+    color: var(--text-primary);
 }
 
 .modal-body {
     margin: 0;
     font-size: var(--font-size-sm);
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--text-secondary);
     line-height: 1.5;
 }
 
@@ -150,19 +148,19 @@
 }
 
 .modal-btn--cancel {
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.7);
+    background: var(--border-subtle);
+    color: var(--text-secondary);
 }
 
 .modal-btn--cancel:hover {
-    background: rgba(255, 255, 255, 0.14);
+    background: var(--border-default);
 }
 
 .modal-btn--danger {
-    background: #c0392b;
-    color: white;
+    background: var(--color-danger);
+    color: var(--text-primary);
 }
 
 .modal-btn--danger:hover {
-    background: #e74c3c;
+    background: var(--color-danger-hover);
 }

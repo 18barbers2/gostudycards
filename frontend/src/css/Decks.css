@@ -1,6 +1,6 @@
 .decks-page {
-    background-color: #222222;
-    color: white;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
 }
 .decks {
     display: grid;
@@ -12,8 +12,8 @@
     width: 200px;
     height: 320px;
     background: transparent;
-    color: rgba(255, 255, 255, 0.35);
-    border: 1.5px dashed rgba(255, 255, 255, 0.2);
+    color: var(--text-muted);
+    border: 1.5px dashed var(--border-default);
     border-radius: 5px;
     cursor: pointer;
     display: flex;
@@ -26,8 +26,8 @@
 }
 
 .add-deck-tile:hover {
-    color: rgba(255, 255, 255, 0.7);
-    border-color: rgba(255, 255, 255, 0.4);
+    color: var(--text-secondary);
+    border-color: var(--border-hover);
 }
 
 .add-deck-tile .material-symbols-outlined {
@@ -38,7 +38,7 @@
     width: 200px;
     height: 320px;
     background: transparent;
-    border: 1.5px dashed rgba(255, 255, 255, 0.3);
+    border: 1.5px dashed var(--border-default);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -50,21 +50,21 @@
 }
 
 .add-deck-input {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: var(--border-subtle);
+    border: 1px solid var(--border-default);
     border-radius: 4px;
-    color: white;
+    color: var(--text-primary);
     font-size: var(--font-size-sm);
     padding: 6px 8px;
     outline: none;
 }
 
 .add-deck-input:focus {
-    border-color: rgba(255, 255, 255, 0.35);
+    border-color: var(--border-hover);
 }
 
 .add-deck-input::placeholder {
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-disabled);
 }
 
 .add-deck-submit,
@@ -77,19 +77,19 @@
 }
 
 .add-deck-submit {
-    background: rgba(255, 255, 255, 0.15);
-    color: white;
+    background: var(--border-default);
+    color: var(--text-primary);
 }
 
 .add-deck-submit:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: var(--border-hover);
 }
 
 .add-deck-cancel {
     background: transparent;
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
 }
 
 .add-deck-cancel:hover {
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-secondary);
 }

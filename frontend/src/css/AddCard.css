@@ -29,7 +29,7 @@
 
 .deck-selector:focus {
     outline: none;
-    background-color: #131313;
+    background-color: var(--bg-active);
 }
 
 .input-section {
@@ -46,8 +46,8 @@
     padding: 10px;
     font-size: var(--font-size-sm);
     background: transparent;
-    color: rgba(255, 255, 255, 0.35);
-    border: 1.5px dashed rgba(255, 255, 255, 0.15);
+    color: var(--text-muted);
+    border: 1.5px dashed var(--border-default);
     border-radius: var(--border-radius);
     cursor: pointer;
     display: flex;
@@ -58,8 +58,8 @@
 }
 
 .add-field-button:hover {
-    color: rgba(255, 255, 255, 0.7);
-    border-color: rgba(255, 255, 255, 0.3);
+    color: var(--text-secondary);
+    border-color: var(--border-hover);
 }
 
 .add-field-button .material-symbols-outlined {
@@ -72,7 +72,7 @@
     padding: 12px;
     font-size: var(--font-size-sm);
     background-color: var(--bg-secondary);
-    color: white;
+    color: var(--text-primary);
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -80,11 +80,11 @@
 }
 
 .save-card-button:hover {
-    background-color: #131313;
+    background-color: var(--bg-active);
 }
 
 .save-card-button:active {
-    background-color: #0a0a0a;
+    background-color: var(--bg-active);
 }
 
 .disabled {

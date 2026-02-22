@@ -43,7 +43,7 @@
 
 .deck-selector:focus {
     outline: none;
-    background-color: #131313;
+    background-color: var(--bg-active);
 }
 
 /** Front, Back, Style Tabs **/
@@ -77,10 +77,10 @@
 }
 
 .tab-button:hover {
-    background-color: #131313;
+    background-color: var(--bg-active);
 }
 
 .tab-button.active {
-    background-color: #131313;
+    background-color: var(--bg-active);
     color: var(--text-primary);
 }

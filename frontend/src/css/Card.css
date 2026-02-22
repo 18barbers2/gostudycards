@@ -9,7 +9,7 @@ html { margin:0; padding:0; }
 }
 
 iframe {
-    background-color: #0f1b35;
+    background-color: var(--card-iframe-bg);
     border-width: 0;
     border-radius: 10px;
     overflow: hidden;

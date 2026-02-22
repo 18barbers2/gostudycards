@@ -1,6 +1,6 @@
 .study-page {
-    background-color: #222222;
-    color: white;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     padding: 40px 20px;
 }
 
@@ -21,11 +21,11 @@
 
 .study-header.study-progress {
     font-size: 1rem;
-    color: #aaa;
+    color: var(--text-muted);
     display: flex;
     align-items: flex-end;
     justify-content: center;
-}   
+}
 
 .deck-selection {
     display: flex;
@@ -40,7 +40,7 @@
 .subtitle {
     font-size: 1.2rem;
     margin-bottom: 30px;
-    color: #aaa;
+    color: var(--text-muted);
     font-weight: 400;
 }
 
@@ -50,7 +50,7 @@
     border-radius: var(--border-radius);
     cursor: pointer;
     transition: all 0.2s ease;
-    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border: 1.5px solid var(--border-subtle);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     display: flex;
     justify-content: space-between;
@@ -58,8 +58,8 @@
 }
 
 .deck-option:hover {
-    background: #3a3a3f;
-    border-color: #4a9eff;
+    background: var(--bg-tertiary);
+    border-color: var(--accent-blue);
     transform: translateX(5px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
 }
@@ -72,11 +72,11 @@
     font-size: 1.3rem;
     margin-bottom: 8px;
     font-weight: 600;
-    color: white;
+    color: var(--text-primary);
 }
 
 .deck-info p {
-    color: #aaa;
+    color: var(--text-muted);
     font-size: 0.95rem;
 }
 
@@ -91,14 +91,14 @@
 .due-count {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #4a9eff;
+    color: var(--accent-blue);
     line-height: 1;
     margin-bottom: 5px;
 }
 
 .due-label {
     font-size: 0.85rem;
-    color: #888;
+    color: var(--text-label);
 }
 
 /* Study Interface */
@@ -138,7 +138,6 @@
     height: 450px;
     transition: transform 0.5s;
     transform-style: preserve-3d;
-
 }
 
 .flashcard-container {
@@ -159,7 +158,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
 }
 
 .card-back {
@@ -175,7 +173,7 @@
 
 .card-label {
     font-size: 0.9rem;
-    color: #888;
+    color: var(--text-label);
     margin-bottom: 10px;
     position: absolute;
     top: 20px;
@@ -187,7 +185,7 @@
     bottom: 20px;
     margin-top: 15px;
     font-size: 0.9rem;
-    color: #888;
+    color: var(--text-label);
     backface-visibility: hidden;
 }
 
@@ -228,21 +226,21 @@
 }
 
 .button-easy {
-    background: #27ae60;
-    color: white;
+    background: var(--color-success);
+    color: var(--text-primary);
 }
 
 .button-medium {
-    background: #f1c40f;
+    background: var(--color-warning-medium);
     color: #333;
 }
 .button-hard {
-    background: #f39c12;
-    color: white;
+    background: var(--color-warning-hard);
+    color: var(--text-primary);
 }
 .button-retry {
-    background: #e74c3c;
-    color: white;
+    background: var(--color-danger-hover);
+    color: var(--text-primary);
 }
 
 .study-session-controls {
@@ -254,28 +252,27 @@
 }
 .end-session-button {
     background: transparent;
-    color: white;
+    color: var(--text-primary);
     padding: 15px 30px;
     border-width: 2px;
-    border-color: #575757;
+    border-color: var(--text-label);
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.5s ease;
-
 }
 
 .end-session-button:hover {
-    border-color: #e20b03;
-    background-color: #303030;
-}   
+    border-color: var(--color-danger-hover);
+    background-color: var(--bg-tertiary);
+}
 
 .skip-card-button {
     background: transparent;
-    color: white;
+    color: var(--text-primary);
     padding: 15px 30px;
     border-width: 2px;
-    border-color: #575757;
+    border-color: var(--text-label);
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
@@ -283,15 +280,14 @@
 }
 
 .skip-card-button:hover {
-    border-color: #4a9eff;
-    background-color: #303030;
-}   
+    border-color: var(--accent-blue);
+    background-color: var(--bg-tertiary);
+}
 
 /* Additional Styling */
 
 .study-progress strong {
-    color: #4a9eff;
-    
+    color: var(--accent-blue);
 }
 
 .study-progress span {

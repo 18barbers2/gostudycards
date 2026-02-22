@@ -1,110 +1,183 @@
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import '../css/AddCard.css';
 import FieldInput from '../components/FieldInput';
 import type { FieldInputHandle } from '../components/FieldInput';
 import PreviewPanel from '../components/PreviewPanel';
 import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
-import { MOCK_DECKS } from '../data/decks';
+import { getDecks } from '../api/decks';
+import { getTemplate, createTemplate } from '../api/templates';
+import { createCard } from '../api/cards';
+import type { Deck, CardTemplate } from '../types';
+
+const TEMP_USER_ID = 'test-user-1';
+
+// Default Q/A/H field names — always shown regardless of template
+const DEFAULT_FIELD_NAMES = ['Question', 'Answer', 'Hint'];
+
+// Fallback HTML used for the live preview when the deck has no saved template yet
+const DEFAULT_FRONT = `<div style="padding: 20px; text-align: center;"><h2 style="color: #ffffff; margin-bottom: 10px;">{{Question}}</h2><p style="color: rgba(255,255,255,0.7); font-style: italic;">{{Hint}}</p></div>`;
+const DEFAULT_BACK  = `<div style="padding: 20px; text-align: center;"><p style="color: rgba(255,255,255,0.6); font-size: 0.8em; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em;">Answer</p><p style="color: #ffffff; font-size: 1.2em;">{{Answer}}</p></div>`;
+const DEFAULT_TEMPLATE_FIELDS = DEFAULT_FIELD_NAMES.map(name => ({ name, isDefault: true }));
 
 // Tracks which field the user is currently typing in so the format toolbar
 // knows which FieldInput to apply bold/italic/etc. to.
-// 'question' | 'answer' | 'hint' are the fixed fields; string covers custom field IDs (UUIDs).
 type ActiveField = 'question' | 'answer' | 'hint' | string;
 
 export default function AddCard() {
+    const [decks, setDecks] = useState<Deck[]>([]);
+    const [selectedDeckId, setSelectedDeckId] = useState<string>('');
 
-    // The deck the user has selected from the dropdown — defaults to the first available deck
-    const [selectedDeckId, setSelectedDeckId] = useState<string>(MOCK_DECKS[0]?.id ?? '');
+    // Template for the selected deck (null = no template, undefined = still loading)
+    const [template, setTemplate] = useState<CardTemplate | null | undefined>(undefined);
 
-    // List of custom fields the user has added via "Add Field".
-    // Each has a unique id (UUID), a display name, and its text value.
+    // Fixed default fields — always visible
+    const [question, setQuestion] = useState('');
+    const [answer, setAnswer] = useState('');
+    const [hint, setHint] = useState('');
+
+    // Extra fields defined in the template beyond Q/A/H (e.g. "Etymology", "Example")
+    const [extraFieldValues, setExtraFieldValues] = useState<Record<string, string>>({});
+
+    // User-added one-off custom fields (via the Add Field button)
     const [customFields, setCustomFields] = useState<{ id: string; name: string; value: string }[]>([]);
 
     // Controls whether the card preview shows the front or back face
     const [previewSide, setPreviewSide] = useState<'front' | 'back'>('front');
 
-    // State for the three fixed card fields
-    const [question, setQuestion] = useState('');
-    const [answer, setAnswer] = useState('');
-    const [hint, setHint] = useState('');
-
-    // Tracks which field the user last focused, so the format toolbar targets the right textarea
+    // Tracks which field the user last focused so the format toolbar targets the right textarea
     const [activeField, setActiveField] = useState<ActiveField>('question');
 
-    // Refs give us a handle into each FieldInput so we can call applyFormat() on them
-    // from the toolbar without re-rendering the whole page
+    // Save feedback
+    const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+    const [saveMessage, setSaveMessage] = useState('');
+
+    // Refs give us a handle into each FieldInput so we can call applyFormat() from the toolbar
     const questionRef = useRef<FieldInputHandle>(null);
     const answerRef   = useRef<FieldInputHandle>(null);
     const hintRef     = useRef<FieldInputHandle>(null);
-
-    // A Map from field ID → FieldInputHandle for custom fields.
-    // Using a Map (instead of an array of refs) makes it easy to look up by ID.
+    const extraFieldRefs = useRef<Map<string, FieldInputHandle>>(new Map());
+    // A Map from custom field ID → FieldInputHandle for toolbar routing
     const customFieldRefs = useRef<Map<string, FieldInputHandle>>(new Map());
 
-    // Called by the format toolbar (bold, italic, etc.).
-    // Routes the format command to whichever field is currently active.
-    const handleFormat = (format: string) => {
-        if (activeField === 'question') questionRef.current?.applyFormat(format);
-        else if (activeField === 'answer') answerRef.current?.applyFormat(format);
-        else if (activeField === 'hint') hintRef.current?.applyFormat(format);
-        else customFieldRefs.current.get(activeField)?.applyFormat(format); // Custom field by UUID
-    };
+    // Load decks on mount
+    useEffect(() => {
+        getDecks(TEMP_USER_ID)
+            .then(data => {
+                setDecks(data);
+                if (data.length > 0) setSelectedDeckId(data[0].id);
+            })
+            .catch(err => console.error(err));
+    }, []);
 
-    // Creates a new custom field with a unique ID and adds it to the list.
-    // crypto.randomUUID() ensures no two fields ever share an ID.
+    // Load template whenever the selected deck changes
+    useEffect(() => {
+        if (!selectedDeckId) return;
+        setTemplate(undefined); // loading
+        setExtraFieldValues({});
+        getTemplate(selectedDeckId)
+            .then(t => setTemplate(t))
+            .catch(() => setTemplate(null));
+    }, [selectedDeckId]);
+
+    // When a template loads, seed the extra (non-default) field values
+    useEffect(() => {
+        if (template) {
+            const extra: Record<string, string> = {};
+            for (const f of template.fields) {
+                if (!DEFAULT_FIELD_NAMES.includes(f.name)) extra[f.name] = '';
+            }
+            setExtraFieldValues(extra);
+        }
+    }, [template]);
+
     const handleAddField = () => {
         const id = crypto.randomUUID();
         setCustomFields(prev => [...prev, { id, name: 'Field', value: '' }]);
     };
 
-    // Removes a custom field by its ID and cleans up its ref entry
     const handleDeleteField = (id: string) => {
         setCustomFields(prev => prev.filter(f => f.id !== id));
         customFieldRefs.current.delete(id);
     };
 
-    // Updates the display name of a custom field (e.g. renaming "Field" → "Etymology")
     const handleFieldNameChange = (id: string, name: string) => {
         setCustomFields(prev => prev.map(f => f.id === id ? { ...f, name } : f));
     };
 
-    // Updates the text content of a custom field
     const handleFieldValueChange = (id: string, value: string) => {
         setCustomFields(prev => prev.map(f => f.id === id ? { ...f, value } : f));
     };
 
-    // Builds a flat key→value object from all fields for the preview panel.
-    // Custom field names become the keys, so {{FieldName}} tokens in the template resolve correctly.
-    const cardData = {
-        Question: question,
-        Answer: answer,
-        Hint: hint,
-        ...Object.fromEntries(customFields.map(f => [f.name, f.value]))
+    // Routes the format command to whichever field is currently active
+    const handleFormat = (format: string) => {
+        if (activeField === 'question') questionRef.current?.applyFormat(format);
+        else if (activeField === 'answer') answerRef.current?.applyFormat(format);
+        else if (activeField === 'hint') hintRef.current?.applyFormat(format);
+        else if (extraFieldRefs.current.has(activeField)) extraFieldRefs.current.get(activeField)?.applyFormat(format);
+        else customFieldRefs.current.get(activeField)?.applyFormat(format);
     };
 
-    // Toggles the preview between front and back
     const handleFlip = () => {
         setPreviewSide(prev => prev === 'front' ? 'back' : 'front');
     };
 
-    // Resets all fields after saving (currently just logs and shows an alert)
-    const handleSaveCard = () => {
-        console.log('Card saved:', { deckId: selectedDeckId, ...cardData });
-        setQuestion('');
-        setAnswer('');
-        setHint('');
-        setCustomFields([]);
-        setPreviewSide('front');
-        alert('Card saved successfully!');
+    const handleSaveCard = async () => {
+        if (!selectedDeckId) return;
+        setSaveStatus('saving');
+
+        const customFieldData = Object.fromEntries(customFields.map(f => [f.name, f.value]));
+        const cardData = { Question: question, Answer: answer, Hint: hint, ...extraFieldValues, ...customFieldData };
+
+        // Use the existing template, or auto-create the default one on first save
+        let activeTemplate = template;
+        if (!activeTemplate) {
+            try {
+                activeTemplate = await createTemplate(
+                    selectedDeckId, TEMP_USER_ID,
+                    DEFAULT_FRONT, DEFAULT_BACK, '',
+                    DEFAULT_TEMPLATE_FIELDS
+                );
+                setTemplate(activeTemplate);
+            } catch {
+                setSaveStatus('error');
+                setSaveMessage('Failed to create template.');
+                setTimeout(() => setSaveStatus('idle'), 3000);
+                return;
+            }
+        }
+
+        try {
+            await createCard(activeTemplate.id, selectedDeckId, cardData);
+            setQuestion('');
+            setAnswer('');
+            setHint('');
+            setExtraFieldValues(prev => Object.fromEntries(Object.keys(prev).map(k => [k, ''])));
+            setCustomFields([]);
+            setPreviewSide('front');
+            setSaveStatus('saved');
+            setSaveMessage('Card saved!');
+        } catch {
+            setSaveStatus('error');
+            setSaveMessage('Failed to save card.');
+        }
+
+        setTimeout(() => setSaveStatus('idle'), 3000);
     };
 
-    // HTML templates for the card preview. {{Token}} placeholders are replaced with live
-    // field values by the PreviewPanel component.
-    const frontTemplate = `<div style="padding: 20px; text-align: center;"><h2 style="color: #ffffff; margin-bottom: 10px;">{{Question}}</h2><p style="color: rgba(255,255,255,0.7); font-style: italic;">{{Hint}}</p></div>`;
-    const backTemplate  = `<div style="padding: 20px; text-align: center;"><p style="color: rgba(255,255,255,0.6); font-size: 0.8em; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em;">Answer</p><p style="color: #ffffff; font-size: 1.2em;">{{Answer}}</p></div>`;
+    // Extra fields are those in the template that aren't the three defaults
+    const extraFields = template?.fields.filter(f => !DEFAULT_FIELD_NAMES.includes(f.name)) ?? [];
+
+    // Use the template's HTML for the preview if available, else fall back to the defaults
+    const frontTemplate = template?.frontTemplate ?? DEFAULT_FRONT;
+    const backTemplate  = template?.backTemplate  ?? DEFAULT_BACK;
     const previewTemplate = previewSide === 'front' ? frontTemplate : backTemplate;
+    const cardData = {
+        Question: question, Answer: answer, Hint: hint,
+        ...extraFieldValues,
+        ...Object.fromEntries(customFields.map(f => [f.name, f.value]))
+    };
 
     return (
         <Layout>
@@ -117,19 +190,19 @@ export default function AddCard() {
                         value={selectedDeckId}
                         onChange={e => setSelectedDeckId(e.target.value)}
                     >
-                        {MOCK_DECKS.map(deck => (
+                        {decks.length === 0 && <option value=''>No decks yet</option>}
+                        {decks.map(deck => (
                             <option key={deck.id} value={deck.id}>{deck.name}</option>
                         ))}
                     </select>
                 </div>
 
-                {/* Formatting toolbar — field-level editing tools, sits on its own row */}
+                {/* Formatting toolbar — field-level editing tools */}
                 <EditorFormatControls handleFormat={handleFormat} />
 
                 <div className='workspace'>
                     <div className='input-section'>
-                        {/* Each wrapper div listens for focus so we know which field is active.
-                            The ref gives the toolbar a way to call applyFormat() on that field. */}
+                        {/* Fixed default fields — always shown */}
                         <div onFocus={() => setActiveField('question')}>
                             <FieldInput ref={questionRef} fieldName='Question' value={question} onChange={setQuestion} />
                         </div>
@@ -140,10 +213,19 @@ export default function AddCard() {
                             <FieldInput ref={hintRef} fieldName='Hint' value={hint} onChange={setHint} />
                         </div>
 
-                        {/* Render each custom field dynamically.
-                            onDelete removes it from the list.
-                            onNameChange lets the user rename it inline.
-                            The ref callback stores the handle in our Map keyed by field ID. */}
+                        {/* Extra fields from the deck's template (e.g. "Etymology") */}
+                        {extraFields.map(field => (
+                            <div key={field.name} onFocus={() => setActiveField(field.name)}>
+                                <FieldInput
+                                    ref={el => { if (el) extraFieldRefs.current.set(field.name, el); }}
+                                    fieldName={field.name}
+                                    value={extraFieldValues[field.name] ?? ''}
+                                    onChange={val => setExtraFieldValues(prev => ({ ...prev, [field.name]: val }))}
+                                />
+                            </div>
+                        ))}
+
+                        {/* User-added one-off custom fields */}
                         {customFields.map(field => (
                             <div key={field.id} onFocus={() => setActiveField(field.id)}>
                                 <FieldInput
@@ -157,21 +239,30 @@ export default function AddCard() {
                             </div>
                         ))}
 
-                        {/* Adds a new blank custom field to the list */}
                         <button className='add-field-button' onClick={handleAddField}>
                             <span className='material-symbols-outlined'>add</span>
                             Add Field
                         </button>
 
-                        <button className='save-card-button' onClick={handleSaveCard}>Save Card</button>
+                        <div className='save-card-row'>
+                            <button
+                                className='save-card-button'
+                                onClick={handleSaveCard}
+                                disabled={!selectedDeckId || saveStatus === 'saving'}
+                            >
+                                {saveStatus === 'saving' ? 'Saving…' : 'Save Card'}
+                            </button>
+                            {saveStatus !== 'idle' && saveStatus !== 'saving' && (
+                                <span className={`save-status save-status--${saveStatus}`}>{saveMessage}</span>
+                            )}
+                        </div>
                     </div>
 
-                    {/* Live card preview — updates as the user types.
-                        onFlip switches between front and back views. */}
+                    {/* Live card preview — updates as the user types */}
                     <PreviewPanel
                         side={previewSide}
                         template={previewTemplate}
-                        style=''
+                        style={template?.style ?? ''}
                         data={cardData}
                         onFlip={handleFlip}
                         onInsert={() => {}}

@@ -15,6 +15,46 @@
     min-height: 0;
 }
 
+/** Title row actions — deck selector + save button **/
+
+.title-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.save-template-button {
+    height: var(--button-size);
+    padding: 0 16px;
+    background-color: var(--accent-indigo);
+    color: var(--text-primary);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+}
+
+.save-template-button:hover:not(:disabled) {
+    opacity: 0.85;
+}
+
+.save-template-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.save-status {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.save-status--saved  { color: var(--color-success); }
+.save-status--error  { color: var(--color-danger-hover); }
+
 /** Controls **/
 
 /* Tabs + format toolbar share a row — both are editor-level tools */

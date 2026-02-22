@@ -92,6 +92,42 @@
     pointer-events: none;
 }
 
+.template-status {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    padding: 12px 0;
+}
+
+.template-status--empty {
+    color: var(--text-secondary);
+}
+
+.save-card-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.save-card-row .save-card-button {
+    flex: 1;
+    margin-top: 0;
+}
+
+.save-status {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.save-status--saved { color: var(--color-success); }
+.save-status--error { color: var(--color-danger-hover); }
+
+.save-card-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 @media (max-width: 1024px) {
     .add-card-page {
         overflow-y: auto;

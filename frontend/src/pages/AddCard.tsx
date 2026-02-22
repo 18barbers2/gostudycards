@@ -9,7 +9,7 @@ import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
 import { getDecks, createDeck } from '../api/decks';
 import { getTemplate, createTemplate, updateTemplate } from '../api/templates';
-import { getCards, createCard } from '../api/cards';
+import { getCards, createCard, removeFieldFromCards } from '../api/cards';
 import type { Deck, CardTemplate } from '../types';
 
 const TEMP_USER_ID = 'test-user-1';
@@ -158,14 +158,18 @@ export default function AddCard() {
 
     const cancelDeleteExtraField = () => setPendingDeleteField(null);
 
-    // Removes a field from the template and syncs local state
+    // Removes a field from the template and deletes that field's data from all cards in the deck
     const removeExtraField = (fieldName: string) => {
-        if (!template) return;
+        if (!template || !selectedDeckId) return;
         const updatedFields = template.fields
             .filter(f => f.name !== fieldName)
             .map(f => ({ name: f.name, isDefault: f.isDefault }));
-        updateTemplate(template.id, updatedFields)
-            .then(updated => {
+        // Run both operations in parallel: update the template and scrub the data from cards
+        Promise.all([
+            updateTemplate(template.id, updatedFields),
+            removeFieldFromCards(selectedDeckId, fieldName),
+        ])
+            .then(([updated]) => {
                 setTemplate(updated);
                 setExtraFieldValues(prev => {
                     const next = { ...prev };
@@ -397,8 +401,8 @@ export default function AddCard() {
                     <div className='delete-field-modal'>
                         <p className='delete-field-modal__message'>
                             <strong>{deleteWarningCount} card{deleteWarningCount !== 1 ? 's' : ''}</strong> already
-                            have data for &ldquo;{pendingDeleteField}&rdquo;. Removing this field won&apos;t delete
-                            that data, but the field won&apos;t appear when adding new cards.
+                            have data for &ldquo;{pendingDeleteField}&rdquo;. Removing this field will
+                            permanently delete that data from all cards in this deck.
                         </p>
                         <div className='delete-field-modal__actions'>
                             <button className='delete-field-modal__confirm' onClick={confirmDeleteExtraField}>

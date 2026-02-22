@@ -22,4 +22,16 @@ router.post('/', async (req, res) => {
     res.json(card)
 })
 
+// PATCH remove a field key from the data JSON of every card in a deck.
+// Uses PostgreSQL's JSONB `-` operator to delete the key in a single query.
+router.patch('/remove-field', async (req, res) => {
+    const { deckId, fieldName } = req.body
+    const result = await prisma.$executeRaw`
+        UPDATE "CardEntry"
+        SET data = data - ${fieldName}::text
+        WHERE "deckId" = ${deckId}
+    `
+    res.json({ updatedCount: result })
+})
+
 export default router

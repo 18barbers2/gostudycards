@@ -7,6 +7,11 @@ export async function get(path: string) {
     return res.json()
 }
 
+export async function del(path: string) {
+    const res = await fetch(`${BASE_URL}${path}`, { method: 'DELETE' })
+    if (!res.ok) throw new Error(`DELETE ${path} failed: ${res.status}`)
+}
+
 export async function post(path: string, body: unknown) {
     const res = await fetch(`${BASE_URL}${path}`, {
         method: 'POST',

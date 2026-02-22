@@ -9,7 +9,7 @@ import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
 import { getDecks, createDeck } from '../api/decks';
 import { getTemplate, createTemplate, updateTemplate } from '../api/templates';
-import { getCards, createCard, removeFieldFromCards } from '../api/cards';
+import { getCards, createCard, removeFieldFromCards, renameFieldInCards } from '../api/cards';
 import type { Deck, CardTemplate } from '../types';
 
 const TEMP_USER_ID = 'test-user-1';
@@ -61,8 +61,8 @@ export default function AddCard() {
     const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
     const [saveMessage, setSaveMessage] = useState('');
 
-    // Delete-field confirmation: fieldName waiting for confirmation, and how many cards use it
-    const [pendingDeleteField, setPendingDeleteField] = useState<string | null>(null);
+    // Delete-field confirmation: the field (by id + name) waiting for confirmation, and how many cards use it
+    const [pendingDeleteField, setPendingDeleteField] = useState<{ id: string; name: string } | null>(null);
     const [deleteWarningCount, setDeleteWarningCount] = useState(0);
 
     // Refs give us a handle into each FieldInput so we can call applyFormat() from the toolbar
@@ -133,18 +133,19 @@ export default function AddCard() {
     };
 
     // Initiates deletion of a template-based (extra) field.
-    // If existing cards have data for this field, shows a confirmation warning first.
-    const handleDeleteExtraField = (fieldName: string) => {
+    // Uses fieldId so two fields with the same name are treated independently.
+    // If existing cards have data for this field name, shows a confirmation warning first.
+    const handleDeleteExtraField = (fieldId: string, fieldName: string) => {
         if (!template || !selectedDeckId) return;
         getCards(selectedDeckId)
             .then(cards => {
                 const count = cards.filter(c => c.data[fieldName]?.trim()).length;
                 if (count > 0) {
                     // Surface a warning before removing a field that has card data
-                    setPendingDeleteField(fieldName);
+                    setPendingDeleteField({ id: fieldId, name: fieldName });
                     setDeleteWarningCount(count);
                 } else {
-                    removeExtraField(fieldName);
+                    removeExtraField(fieldId, fieldName);
                 }
             })
             .catch(err => console.error(err));
@@ -152,17 +153,49 @@ export default function AddCard() {
 
     // Executes the deletion after the user confirms the warning dialog
     const confirmDeleteExtraField = () => {
-        if (pendingDeleteField) removeExtraField(pendingDeleteField);
+        if (pendingDeleteField) removeExtraField(pendingDeleteField.id, pendingDeleteField.name);
         setPendingDeleteField(null);
     };
 
     const cancelDeleteExtraField = () => setPendingDeleteField(null);
 
-    // Removes a field from the template and deletes that field's data from all cards in the deck
-    const removeExtraField = (fieldName: string) => {
+    // Renames a template field: updates the template, migrates all card data, and syncs local state.
+    // Uses fieldId so two fields with the same name are renamed independently.
+    const handleRenameExtraField = (fieldId: string, oldName: string, newName: string) => {
+        if (!template || !selectedDeckId || !newName.trim() || newName === oldName) return;
+        const updatedFields = template.fields.map(f =>
+            f.id === fieldId
+                ? { name: newName, isDefault: f.isDefault }
+                : { name: f.name, isDefault: f.isDefault }
+        );
+        Promise.all([
+            updateTemplate(template.id, updatedFields),
+            renameFieldInCards(selectedDeckId, oldName, newName),
+        ])
+            .then(([updated]) => {
+                setTemplate(updated);
+                // Move the current value over to the new key in local state
+                setExtraFieldValues(prev => {
+                    const next = { ...prev };
+                    next[newName] = next[oldName] ?? '';
+                    delete next[oldName];
+                    return next;
+                });
+                // Keep the toolbar ref map consistent with the new name
+                const ref = extraFieldRefs.current.get(oldName);
+                if (ref) {
+                    extraFieldRefs.current.set(newName, ref);
+                    extraFieldRefs.current.delete(oldName);
+                }
+            })
+            .catch(err => console.error(err));
+    };
+
+    // Removes exactly one field (by id) from the template and deletes its data from all cards in the deck
+    const removeExtraField = (fieldId: string, fieldName: string) => {
         if (!template || !selectedDeckId) return;
         const updatedFields = template.fields
-            .filter(f => f.name !== fieldName)
+            .filter(f => f.id !== fieldId)  // match by id, not name, to avoid removing duplicates
             .map(f => ({ name: f.name, isDefault: f.isDefault }));
         // Run both operations in parallel: update the template and scrub the data from cards
         Promise.all([
@@ -340,13 +373,14 @@ export default function AddCard() {
 
                         {/* Extra fields from the deck's template (e.g. "Etymology") */}
                         {extraFields.map(field => (
-                            <div key={field.name} onFocus={() => setActiveField(field.name)}>
+                            <div key={field.id} onFocus={() => setActiveField(field.name)}>
                                 <FieldInput
                                     ref={el => { if (el) extraFieldRefs.current.set(field.name, el); }}
                                     fieldName={field.name}
                                     value={extraFieldValues[field.name] ?? ''}
                                     onChange={val => setExtraFieldValues(prev => ({ ...prev, [field.name]: val }))}
-                                    onDelete={() => handleDeleteExtraField(field.name)}
+                                    onDelete={() => handleDeleteExtraField(field.id, field.name)}
+                                    onNameChange={newName => handleRenameExtraField(field.id, field.name, newName)}
                                 />
                             </div>
                         ))}
@@ -405,7 +439,7 @@ export default function AddCard() {
                     <div className='delete-field-modal'>
                         <p className='delete-field-modal__message'>
                             <strong>{deleteWarningCount} card{deleteWarningCount !== 1 ? 's' : ''}</strong> already
-                            have data for &ldquo;{pendingDeleteField}&rdquo;. Removing this field will
+                            have data for &ldquo;{pendingDeleteField.name}&rdquo;. Removing this field will
                             permanently delete that data from all cards in this deck.
                         </p>
                         <div className='delete-field-modal__actions'>

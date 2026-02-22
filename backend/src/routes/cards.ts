@@ -22,6 +22,20 @@ router.post('/', async (req, res) => {
     res.json(card)
 })
 
+// PATCH rename a field key in the data JSON of every card in a deck.
+// Removes the old key and inserts a new one with the same value in a single query.
+router.patch('/rename-field', async (req, res) => {
+    const { deckId, oldName, newName } = req.body
+    const result = await prisma.$executeRaw`
+        UPDATE "CardEntry"
+        SET data = (data - ${oldName}::text)
+                   || jsonb_build_object(${newName}::text, data->>${oldName}::text)
+        WHERE "deckId" = ${deckId}
+          AND data ? ${oldName}::text
+    `
+    res.json({ updatedCount: result })
+})
+
 // PATCH remove a field key from the data JSON of every card in a deck.
 // Uses PostgreSQL's JSONB `-` operator to delete the key in a single query.
 router.patch('/remove-field', async (req, res) => {

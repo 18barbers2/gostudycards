@@ -5,6 +5,11 @@ export async function getCards(deckId: string): Promise<CardEntry[]> {
     return get(`/cards?deckId=${deckId}`);
 }
 
+// Renames a field key across all cards in a deck
+export async function renameFieldInCards(deckId: string, oldName: string, newName: string): Promise<void> {
+    return patch('/cards/rename-field', { deckId, oldName, newName });
+}
+
 // Removes a field key from the data JSON of every card in a deck
 export async function removeFieldFromCards(deckId: string, fieldName: string): Promise<void> {
     return patch('/cards/remove-field', { deckId, fieldName });

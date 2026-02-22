@@ -371,6 +371,13 @@ export default function AddCard() {
                             <FieldInput ref={hintRef} fieldName='Hint' value={hint} onChange={setHint} />
                         </div>
 
+                        {/* Spinner shown while the selected deck's template is being fetched */}
+                        {template === undefined && selectedDeckId && (
+                            <div className='template-loading'>
+                                <span className='spinner' />
+                            </div>
+                        )}
+
                         {/* Extra fields from the deck's template (e.g. "Etymology") */}
                         {extraFields.map(field => (
                             <div key={field.id} onFocus={() => setActiveField(field.name)}>

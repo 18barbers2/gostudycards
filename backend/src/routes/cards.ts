@@ -12,3 +12,14 @@ router.get('/', async (req, res) => {
     })
     res.json(cards)
 })
+
+// POST create a new card
+router.post('/', async (req, res) => {
+    const { templateId, deckId, data } = req.body
+    const card = await prisma.cardEntry.create({
+        data: { templateId, deckId, data }
+    })
+    res.json(card)
+})
+
+export default router

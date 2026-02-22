@@ -1,16 +1,26 @@
 import '../css/Decks.css';
 import DeckTile from '../components/DeckTile.tsx';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Deck } from '../types';
-import { MOCK_DECKS } from '../data/decks';
+import { getDecks } from '../api/decks';
 import { Layout } from '../components/Layout/Layout.tsx';
 
+const TEMP_USER_ID = 'test-user-1'; // Temporary until guest/auth is implemented
 
 export function Decks() {
 
     // TODO: Replace with API fetch
-    const [decks] = useState<Deck[]>(MOCK_DECKS);
+    const [decks, setDecks] = useState<Deck[]>([]);
+    const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+        getDecks(TEMP_USER_ID)
+            .then(data => setDecks(data))
+            .catch(err => console.error(err))
+            .finally(() => setLoading(false));
+    }, []);
+
+    if (loading) return <Layout><p>Loading decks ...</p></Layout>;
 
     return (
 

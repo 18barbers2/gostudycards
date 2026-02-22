@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  username  String   @unique
+  createdAt DateTime @default(now())
+
+  decks       Deck[]
+  reviewLogs  ReviewLog[]
+}
+
+model Deck {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  ownerId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  owner       User          @relation(fields: [ownerId], references: [id])
+  template    CardTemplate?
+  cards       CardEntry[]
+  reviewLogs  ReviewLog[]
+}
+
+model CardTemplate {
+  id            String   @id @default(uuid())
+  deckId        String   @unique
+  ownerId       String
+  frontTemplate String
+  backTemplate  String
+  style         String   @default("")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  deck    Deck        @relation(fields: [deckId], references: [id])
+  fields  CardField[]
+  cards   CardEntry[]
+}
+
+model CardField {
+  id         String  @id @default(uuid())
+  templateId String
+  name       String
+  isDefault  Boolean @default(false)
+
+  template CardTemplate @relation(fields: [templateId], references: [id])
+}
+
+model CardEntry {
+  id           String    @id @default(uuid())
+  templateId   String
+  deckId       String
+  data         Json
+  nextReviewAt DateTime  @default(now())
+  interval     Int       @default(1)
+  easeFactor   Float     @default(2.5)
+  reviewCount  Int       @default(0)
+  masteredAt   DateTime?
+  createdAt    DateTime  @default(now())
+
+  template   CardTemplate @relation(fields: [templateId], references: [id])
+  deck       Deck         @relation(fields: [deckId], references: [id])
+  reviewLogs ReviewLog[]
+}
+
+model ReviewLog {
+  id               String   @id @default(uuid())
+  cardId           String
+  deckId           String
+  userId           String
+  reviewedAt       DateTime @default(now())
+  rating           String
+  previousInterval Int
+  newInterval      Int
+
+  card CardEntry @relation(fields: [cardId], references: [id])
+  deck Deck      @relation(fields: [deckId], references: [id])
+  user User      @relation(fields: [userId], references: [id])
+}

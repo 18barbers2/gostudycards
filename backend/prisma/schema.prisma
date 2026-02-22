@@ -46,7 +46,7 @@ model CardTemplate {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  deck    Deck        @relation(fields: [deckId], references: [id])
+  deck    Deck        @relation(fields: [deckId], references: [id], onDelete: Cascade)
   fields  CardField[]
   cards   CardEntry[]
 }
@@ -57,7 +57,7 @@ model CardField {
   name       String
   isDefault  Boolean @default(false)
 
-  template CardTemplate @relation(fields: [templateId], references: [id])
+  template CardTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
 }
 
 model CardEntry {
@@ -72,8 +72,8 @@ model CardEntry {
   masteredAt   DateTime?
   createdAt    DateTime  @default(now())
 
-  template   CardTemplate @relation(fields: [templateId], references: [id])
-  deck       Deck         @relation(fields: [deckId], references: [id])
+  template   CardTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  deck       Deck         @relation(fields: [deckId], references: [id], onDelete: Cascade)
   reviewLogs ReviewLog[]
 }
 
@@ -87,7 +87,7 @@ model ReviewLog {
   previousInterval Int
   newInterval      Int
 
-  card CardEntry @relation(fields: [cardId], references: [id])
-  deck Deck      @relation(fields: [deckId], references: [id])
+  card CardEntry @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  deck Deck      @relation(fields: [deckId], references: [id], onDelete: Cascade)
   user User      @relation(fields: [userId], references: [id])
 }

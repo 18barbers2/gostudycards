@@ -65,6 +65,9 @@ export default function AddCard() {
     const [pendingDeleteField, setPendingDeleteField] = useState<{ id: string; name: string } | null>(null);
     const [deleteWarningCount, setDeleteWarningCount] = useState(0);
 
+    // IDs of fields currently playing their removal animation — actual state removal happens on animationend
+    const [removingFields, setRemovingFields] = useState<Set<string>>(new Set());
+
     // Refs give us a handle into each FieldInput so we can call applyFormat() from the toolbar
     const questionRef = useRef<FieldInputHandle>(null);
     const answerRef   = useRef<FieldInputHandle>(null);
@@ -128,8 +131,8 @@ export default function AddCard() {
     };
 
     const handleDeleteField = (id: string) => {
-        setCustomFields(prev => prev.filter(f => f.id !== id));
-        customFieldRefs.current.delete(id);
+        // Trigger the pop animation; actual removal fires in the wrapper's onAnimationEnd
+        setRemovingFields(prev => new Set(prev).add(id));
     };
 
     // Initiates deletion of a template-based (extra) field.
@@ -145,7 +148,8 @@ export default function AddCard() {
                     setPendingDeleteField({ id: fieldId, name: fieldName });
                     setDeleteWarningCount(count);
                 } else {
-                    removeExtraField(fieldId, fieldName);
+                    // No dialog needed — animate out; removal fires in the wrapper's onAnimationEnd
+                    setRemovingFields(prev => new Set(prev).add(fieldId));
                 }
             })
             .catch(err => console.error(err));
@@ -153,7 +157,9 @@ export default function AddCard() {
 
     // Executes the deletion after the user confirms the warning dialog
     const confirmDeleteExtraField = () => {
-        if (pendingDeleteField) removeExtraField(pendingDeleteField.id, pendingDeleteField.name);
+        if (!pendingDeleteField) return;
+        // Animate the field out; removal fires in the wrapper's onAnimationEnd
+        setRemovingFields(prev => new Set(prev).add(pendingDeleteField.id));
         setPendingDeleteField(null);
     };
 
@@ -380,7 +386,16 @@ export default function AddCard() {
 
                         {/* Extra fields from the deck's template (e.g. "Etymology") */}
                         {extraFields.map(field => (
-                            <div key={field.id} onFocus={() => setActiveField(field.name)}>
+                            <div
+                                key={field.id}
+                                className={removingFields.has(field.id) ? 'field-wrapper--removing' : undefined}
+                                onFocus={() => setActiveField(field.name)}
+                                onAnimationEnd={e => {
+                                    if (e.animationName !== 'field-pop-out') return;
+                                    setRemovingFields(prev => { const s = new Set(prev); s.delete(field.id); return s; });
+                                    removeExtraField(field.id, field.name);
+                                }}
+                            >
                                 <FieldInput
                                     ref={el => { if (el) extraFieldRefs.current.set(field.name, el); }}
                                     fieldName={field.name}
@@ -394,7 +409,17 @@ export default function AddCard() {
 
                         {/* User-added one-off custom fields */}
                         {customFields.map(field => (
-                            <div key={field.id} onFocus={() => setActiveField(field.id)}>
+                            <div
+                                key={field.id}
+                                className={removingFields.has(field.id) ? 'field-wrapper--removing' : undefined}
+                                onFocus={() => setActiveField(field.id)}
+                                onAnimationEnd={e => {
+                                    if (e.animationName !== 'field-pop-out') return;
+                                    setCustomFields(prev => prev.filter(f => f.id !== field.id));
+                                    customFieldRefs.current.delete(field.id);
+                                    setRemovingFields(prev => { const s = new Set(prev); s.delete(field.id); return s; });
+                                }}
+                            >
                                 <FieldInput
                                     ref={el => { if (el) customFieldRefs.current.set(field.id, el); }}
                                     fieldName={field.name}

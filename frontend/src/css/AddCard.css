@@ -128,6 +128,19 @@
     padding-right: 8px;
 }
 
+/* Field removal animation — slight inflate then shrink + fade */
+@keyframes field-pop-out {
+    0%   { transform: scale(1);    opacity: 1; }
+    20%  { transform: scale(1.02); opacity: 1; }
+    100% { transform: scale(0.88); opacity: 0; }
+}
+
+.field-wrapper--removing {
+    animation: field-pop-out 0.2s ease-in forwards;
+    pointer-events: none;
+    transform-origin: center top;
+}
+
 /* Centered spinner row shown while the deck's template is loading */
 .template-loading {
     display: flex;

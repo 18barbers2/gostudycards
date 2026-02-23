@@ -15,6 +15,14 @@ router.get('/', async (req, res) => {
     res.json(decks);
 }) 
 
+// GET a single deck by id
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    const deck = await prisma.deck.findUnique({ where: { id } });
+    if (!deck) { res.status(404).json({ error: 'Deck not found' }); return; }
+    res.json(deck);
+});
+
 // POST create a new deck
 router.post('/', async (req, res) => {
     const { name, description, ownerId } = req.body;

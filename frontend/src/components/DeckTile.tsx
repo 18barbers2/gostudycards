@@ -1,6 +1,7 @@
 import '../css/DeckTile.css';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface DeckTileProps {
     title?: string;
@@ -18,6 +19,7 @@ interface DeckTileProps {
 }
 
 export function DeckTile({ title, createdBy, deckId, onDelete, onRename }: DeckTileProps){
+    const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -26,7 +28,7 @@ export function DeckTile({ title, createdBy, deckId, onDelete, onRename }: DeckT
     }
 
     return (
-        <div className='deck-tile'>
+        <div className='deck-tile' onClick={() => deckId && navigate(`/decks/${deckId}`)}>
             <button
                 className='deck-menu'
                 onClick={(e) => { e.stopPropagation(); setMenuOpen(o => !o); }}

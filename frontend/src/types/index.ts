@@ -1,5 +1,6 @@
 // A field definition on a card template
 export interface CardField {
+    id: string;
     name: string;
     isDefault: boolean;
 }

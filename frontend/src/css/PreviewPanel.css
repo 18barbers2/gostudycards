@@ -19,7 +19,7 @@
 .preview-label {
     font-weight: 600;
     font-size: 14px;
-    color: #aaa;
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -30,8 +30,8 @@
     text-transform: uppercase;
     padding: 4px 12px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
+    background: var(--border-default);
+    color: var(--text-primary);
     letter-spacing: 0.08em;
 }
 
@@ -56,7 +56,7 @@
 .preview-flip-hint {
     background: none;
     border: none;
-    color: #888;
+    color: var(--text-muted);
     font-size: 13px;
     cursor: pointer;
     display: flex;
@@ -67,7 +67,7 @@
 }
 
 .preview-flip-hint:hover {
-    color: #ccc;
+    color: var(--text-secondary);
 }
 
 .preview-flip-icon {
@@ -81,20 +81,20 @@
     align-items: center;
     gap: 8px;
     padding: 12px 0 0 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--border-subtle);
     margin-top: 12px;
 }
 
 .preview-insert-label {
     font-size: 12px;
-    color: #777;
+    color: var(--text-muted);
     white-space: nowrap;
 }
 
 .preview-insert-chip {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: #ccc;
+    background: var(--bg-hover);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
     font-size: 12px;
     font-family: monospace;
     padding: 4px 10px;
@@ -104,7 +104,7 @@
 }
 
 .preview-insert-chip:hover {
-    background: rgba(255, 255, 255, 0.14);
-    border-color: rgba(255, 255, 255, 0.25);
-    color: #fff;
+    background: var(--border-default);
+    border-color: var(--border-default);
+    color: var(--text-primary);
 }

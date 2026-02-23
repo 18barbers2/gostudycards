@@ -22,7 +22,7 @@
 }
 
 .editor-format-controls button:hover {
-    background-color: #131313;
+    background-color: var(--bg-active);
 }
 
 .editor-format-controls button:focus {

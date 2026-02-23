@@ -29,7 +29,93 @@
 
 .deck-selector:focus {
     outline: none;
-    background-color: #131313;
+    background-color: var(--bg-active);
+}
+
+/* Wrapper row for the deck selector + "+ New Deck" button */
+.deck-selector-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Small secondary button to open the inline deck creation form */
+.new-deck-btn {
+    height: var(--button-size);
+    padding: 0 12px;
+    background-color: var(--bg-secondary);
+    color: var(--text-muted);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.15s, background-color 0.15s;
+}
+
+.new-deck-btn:hover {
+    background-color: var(--bg-active);
+    color: var(--text-primary);
+}
+
+/* Compact inline form that replaces the selector when creating a new deck */
+.inline-deck-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.inline-deck-input {
+    height: var(--button-size);
+    padding: 0 12px;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    outline: none;
+    min-width: 160px;
+}
+
+.inline-deck-input:focus {
+    border-color: var(--border-hover);
+}
+
+/* Shared style for Create / Cancel buttons inside the inline form */
+.inline-deck-form button {
+    height: var(--button-size);
+    padding: 0 12px;
+    background-color: var(--bg-secondary);
+    color: var(--text-muted);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: color 0.15s, background-color 0.15s;
+}
+
+.inline-deck-form button:hover {
+    background-color: var(--bg-active);
+    color: var(--text-primary);
+}
+
+/* Two-column layout: scrollable fields on the left, preview on the right */
+.workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Left column: stretches to fill, lets input-section scroll while save button stays fixed */
+.input-column {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    gap: 12px;
 }
 
 .input-section {
@@ -37,8 +123,29 @@
     flex-direction: column;
     gap: 12px;
     overflow-y: auto;
+    flex: 1; /* fill remaining space, pushing save button to the bottom */
     min-height: 0;
     padding-right: 8px;
+}
+
+/* Field removal animation — slight inflate then shrink + fade */
+@keyframes field-pop-out {
+    0%   { transform: scale(1);    opacity: 1; }
+    20%  { transform: scale(1.02); opacity: 1; }
+    100% { transform: scale(0.88); opacity: 0; }
+}
+
+.field-wrapper--removing {
+    animation: field-pop-out 0.2s ease-in forwards;
+    pointer-events: none;
+    transform-origin: center top;
+}
+
+/* Centered spinner row shown while the deck's template is loading */
+.template-loading {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
 }
 
 .add-field-button {
@@ -46,8 +153,8 @@
     padding: 10px;
     font-size: var(--font-size-sm);
     background: transparent;
-    color: rgba(255, 255, 255, 0.35);
-    border: 1.5px dashed rgba(255, 255, 255, 0.15);
+    color: var(--text-muted);
+    border: 1.5px dashed var(--border-default);
     border-radius: var(--border-radius);
     cursor: pointer;
     display: flex;
@@ -58,8 +165,8 @@
 }
 
 .add-field-button:hover {
-    color: rgba(255, 255, 255, 0.7);
-    border-color: rgba(255, 255, 255, 0.3);
+    color: var(--text-secondary);
+    border-color: var(--border-hover);
 }
 
 .add-field-button .material-symbols-outlined {
@@ -72,7 +179,7 @@
     padding: 12px;
     font-size: var(--font-size-sm);
     background-color: var(--bg-secondary);
-    color: white;
+    color: var(--text-primary);
     border: none;
     border-radius: var(--border-radius);
     cursor: pointer;
@@ -80,16 +187,117 @@
 }
 
 .save-card-button:hover {
-    background-color: #131313;
+    background-color: var(--bg-active);
 }
 
 .save-card-button:active {
-    background-color: #0a0a0a;
+    background-color: var(--bg-active);
 }
 
 .disabled {
     opacity: 0.5;
     pointer-events: none;
+}
+
+.template-status {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+    padding: 12px 0;
+}
+
+.template-status--empty {
+    color: var(--text-secondary);
+}
+
+.save-card-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+.save-card-row .save-card-button {
+    flex: 1;
+    margin-top: 0;
+}
+
+.save-status {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.save-status--saved { color: var(--color-success); }
+.save-status--error { color: var(--color-danger-hover); }
+
+.save-card-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Delete-field confirmation overlay */
+.delete-field-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.delete-field-modal {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    max-width: 380px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.delete-field-modal__message {
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.delete-field-modal__actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.delete-field-modal__confirm,
+.delete-field-modal__cancel {
+    height: var(--button-size);
+    padding: 0 16px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.delete-field-modal__confirm {
+    background-color: var(--color-danger, #e05252);
+    color: #fff;
+}
+
+.delete-field-modal__confirm:hover {
+    background-color: var(--color-danger-hover, #c0392b);
+}
+
+.delete-field-modal__cancel {
+    background-color: var(--bg-active);
+    color: var(--text-primary);
+}
+
+.delete-field-modal__cancel:hover {
+    background-color: var(--border-default);
 }
 
 @media (max-width: 1024px) {
@@ -100,6 +308,15 @@
 
     .workspace {
         grid-template-columns: 1fr;
+    }
+
+    /* On mobile, input-column can grow freely since the page itself scrolls */
+    .input-column {
+        overflow: visible;
+    }
+
+    .input-section {
+        overflow-y: visible;
     }
 
     .deck-selector {

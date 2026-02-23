@@ -1,9 +1,120 @@
 .decks-page {
-    background-color: #222222;
-    color: white;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
 }
+
 .decks {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
+}
+
+/* Skeleton tile — shown while decks are loading, mirrors .deck-tile proportions */
+.deck-tile-skeleton {
+    width: 200px;
+    height: 320px;
+    background-color: var(--bg-secondary);
+    border-left: 10px solid var(--bg-tertiary);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+}
+
+.deck-tile-skeleton__title {
+    height: 20px;
+    width: 60%;
+}
+
+.deck-tile-skeleton__sub {
+    height: 13px;
+    width: 40%;
+}
+
+.add-deck-tile {
+    width: 200px;
+    height: 320px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1.5px dashed var(--border-default);
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: var(--font-size-sm);
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.add-deck-tile:hover {
+    color: var(--text-secondary);
+    border-color: var(--border-hover);
+}
+
+.add-deck-tile .material-symbols-outlined {
+    font-size: 32px;
+}
+
+.add-deck-form-tile {
+    width: 200px;
+    height: 320px;
+    background: transparent;
+    border: 1.5px dashed var(--border-default);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.add-deck-input {
+    background: var(--border-subtle);
+    border: 1px solid var(--border-default);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    padding: 6px 8px;
+    outline: none;
+}
+
+.add-deck-input:focus {
+    border-color: var(--border-hover);
+}
+
+.add-deck-input::placeholder {
+    color: var(--text-disabled);
+}
+
+.add-deck-submit,
+.add-deck-cancel {
+    border-radius: 4px;
+    font-size: var(--font-size-sm);
+    padding: 6px 8px;
+    cursor: pointer;
+    border: none;
+}
+
+.add-deck-submit {
+    background: var(--border-default);
+    color: var(--text-primary);
+}
+
+.add-deck-submit:hover {
+    background: var(--border-hover);
+}
+
+.add-deck-cancel {
+    background: transparent;
+    color: var(--text-muted);
+}
+
+.add-deck-cancel:hover {
+    color: var(--text-secondary);
 }

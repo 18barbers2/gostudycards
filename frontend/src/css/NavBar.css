@@ -29,7 +29,7 @@
     gap: 12px;
     padding: 12px 16px;
     text-decoration: none;
-    color: #a0aec0;
+    color: var(--text-secondary);
     font-size: 0.875rem;
     transition: color 0.15s ease;
     white-space: nowrap;
@@ -38,21 +38,21 @@
 
 /* ── Active state ── */
 .navbar li.active {
-    border-left-color: #6366f1;
-    background-color: rgba(99, 102, 241, 0.12);
+    border-left-color: var(--accent-nav);
+    background-color: var(--accent-nav-subtle);
 }
 
 .navbar li.active a {
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 /* ── Hover state ── */
 .navbar li:hover:not(.active) {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--bg-hover);
 }
 
 .navbar li:hover a {
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .material-symbols-outlined {
@@ -74,14 +74,14 @@
     justify-content: flex-end;
     padding: 12px;
     flex-shrink: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px solid var(--border-subtle);
 }
 
 .navbar-toggle {
     background: none;
     border: none;
     cursor: pointer;
-    color: #a0aec0;
+    color: var(--text-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,8 +91,8 @@
 }
 
 .navbar-toggle:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
+    background: var(--border-subtle);
+    color: var(--text-primary);
 }
 
 /* ── Collapsed state ── */
@@ -136,8 +136,8 @@
     }
 
     .navbar li.active {
-        border-bottom-color: #6366f1;
-        background-color: rgba(99, 102, 241, 0.12);
+        border-bottom-color: var(--accent-nav);
+        background-color: var(--accent-nav-subtle);
     }
 
     .navbar li a {

@@ -4,6 +4,19 @@ import prisma from '../lib/prisma.js'
 
 const router = Router();
 
+// GET count of cards in a deck that have non-empty data for a specific field.
+// Much cheaper than fetching all cards just to count field usage.
+router.get('/field-count', async (req, res) => {
+    const { deckId, fieldName } = req.query
+    const result = await prisma.$queryRaw<[{ count: bigint }]>`
+        SELECT COUNT(*) as count
+        FROM "CardEntry"
+        WHERE "deckId" = ${String(deckId)}
+          AND TRIM(data->>${String(fieldName)}) != ''
+    `
+    res.json({ count: Number(result[0].count) })
+})
+
 // GET all cards for a deck
 router.get('/', async (req, res) => {
     const { deckId } = req.query

@@ -14,6 +14,18 @@ export async function updateTemplate(
     return patch(`/templates/${templateId}`, { fields });
 }
 
+// Replaces the full template (HTML, style, and fields) for an existing template.
+// Used by CardBuilder when saving changes to a deck that already has a template.
+export async function updateFullTemplate(
+    templateId: string,
+    frontTemplate: string,
+    backTemplate: string,
+    style: string,
+    fields: Array<{ name: string; isDefault: boolean }>
+): Promise<CardTemplate> {
+    return patch(`/templates/${templateId}`, { frontTemplate, backTemplate, style, fields });
+}
+
 export async function createTemplate(
     deckId: string,
     ownerId: string,

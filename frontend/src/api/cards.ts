@@ -5,6 +5,11 @@ export async function getCards(deckId: string): Promise<CardEntry[]> {
     return get(`/cards?deckId=${deckId}`);
 }
 
+export async function getFieldUsageCount(deckId: string, fieldName: string): Promise<number> {
+    const result: { count: number } = await get(`/cards/field-count?deckId=${encodeURIComponent(deckId)}&fieldName=${encodeURIComponent(fieldName)}`);
+    return result.count;
+}
+
 // Renames a field key across all cards in a deck
 export async function renameFieldInCards(deckId: string, oldName: string, newName: string): Promise<void> {
     return patch('/cards/rename-field', { deckId, oldName, newName });

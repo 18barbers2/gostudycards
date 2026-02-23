@@ -9,7 +9,7 @@ import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
 import { getDecks, createDeck } from '../api/decks';
 import { getTemplate, createTemplate, updateTemplate } from '../api/templates';
-import { getCards, createCard, removeFieldFromCards, renameFieldInCards } from '../api/cards';
+import { getFieldUsageCount, createCard, removeFieldFromCards, renameFieldInCards } from '../api/cards';
 import type { Deck, CardTemplate } from '../types';
 
 const TEMP_USER_ID = 'test-user-1';
@@ -76,24 +76,39 @@ export default function AddCard() {
     // A Map from custom field ID → FieldInputHandle for toolbar routing
     const customFieldRefs = useRef<Map<string, FieldInputHandle>>(new Map());
 
-    // Load decks on mount; if a deckId was passed via nav state, pre-select it
+    // Prevents the [selectedDeckId] effect from firing a duplicate template fetch
+    // on the initial mount (the mount effect already starts that fetch directly).
+    const skipNextTemplateLoad = useRef(false);
+
+    // Load decks on mount; if a deckId was passed via nav state, pre-select it.
+    // Also kick off the template fetch immediately so both requests run in parallel.
     useEffect(() => {
         getDecks(TEMP_USER_ID)
             .then(data => {
                 setDecks(data);
                 const preselected = location.state?.deckId;
-                if (preselected && data.some((d: { id: string }) => d.id === preselected)) {
-                    setSelectedDeckId(preselected);
-                } else if (data.length > 0) {
-                    setSelectedDeckId(data[0].id);
+                const initialId = (preselected && data.some((d: { id: string }) => d.id === preselected))
+                    ? preselected
+                    : data.length > 0 ? data[0].id : '';
+                skipNextTemplateLoad.current = true;
+                setSelectedDeckId(initialId);
+                if (initialId) {
+                    getTemplate(initialId)
+                        .then(t => setTemplate(t))
+                        .catch(() => setTemplate(null));
                 }
             })
             .catch(err => console.error(err));
     }, []);
 
-    // Load template whenever the selected deck changes
+    // Load template whenever the selected deck changes (user picks a different deck).
+    // Skipped on initial mount because the mount effect already handles that fetch.
     useEffect(() => {
         if (!selectedDeckId) return;
+        if (skipNextTemplateLoad.current) {
+            skipNextTemplateLoad.current = false;
+            return;
+        }
         setTemplate(undefined); // loading
         setExtraFieldValues({});
         getTemplate(selectedDeckId)
@@ -140,9 +155,8 @@ export default function AddCard() {
     // If existing cards have data for this field name, shows a confirmation warning first.
     const handleDeleteExtraField = (fieldId: string, fieldName: string) => {
         if (!template || !selectedDeckId) return;
-        getCards(selectedDeckId)
-            .then(cards => {
-                const count = cards.filter(c => c.data[fieldName]?.trim()).length;
+        getFieldUsageCount(selectedDeckId, fieldName)
+            .then(count => {
                 if (count > 0) {
                     // Surface a warning before removing a field that has card data
                     setPendingDeleteField({ id: fieldId, name: fieldName });
@@ -277,13 +291,19 @@ export default function AddCard() {
                     ...activeTemplate.fields.map(f => ({ name: f.name, isDefault: f.isDefault })),
                     ...newCustomFieldDefs
                 ];
-                activeTemplate = await updateTemplate(activeTemplate.id, allFields);
+                // Run template update and card creation in parallel — createCard only needs
+                // the template ID (which is already known) and doesn't depend on the update result.
+                const [updatedTemplate] = await Promise.all([
+                    updateTemplate(activeTemplate.id, allFields),
+                    createCard(activeTemplate.id, selectedDeckId, cardData),
+                ]);
+                activeTemplate = updatedTemplate;
                 // Updating the template triggers the extraFields seeding effect,
                 // which will surface the new fields as persistent extra fields
                 setTemplate(activeTemplate);
+            } else {
+                await createCard(activeTemplate.id, selectedDeckId, cardData);
             }
-
-            await createCard(activeTemplate.id, selectedDeckId, cardData);
             setQuestion('');
             setAnswer('');
             setHint('');

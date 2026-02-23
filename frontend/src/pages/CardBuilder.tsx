@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import '../css/CardBuilder.css';
 import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
 import CodeEditor from '../components/CodeEditor.tsx';
 import PreviewPanel from '../components/PreviewPanel.tsx';
 import { getDecks } from '../api/decks';
-import { createTemplate } from '../api/templates';
-import type { Deck } from '../types';
+import { getTemplate, createTemplate, updateFullTemplate } from '../api/templates';
+import type { CardTemplate, Deck } from '../types';
 
 const TEMP_USER_ID = 'test-user-1';
 
@@ -26,6 +26,7 @@ export function Tabs({ activeTab, onClick }: { activeTab: CardTextInputMode; onC
 export default function CardBuilder() {
     const [decks, setDecks] = useState<Deck[]>([]);
     const [selectedDeckId, setSelectedDeckId] = useState<string>('');
+    const [existingTemplate, setExistingTemplate] = useState<CardTemplate | null>(null);
     const [frontHtml, setFrontHtml] = useState('<h2>{{Question}}</h2>\n<p>{{Hint}}</p>');
     const [backHtml, setBackHtml] = useState('<p>{{Answer}}</p>');
     const [styleHtml, setStyleHtml] = useState('h2, p {\n    color: white;\n    font-family: sans-serif;\n    text-align: center;\n}');
@@ -34,14 +35,54 @@ export default function CardBuilder() {
     const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
     const [saveMessage, setSaveMessage] = useState('');
 
+    // Prevents the [selectedDeckId] effect from firing a duplicate template fetch
+    // on the initial mount (the mount effect already starts that fetch directly).
+    const skipNextTemplateLoad = useRef(false);
+
     useEffect(() => {
         getDecks(TEMP_USER_ID)
             .then(data => {
                 setDecks(data);
-                if (data.length > 0) setSelectedDeckId(data[0].id);
+                if (data.length > 0) {
+                    const initialId = data[0].id;
+                    skipNextTemplateLoad.current = true;
+                    setSelectedDeckId(initialId);
+                    getTemplate(initialId)
+                        .then(t => {
+                            setExistingTemplate(t);
+                            if (t) {
+                                setFrontHtml(t.frontTemplate);
+                                setBackHtml(t.backTemplate);
+                                setStyleHtml(t.style);
+                            }
+                        })
+                        .catch(() => setExistingTemplate(null));
+                }
             })
             .catch(err => console.error(err));
     }, []);
+
+    // When the selected deck changes, load its existing template (if any) and
+    // pre-populate the editor so the user can see and edit what was previously saved.
+    // Skipped on initial mount because the mount effect already handles that fetch.
+    useEffect(() => {
+        if (!selectedDeckId) return;
+        if (skipNextTemplateLoad.current) {
+            skipNextTemplateLoad.current = false;
+            return;
+        }
+        setExistingTemplate(null);
+        getTemplate(selectedDeckId)
+            .then(t => {
+                setExistingTemplate(t);
+                if (t) {
+                    setFrontHtml(t.frontTemplate);
+                    setBackHtml(t.backTemplate);
+                    setStyleHtml(t.style);
+                }
+            })
+            .catch(() => setExistingTemplate(null));
+    }, [selectedDeckId]);
 
     // Which HTML to show in editor based on active tab
     const currentHtml = cardTextInputMode === 'front' ? frontHtml : cardTextInputMode === 'back' ? backHtml : styleHtml;
@@ -79,15 +120,17 @@ export default function CardBuilder() {
         const fields = [...fieldNames].map(name => ({ name, isDefault: DEFAULT_NAMES.has(name) }));
 
         try {
-            await createTemplate(selectedDeckId, TEMP_USER_ID, frontHtml, backHtml, styleHtml, fields);
+            if (existingTemplate) {
+                await updateFullTemplate(existingTemplate.id, frontHtml, backHtml, styleHtml, fields);
+            } else {
+                const created = await createTemplate(selectedDeckId, TEMP_USER_ID, frontHtml, backHtml, styleHtml, fields);
+                setExistingTemplate(created);
+            }
             setSaveStatus('saved');
             setSaveMessage('Template saved!');
-        } catch (err: unknown) {
+        } catch {
             setSaveStatus('error');
-            const message = err instanceof Error ? err.message : '';
-            setSaveMessage(message.includes('409') || message.includes('Unique')
-                ? 'A template already exists for this deck.'
-                : 'Failed to save template.');
+            setSaveMessage('Failed to save template.');
         }
 
         setTimeout(() => setSaveStatus('idle'), 3000);

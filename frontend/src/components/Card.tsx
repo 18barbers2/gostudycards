@@ -31,7 +31,6 @@ function Card( props : CardProps) {
                         justify-content: center;
                         align-items: center;
                         flex-direction: column;
-                        white-space: pre-wrap;
                         background-color: #e5e5e5ff;
                         border-width: 0;
                         min-height: 100vh;

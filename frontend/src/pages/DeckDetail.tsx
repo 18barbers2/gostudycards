@@ -153,7 +153,7 @@ export function DeckDetail() {
                         <p className="deck-detail-description">{deck.description}</p>
                     )}
 
-                    <div className="deck-stats">
+                    <div className="dd-stats">
                         <div className="stat-tile">
                             <span className="stat-number">{stats.total}</span>
                             <span className="stat-label">Total</span>

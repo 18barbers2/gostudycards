@@ -22,8 +22,7 @@
 /* ── Header ────────────────────────────────────────────────────────── */
 
 .deck-detail-header {
-    padding: 28px 36px 24px;
-    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 24px;
     flex-shrink: 0;
 }
 
@@ -45,15 +44,14 @@
     color: var(--text-primary);
 }
 
-.deck-detail-title {
-    margin: 0 0 4px;
-    font-size: 28px;
-    font-weight: 700;
-    line-height: 1.2;
+.deck-detail-title-block {
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .deck-detail-description {
-    margin: 0 0 20px;
+    margin: 6px 0 0;
     color: var(--text-secondary);
     font-size: 14px;
 }
@@ -72,6 +70,7 @@
 .stat-tile {
     background: var(--bg-secondary);
     border: 1px solid var(--border-subtle);
+    border-top: 3px solid var(--card-border-default);
     border-radius: 10px;
     padding: 12px 20px;
     display: flex;
@@ -81,6 +80,10 @@
     gap: 3px;
 }
 
+.stat-tile--due      { border-top-color: #e74c3c; }
+.stat-tile--new      { border-top-color: var(--accent-blue); }
+.stat-tile--mastered { border-top-color: var(--color-success); }
+
 .stat-number {
     font-size: 24px;
     font-weight: 700;
@@ -88,8 +91,8 @@
     color: var(--text-primary);
 }
 
-.stat-tile--due   .stat-number { color: #e74c3c; }
-.stat-tile--new   .stat-number { color: var(--accent-blue); }
+.stat-tile--due      .stat-number { color: #e74c3c; }
+.stat-tile--new      .stat-number { color: var(--accent-blue); }
 .stat-tile--mastered .stat-number { color: var(--color-success); }
 
 .stat-label {
@@ -106,7 +109,7 @@
     width: 100%;
     padding: 15px 24px;
     border: none;
-    border-radius: 12px;
+    border-radius: var(--border-radius);
     background: var(--accent-nav);
     color: white;
     font-size: 15px;
@@ -145,6 +148,7 @@
     grid-template-columns: 1fr 400px;
     align-items: start;
     flex: 1;
+    border-top: 1px solid var(--border-subtle);
 }
 
 /* ── Card list (left column) ───────────────────────────────────────── */
@@ -521,7 +525,7 @@
     z-index: 101;
     background: var(--bg-secondary);
     border: 1px solid var(--border-subtle);
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     padding: 28px;
     width: 340px;
     display: flex;

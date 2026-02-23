@@ -148,10 +148,12 @@ export function DeckDetail() {
                         ← Back to Decks
                     </button>
 
-                    <h1 className="deck-detail-title">{deck.name}</h1>
-                    {deck.description && (
-                        <p className="deck-detail-description">{deck.description}</p>
-                    )}
+                    <div className="deck-detail-title-block">
+                        <h1 className="page-title">{deck.name}</h1>
+                        {deck.description && (
+                            <p className="deck-detail-description">{deck.description}</p>
+                        )}
+                    </div>
 
                     <div className="dd-stats">
                         <div className="stat-tile">

@@ -35,6 +35,13 @@ router.post('/', async (req, res) => {
     res.json(card)
 })
 
+// DELETE a single card by id
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    await prisma.cardEntry.delete({ where: { id } });
+    res.status(204).send();
+});
+
 // PATCH rename a field key in the data JSON of every card in a deck.
 // Removes the old key and inserts a new one with the same value in a single query.
 router.patch('/rename-field', async (req, res) => {

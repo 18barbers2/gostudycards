@@ -10,6 +10,10 @@ export async function createDeck(name: string, description: string | undefined, 
     return post('/decks', { name, description, ownerId })
 }
 
+export async function getDeck(deckId: string): Promise<Deck> {
+    return get(`/decks/${deckId}`)
+}
+
 export async function deleteDeck(deckId: string): Promise<void> {
     return del(`/decks/${deckId}`)
 }

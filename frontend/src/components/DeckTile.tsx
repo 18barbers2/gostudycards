@@ -1,6 +1,7 @@
 import '../css/DeckTile.css';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface DeckTileProps {
     title?: string;
@@ -18,6 +19,7 @@ interface DeckTileProps {
 }
 
 export function DeckTile({ title, createdBy, deckId, onDelete, onRename }: DeckTileProps){
+    const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -26,7 +28,7 @@ export function DeckTile({ title, createdBy, deckId, onDelete, onRename }: DeckT
     }
 
     return (
-        <div className='deck-tile'>
+        <div className='deck-tile' onClick={() => deckId && navigate(`/decks/${deckId}`)}>
             <button
                 className='deck-menu'
                 onClick={(e) => { e.stopPropagation(); setMenuOpen(o => !o); }}
@@ -34,18 +36,18 @@ export function DeckTile({ title, createdBy, deckId, onDelete, onRename }: DeckT
 
             {menuOpen && (
                 <>
-                    <div className='deck-menu-backdrop' onClick={closeMenu} />
+                    <div className='deck-menu-backdrop' onClick={(e) => { e.stopPropagation(); closeMenu(); }} />
                     <div className='deck-menu-dropdown'>
                         <button
                             className='deck-menu-item'
                             disabled
-                            onClick={() => { onRename?.(deckId!); closeMenu(); }}
+                            onClick={(e) => { e.stopPropagation(); onRename?.(deckId!); closeMenu(); }}
                         >
                             Rename
                         </button>
                         <button
                             className='deck-menu-item deck-menu-item--danger'
-                            onClick={() => { setShowDeleteModal(true); closeMenu(); }}
+                            onClick={(e) => { e.stopPropagation(); setShowDeleteModal(true); closeMenu(); }}
                         >
                             Delete
                         </button>
@@ -55,8 +57,8 @@ export function DeckTile({ title, createdBy, deckId, onDelete, onRename }: DeckT
 
             {showDeleteModal && createPortal(
                 <>
-                    <div className='modal-overlay' onClick={() => setShowDeleteModal(false)} />
-                    <div className='modal-dialog'>
+                    <div className='modal-overlay' onClick={(e) => { e.stopPropagation(); setShowDeleteModal(false); }} />
+                    <div className='modal-dialog' onClick={(e) => e.stopPropagation()}>
                         <h3 className='modal-title'>Delete deck?</h3>
                         <p className='modal-body'>
                             <strong>"{title}"</strong> and all its cards will be permanently deleted. This can't be undone.

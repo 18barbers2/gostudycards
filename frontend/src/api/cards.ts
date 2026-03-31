@@ -1,4 +1,4 @@
-import { get, post, patch } from './client';
+import { get, post, patch, del } from './client';
 import type { CardEntry } from '../types';
 
 export async function getCards(deckId: string): Promise<CardEntry[]> {
@@ -18,6 +18,10 @@ export async function renameFieldInCards(deckId: string, oldName: string, newNam
 // Removes a field key from the data JSON of every card in a deck
 export async function removeFieldFromCards(deckId: string, fieldName: string): Promise<void> {
     return patch('/cards/remove-field', { deckId, fieldName });
+}
+
+export async function deleteCard(cardId: string): Promise<void> {
+    return del(`/cards/${cardId}`);
 }
 
 export async function createCard(

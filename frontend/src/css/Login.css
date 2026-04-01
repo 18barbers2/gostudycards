@@ -1,0 +1,117 @@
+.login-bg {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg, #1e2025);
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.login-card {
+    background: var(--panel, #252830);
+    border: 1px solid var(--border, rgba(255,255,255,0.08));
+    border-radius: 20px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    padding: 52px 48px 44px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    animation: loginFadeUp 1.0s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes loginFadeUp {
+    from { opacity: 0; transform: translateY(18px);}
+    to { opacity: 1; transform: translateY(0px);}
+}
+
+.login-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text, #e8eaf0);
+    letter-spacing: -0.4px;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.login-subtitle {
+    font-size: 0.82rem;
+    color: var(--muted, #6b7080);
+    text-align: center;
+    margin-bottom: 36px;
+    line-height: 1.5;
+}
+
+.login-button {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 11px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.login-button:active { transform: scale(0.985); }
+
+.login-button--primary {
+  background: linear-gradient(135deg, #3a4a6b, #4a5a8a);
+  border: 1px solid rgba(91,140,245,0.28);
+  color: var(--text, #e8eaf0);
+}
+
+.login-button--primary:hover {
+  background: linear-gradient(135deg, #4a5a80, #5a6a9a);
+  border-color: rgba(91,140,245,0.45);
+}
+
+.login-button--ghost {
+  background: transparent;
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  color: var(--muted, #6b7080);
+}
+
+.login-button--ghost:hover {
+  background: var(--surface, #2d3038);
+  color: var(--text, #e8eaf0);
+  border-color: rgba(255,255,255,0.14);
+}
+
+.login-divider {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px 0px;
+}
+
+.login-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border, rgba(255,255,255,0.08));
+    margin: 0px 10px;
+}
+
+.login-divider-text {
+    color: var(--muted, #6b7080);
+    letter-spacing: 0.04em;
+}
+
+.login-note {
+  margin-top: 28px;
+  font-size: 0.72rem;
+  color: var(--muted, #6b7080);
+  text-align: center;
+  line-height: 1.6;
+  opacity: 0.7;
+}
+
+.login-note span {
+  color: rgba(91,140,245,0.7);
+}

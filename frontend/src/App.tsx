@@ -6,6 +6,7 @@ import Decks from './pages/Decks.tsx';
 import DeckDetail from './pages/DeckDetail.tsx';
 import Home from './pages/Home.tsx';
 import Study from './pages/Study.tsx';
+import Login from "./pages/Login.tsx";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home></Home>}/>
+        <Route path="/login" element={<Login/>}/>
         <Route path="/add-card" element={<AddCard/>}/>
         <Route path="/card-builder" element={<CardBuilder/>}/>
         <Route path="/decks" element={<Decks/>}/>

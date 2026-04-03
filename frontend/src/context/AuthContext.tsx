@@ -13,7 +13,7 @@ export function AuthProvider({ children } : any ) {
         <AuthContext.Provider value= {{ isGuest, loginAsGuest }}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 }
 
 export function useAuth() {

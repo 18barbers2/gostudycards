@@ -1,17 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import '../css/Login.css'
+import { useAuth } from "../context/AuthContext";
 
 
 export default function Login() {
+
+    const { loginAsGuest } = useAuth();
+
     const navigate = useNavigate();
 
     const handleGuest = () =>  {
         // Wire to loginAsGuest() later
+        loginAsGuest();
         navigate('/');
     };
 
     const handleLogin = () => {
-        // Wire to loginAsuse() later
+        // Wire to loginAsuser() later
         navigate('/');
     };
 
@@ -29,7 +34,7 @@ export default function Login() {
                     <span className="login-divider-line"/>
                 </div>
 
-                <button className="login-button login-button--ghost">Continue as Guest</button>
+                <button className="login-button login-button--ghost" onClick={handleLogin}>Continue as Guest</button>
 
                 <p className="login-note">
                     Guest sessions are temporary.{' '}

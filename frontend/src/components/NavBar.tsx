@@ -5,11 +5,12 @@ import { useState } from "react";
 export function NavBar() {
     const location = useLocation();
 
-    if (location.pathname === '/login') return null;
     
     const [collapsed, setCollapsed] = useState(
         () => localStorage.getItem('navCollapsed') === 'true'
     );
+    
+    if (location.pathname === '/login') return null;
 
     const toggleCollapsed = () => {
         setCollapsed(prev => {

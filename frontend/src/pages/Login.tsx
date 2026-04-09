@@ -15,11 +15,6 @@ export default function Login() {
         navigate('/');
     };
 
-    const handleLogin = () => {
-        // Wire to loginAsuser() later
-        navigate('/');
-    };
-
     return (
         <div className="login-bg">
             <div className="login-card">
@@ -34,7 +29,7 @@ export default function Login() {
                     <span className="login-divider-line"/>
                 </div>
 
-                <button className="login-button login-button--ghost" onClick={handleLogin}>Continue as Guest</button>
+                <button className="login-button login-button--ghost" onClick={handleGuest}>Continue as Guest</button>
 
                 <p className="login-note">
                     Guest sessions are temporary.{' '}

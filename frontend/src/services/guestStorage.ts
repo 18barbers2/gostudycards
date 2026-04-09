@@ -1,0 +1,202 @@
+// guestStorage.ts
+// All guest data lives in the browser's localStorage under these keys.
+// MOCK_DECKS are the read-only sample decks every guest can browse.
+// Anything the guest creates (decks, cards, templates) is saved here and
+// disappears when they clear their browser data or we call clearGuestData().
+
+import { MOCK_DECKS } from '../data/decks';
+import type { Deck, CardEntry, CardTemplate, CardField } from '../types';
+
+const DECKS_KEY     = 'gsc_decks';
+const CARDS_KEY     = 'gsc_cards';
+const TEMPLATES_KEY = 'gsc_templates';
+
+// ── Internal helpers ──────────────────────────────────────────────────────────
+
+function loadJSON<T>(key: string): T[] {
+    try {
+        return JSON.parse(localStorage.getItem(key) ?? '[]');
+    } catch {
+        return [];
+    }
+}
+
+function saveJSON<T>(key: string, data: T[]): void {
+    localStorage.setItem(key, JSON.stringify(data));
+}
+
+// ── Decks ─────────────────────────────────────────────────────────────────────
+
+export function getDecks(): Deck[] {
+    const guestDecks = loadJSON<Deck>(DECKS_KEY);
+    // Sample decks come first so they appear at the top of the list
+    return [...MOCK_DECKS, ...guestDecks];
+}
+
+export function getDeck(deckId: string): Deck | null {
+    const mock = MOCK_DECKS.find(d => d.id === deckId);
+    if (mock) return mock;
+    const guestDecks = loadJSON<Deck>(DECKS_KEY);
+    return guestDecks.find(d => d.id === deckId) ?? null;
+}
+
+export function createDeck(name: string, description: string | undefined, ownerId: string): Deck {
+    const deck: Deck = {
+        id: crypto.randomUUID(),
+        name,
+        description,
+        ownerId,
+        cardIds: [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+    };
+    const existing = loadJSON<Deck>(DECKS_KEY);
+    saveJSON(DECKS_KEY, [...existing, deck]);
+    return deck;
+}
+
+export function deleteDeck(deckId: string): void {
+    // Sample decks (MOCK_DECKS) are read-only — silently ignore attempts to delete them
+    const decks = loadJSON<Deck>(DECKS_KEY);
+    saveJSON(DECKS_KEY, decks.filter(d => d.id !== deckId));
+    // Clean up any cards and templates that belong to this deck too
+    const cards = loadJSON<CardEntry>(CARDS_KEY);
+    saveJSON(CARDS_KEY, cards.filter(c => c.deckId !== deckId));
+    const templates = loadJSON<CardTemplate>(TEMPLATES_KEY);
+    saveJSON(TEMPLATES_KEY, templates.filter(t => t.deckId !== deckId));
+}
+
+// ── Cards ─────────────────────────────────────────────────────────────────────
+
+export function getCards(deckId: string): CardEntry[] {
+    return loadJSON<CardEntry>(CARDS_KEY).filter(c => c.deckId === deckId);
+}
+
+export function createCard(templateId: string, deckId: string, data: Record<string, string>): CardEntry {
+    const card: CardEntry = {
+        id: crypto.randomUUID(),
+        templateId,
+        deckId,
+        data,
+        nextReviewAt: new Date().toISOString(),
+        interval: 0,
+        easeFactor: 2.5,
+        reviewCount: 0,
+    };
+    const existing = loadJSON<CardEntry>(CARDS_KEY);
+    saveJSON(CARDS_KEY, [...existing, card]);
+    return card;
+}
+
+export function deleteCard(cardId: string): void {
+    const cards = loadJSON<CardEntry>(CARDS_KEY);
+    saveJSON(CARDS_KEY, cards.filter(c => c.id !== cardId));
+}
+
+export function getFieldUsageCount(deckId: string, fieldName: string): number {
+    return getCards(deckId).filter(c => fieldName in c.data).length;
+}
+
+export function renameFieldInCards(deckId: string, oldName: string, newName: string): void {
+    const cards = loadJSON<CardEntry>(CARDS_KEY);
+    const updated = cards.map(c => {
+        if (c.deckId !== deckId || !(oldName in c.data)) return c;
+        const data = { ...c.data, [newName]: c.data[oldName] };
+        delete data[oldName];
+        return { ...c, data };
+    });
+    saveJSON(CARDS_KEY, updated);
+}
+
+export function removeFieldFromCards(deckId: string, fieldName: string): void {
+    const cards = loadJSON<CardEntry>(CARDS_KEY);
+    const updated = cards.map(c => {
+        if (c.deckId !== deckId) return c;
+        const data = { ...c.data };
+        delete data[fieldName];
+        return { ...c, data };
+    });
+    saveJSON(CARDS_KEY, updated);
+}
+
+// ── Templates ─────────────────────────────────────────────────────────────────
+
+export function getTemplate(deckId: string): CardTemplate | null {
+    return loadJSON<CardTemplate>(TEMPLATES_KEY).find(t => t.deckId === deckId) ?? null;
+}
+
+export function createTemplate(
+    deckId: string,
+    ownerId: string,
+    frontTemplate: string,
+    backTemplate: string,
+    style: string,
+    fields: Array<{ name: string; isDefault: boolean }>
+): CardTemplate {
+    const template: CardTemplate = {
+        id: crypto.randomUUID(),
+        deckId,
+        ownerId,
+        frontTemplate,
+        backTemplate,
+        style,
+        // The backend normally generates field IDs — we do it ourselves here
+        fields: fields.map(f => ({ id: crypto.randomUUID(), name: f.name, isDefault: f.isDefault })),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+    };
+    const existing = loadJSON<CardTemplate>(TEMPLATES_KEY);
+    saveJSON(TEMPLATES_KEY, [...existing, template]);
+    return template;
+}
+
+export function updateTemplate(
+    templateId: string,
+    fields: Array<{ name: string; isDefault: boolean }>
+): CardTemplate | null {
+    const templates = loadJSON<CardTemplate>(TEMPLATES_KEY);
+    const existing = templates.find(t => t.id === templateId);
+    if (!existing) return null;
+    // Preserve IDs for existing fields so references stay stable; generate new IDs for new fields
+    const updatedFields: CardField[] = fields.map(f => {
+        const match = existing.fields.find(ef => ef.name === f.name);
+        return { id: match?.id ?? crypto.randomUUID(), name: f.name, isDefault: f.isDefault };
+    });
+    const updated: CardTemplate = { ...existing, fields: updatedFields, updatedAt: new Date().toISOString() };
+    saveJSON(TEMPLATES_KEY, templates.map(t => t.id === templateId ? updated : t));
+    return updated;
+}
+
+export function updateFullTemplate(
+    templateId: string,
+    frontTemplate: string,
+    backTemplate: string,
+    style: string,
+    fields: Array<{ name: string; isDefault: boolean }>
+): CardTemplate | null {
+    const templates = loadJSON<CardTemplate>(TEMPLATES_KEY);
+    const existing = templates.find(t => t.id === templateId);
+    if (!existing) return null;
+    const updatedFields: CardField[] = fields.map(f => {
+        const match = existing.fields.find(ef => ef.name === f.name);
+        return { id: match?.id ?? crypto.randomUUID(), name: f.name, isDefault: f.isDefault };
+    });
+    const updated: CardTemplate = {
+        ...existing,
+        frontTemplate,
+        backTemplate,
+        style,
+        fields: updatedFields,
+        updatedAt: new Date().toISOString(),
+    };
+    saveJSON(TEMPLATES_KEY, templates.map(t => t.id === templateId ? updated : t));
+    return updated;
+}
+
+// ── Cleanup ───────────────────────────────────────────────────────────────────
+
+export function clearGuestData(): void {
+    localStorage.removeItem(DECKS_KEY);
+    localStorage.removeItem(CARDS_KEY);
+    localStorage.removeItem(TEMPLATES_KEY);
+}

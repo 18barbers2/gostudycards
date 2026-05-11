@@ -1,21 +1,19 @@
-import { get, post, patch } from './client';
+import * as guest from '../services/guestStorage';
 import type { CardTemplate } from '../types';
 
 export async function getTemplate(deckId: string): Promise<CardTemplate | null> {
-    return get(`/templates?deckId=${deckId}`);
+    return guest.getTemplate(deckId);
 }
 
-// Replaces the template's field list with the provided array.
-// Used when the user adds or removes custom fields from the Add Card page.
 export async function updateTemplate(
     templateId: string,
     fields: Array<{ name: string; isDefault: boolean }>
 ): Promise<CardTemplate> {
-    return patch(`/templates/${templateId}`, { fields });
+    const result = guest.updateTemplate(templateId, fields);
+    if (!result) throw new Error(`Template ${templateId} not found`);
+    return result;
 }
 
-// Replaces the full template (HTML, style, and fields) for an existing template.
-// Used by CardBuilder when saving changes to a deck that already has a template.
 export async function updateFullTemplate(
     templateId: string,
     frontTemplate: string,
@@ -23,7 +21,9 @@ export async function updateFullTemplate(
     style: string,
     fields: Array<{ name: string; isDefault: boolean }>
 ): Promise<CardTemplate> {
-    return patch(`/templates/${templateId}`, { frontTemplate, backTemplate, style, fields });
+    const result = guest.updateFullTemplate(templateId, frontTemplate, backTemplate, style, fields);
+    if (!result) throw new Error(`Template ${templateId} not found`);
+    return result;
 }
 
 export async function createTemplate(
@@ -34,5 +34,5 @@ export async function createTemplate(
     style: string,
     fields: Array<{ name: string; isDefault: boolean }>
 ): Promise<CardTemplate> {
-    return post('/templates', { deckId, ownerId, frontTemplate, backTemplate, style, fields });
+    return guest.createTemplate(deckId, ownerId, frontTemplate, backTemplate, style, fields);
 }

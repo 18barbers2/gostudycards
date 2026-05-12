@@ -19,22 +19,33 @@ const AuthContext = createContext<AuthContextType>({
 
 export function AuthProvider({ children } : any ) {
 
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [isGuest, setIsGuest] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        return localStorage.getItem('isAuthenticated') === 'true'
+    });
+
+    const [isGuest, setIsGuest] = useState(() => {
+        return localStorage.getItem('isGuest') === 'true'
+    });
 
     const login = () => {
         setIsAuthenticated(true);
         setIsGuest(false);
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('isGuest', 'false')
     };
 
     const loginAsGuest = () => {
         setIsAuthenticated(true);
         setIsGuest(true);
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('isGuest', 'true')
     };
 
     const logout = () => {
         setIsAuthenticated(false);
         setIsGuest(false);
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('isGuest');
     };
 
     return (

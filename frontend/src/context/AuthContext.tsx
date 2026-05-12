@@ -1,16 +1,44 @@
 import { createContext, useContext, useState } from "react";
 
-const AuthContext = createContext({ isGuest: true, loginAsGuest: () => {}});
+interface AuthContextType {
+    isAuthenticated: boolean;
+    isGuest: boolean;
+    login: () => void;
+    loginAsGuest: () => void;
+    logout: () => void;
+}
+
+const AuthContext = createContext<AuthContextType>({
+    isAuthenticated: false,
+    isGuest: false,
+    login: () => {},
+    loginAsGuest: () => {},
+    logout: () => {},
+});
 
 
 export function AuthProvider({ children } : any ) {
 
-    // Set guest state and default to true
-    const [isGuest, setIsGuest] = useState(true);
-    const loginAsGuest = () => setIsGuest(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isGuest, setIsGuest] = useState(false);
+
+    const login = () => {
+        setIsAuthenticated(true);
+        setIsGuest(false);
+    };
+
+    const loginAsGuest = () => {
+        setIsAuthenticated(true);
+        setIsGuest(true);
+    };
+
+    const logout = () => {
+        setIsAuthenticated(false);
+        setIsGuest(false);
+    };
 
     return (
-        <AuthContext.Provider value= {{ isGuest, loginAsGuest }}>
+        <AuthContext.Provider value={{ isAuthenticated, isGuest, login, loginAsGuest, logout }}>
             {children}
         </AuthContext.Provider>
     );

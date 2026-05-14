@@ -5,6 +5,7 @@
 // disappears when they clear their browser data or we call clearGuestData().
 
 import { MOCK_DECKS } from '../data/decks';
+import { MOCK_CARDS, MOCK_TEMPLATES } from '../data/mockStudyData';
 import type { Deck, CardEntry, CardTemplate, CardField, ReviewLog } from '../types';
 
 const DECKS_KEY     = 'gsc_decks';
@@ -79,7 +80,9 @@ export function deleteDeck(deckId: string): void {
 // ── Cards ─────────────────────────────────────────────────────────────────────
 
 export function getCards(deckId: string): CardEntry[] {
-    return loadJSON<CardEntry>(CARDS_KEY).filter(c => c.deckId === deckId);
+    const mockCards = MOCK_CARDS.filter(c => c.deckId === deckId);
+    const guestCards = loadJSON<CardEntry>(CARDS_KEY).filter(c => c.deckId === deckId);
+    return [...mockCards, ...guestCards];
 }
 
 export function createCard(templateId: string, deckId: string, data: Record<string, string>): CardEntry {
@@ -132,7 +135,9 @@ export function removeFieldFromCards(deckId: string, fieldName: string): void {
 // ── Templates ─────────────────────────────────────────────────────────────────
 
 export function getTemplate(deckId: string): CardTemplate | null {
-    return loadJSON<CardTemplate>(TEMPLATES_KEY).find(t => t.deckId === deckId) ?? null;
+    const guestTemplate = loadJSON<CardTemplate>(TEMPLATES_KEY).find(t => t.deckId === deckId);
+    if (guestTemplate) return guestTemplate;
+    return MOCK_TEMPLATES.find(t => t.deckId === deckId) ?? null;
 }
 
 export function createTemplate(

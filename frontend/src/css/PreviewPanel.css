@@ -8,6 +8,22 @@
     box-sizing: border-box;
 }
 
+@media (max-width: 1024px) {
+    .preview-pane {
+        height: auto;
+        overflow: visible;
+    }
+
+    .preview-pane-body {
+        flex: none;
+        min-height: unset;
+    }
+
+    .preview-card-wrapper {
+        max-height: none;
+    }
+}
+
 .preview-pane-header {
     display: flex;
     align-items: center;

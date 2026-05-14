@@ -88,7 +88,12 @@
     padding: 6px 8px;
     border-radius: 6px;
     font-size: 0.875rem;
+    flex: 1;
     transition: background 0.15s ease, color 0.15s ease;
+}
+
+.navbar--collapsed .navbar-logout {
+    flex: 0;
 }
 
 .navbar-logout:hover {

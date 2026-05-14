@@ -1,5 +1,4 @@
-import { Routes, Route, Navigate, useLocation} from "react-router-dom";
-import NavBar from './components/NavBar.tsx';
+import { Routes, Route, Navigate } from "react-router-dom";
 import CardBuilder from './pages/CardBuilder.tsx';
 import AddCard from './pages/AddCard.tsx';
 import Decks from './pages/Decks.tsx';
@@ -11,12 +10,8 @@ import { AuthProvider } from "./context/AuthContext.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 function AppLayout() {
-  const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
-
   return (
     <div className="app">
-      {!isLoginPage && <NavBar/>}
       <Routes>
         <Route path="/login" element={<Login/>}/>
         <Route path="/" element={<ProtectedRoute><Home/></ProtectedRoute>}/>

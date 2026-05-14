@@ -17,6 +17,18 @@ router.get('/field-count', async (req, res) => {
     res.json({ count: Number(result[0].count) })
 })
 
+// GET cards due for review in a deck (nextReviewAt <= now)
+router.get('/due', async (req, res) => {
+    const { deckId } = req.query
+    const cards = await prisma.cardEntry.findMany({
+        where: {
+            deckId: String(deckId),
+            nextReviewAt: { lte: new Date() },
+        },
+    })
+    res.json(cards)
+})
+
 // GET all cards for a deck
 router.get('/', async (req, res) => {
     const { deckId } = req.query
@@ -66,6 +78,66 @@ router.patch('/remove-field', async (req, res) => {
         WHERE "deckId" = ${deckId}
     `
     res.json({ updatedCount: result })
+})
+
+// PATCH update a card's SRS fields after a review and write a ReviewLog entry
+router.patch('/:id/review', async (req, res) => {
+    const { id } = req.params
+    const { rating, userId, deckId } = req.body
+
+    const card = await prisma.cardEntry.findUnique({ where: { id } })
+    if (!card) return res.status(404).json({ error: 'Card not found' })
+
+    const previousInterval = card.interval
+    let { interval, easeFactor, reviewCount } = card
+
+    switch (rating) {
+        case 'retry':
+            interval = 1
+            easeFactor = Math.max(1.3, easeFactor - 0.2)
+            break
+        case 'hard':
+            interval = Math.max(1, Math.round(interval * 1.2))
+            easeFactor = Math.max(1.3, easeFactor - 0.15)
+            break
+        case 'medium':
+            interval = Math.round(interval * easeFactor)
+            break
+        case 'easy':
+            interval = Math.round(interval * easeFactor * 1.3)
+            easeFactor = Math.min(4.0, easeFactor + 0.1)
+            break
+        default:
+            return res.status(400).json({ error: 'Invalid rating' })
+    }
+
+    interval = Math.max(1, interval)
+    reviewCount += 1
+
+    const nextReviewAt = new Date()
+    nextReviewAt.setDate(nextReviewAt.getDate() + interval)
+
+    const MASTERY_THRESHOLD = 21
+    const masteredAt = !card.masteredAt && interval >= MASTERY_THRESHOLD ? new Date() : card.masteredAt
+
+    const [updatedCard] = await prisma.$transaction([
+        prisma.cardEntry.update({
+            where: { id },
+            data: { interval, easeFactor, reviewCount, nextReviewAt, masteredAt },
+        }),
+        prisma.reviewLog.create({
+            data: {
+                cardId: id,
+                deckId: String(deckId),
+                userId: String(userId),
+                rating,
+                previousInterval,
+                newInterval: interval,
+            },
+        }),
+    ])
+
+    res.json(updatedCard)
 })
 
 export default router

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { clearGuestData } from "../services/guestStorage";
 
 interface AuthContextType {
     isAuthenticated: boolean;
@@ -46,6 +47,7 @@ export function AuthProvider({ children } : any ) {
         setIsGuest(false);
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('isGuest');
+        clearGuestData();
     };
 
     return (

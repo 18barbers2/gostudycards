@@ -5,11 +5,22 @@
 // disappears when they clear their browser data or we call clearGuestData().
 
 import { MOCK_DECKS } from '../data/decks';
-import type { Deck, CardEntry, CardTemplate, CardField } from '../types';
+import { MOCK_CARDS, MOCK_TEMPLATES } from '../data/mockStudyData';
+import type { Deck, CardEntry, CardTemplate, CardField, ReviewLog } from '../types';
 
 const DECKS_KEY     = 'gsc_decks';
 const CARDS_KEY     = 'gsc_cards';
 const TEMPLATES_KEY = 'gsc_templates';
+const CARD_SRS_KEY  = 'gsc_card_srs';
+const REVIEW_LOGS_KEY = 'gsc_review_logs';
+
+type CardSRSState = {
+    interval: number;
+    easeFactor: number;
+    nextReviewAt: string;
+    reviewCount: number;
+    masteredAt?: string;
+};
 
 // ── Internal helpers ──────────────────────────────────────────────────────────
 
@@ -69,7 +80,9 @@ export function deleteDeck(deckId: string): void {
 // ── Cards ─────────────────────────────────────────────────────────────────────
 
 export function getCards(deckId: string): CardEntry[] {
-    return loadJSON<CardEntry>(CARDS_KEY).filter(c => c.deckId === deckId);
+    const mockCards = MOCK_CARDS.filter(c => c.deckId === deckId);
+    const guestCards = loadJSON<CardEntry>(CARDS_KEY).filter(c => c.deckId === deckId);
+    return [...mockCards, ...guestCards];
 }
 
 export function createCard(templateId: string, deckId: string, data: Record<string, string>): CardEntry {
@@ -122,7 +135,9 @@ export function removeFieldFromCards(deckId: string, fieldName: string): void {
 // ── Templates ─────────────────────────────────────────────────────────────────
 
 export function getTemplate(deckId: string): CardTemplate | null {
-    return loadJSON<CardTemplate>(TEMPLATES_KEY).find(t => t.deckId === deckId) ?? null;
+    const guestTemplate = loadJSON<CardTemplate>(TEMPLATES_KEY).find(t => t.deckId === deckId);
+    if (guestTemplate) return guestTemplate;
+    return MOCK_TEMPLATES.find(t => t.deckId === deckId) ?? null;
 }
 
 export function createTemplate(
@@ -193,10 +208,57 @@ export function updateFullTemplate(
     return updated;
 }
 
+// ── SRS overlay ───────────────────────────────────────────────────────────────
+
+function loadSRSMap(): Record<string, CardSRSState> {
+    try {
+        return JSON.parse(localStorage.getItem(CARD_SRS_KEY) ?? '{}');
+    } catch {
+        return {};
+    }
+}
+
+export function updateCardSRS(cardId: string, patch: Partial<CardSRSState>): void {
+    const map = loadSRSMap();
+    map[cardId] = { ...map[cardId], ...patch } as CardSRSState;
+    localStorage.setItem(CARD_SRS_KEY, JSON.stringify(map));
+}
+
+export function getDueCards(deckId: string): CardEntry[] {
+    const cards = getCards(deckId);
+    const srsMap = loadSRSMap();
+    const now = new Date();
+    return cards
+        .map(card => ({ ...card, ...srsMap[card.id] }))
+        .filter(card => new Date(card.nextReviewAt) <= now);
+}
+
+// ── Review logs ───────────────────────────────────────────────────────────────
+
+export function addReviewLog(log: Omit<ReviewLog, 'id'>): void {
+    const logs = loadJSON<ReviewLog>(REVIEW_LOGS_KEY);
+    saveJSON(REVIEW_LOGS_KEY, [...logs, { ...log, id: crypto.randomUUID() }]);
+}
+
+export function getWeeklyActivity(): { date: string; count: number }[] {
+    const logs = loadJSON<ReviewLog>(REVIEW_LOGS_KEY);
+    const days = Array.from({ length: 7 }, (_, i) => {
+        const d = new Date();
+        d.setDate(d.getDate() - (6 - i));
+        return d.toISOString().slice(0, 10);
+    });
+    return days.map(date => ({
+        date,
+        count: logs.filter(l => l.reviewedAt.slice(0, 10) === date).length,
+    }));
+}
+
 // ── Cleanup ───────────────────────────────────────────────────────────────────
 
 export function clearGuestData(): void {
     localStorage.removeItem(DECKS_KEY);
     localStorage.removeItem(CARDS_KEY);
     localStorage.removeItem(TEMPLATES_KEY);
+    localStorage.removeItem(CARD_SRS_KEY);
+    localStorage.removeItem(REVIEW_LOGS_KEY);
 }

@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import deckRoutes from './routes/decks.js'
 import cardRoutes from './routes/cards.js'
 import templateRoutes from './routes/templates.js'
+import reviewLogRoutes from './routes/review-logs.js'
 
 dotenv.config()
 
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use('/api/decks', deckRoutes)
 app.use('/api/cards', cardRoutes)
 app.use('/api/templates', templateRoutes)
+app.use('/api/review-logs', reviewLogRoutes)
 
 // Health check route — confirms server is running
 app.get('/health', (req, res) => {

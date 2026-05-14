@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import '../css/DashboardCard.css';
 
 interface DashboardCardProps {
@@ -54,10 +55,13 @@ export function PieChartCardContent() {
 }
 
 export function QuickActionsContent() {
+    const navigate = useNavigate();
     return (
         <div className='quick-action-buttons'>
-            <button className="quick-action-btn">Study Now</button>
-            <button className="quick-action-btn">Add New Card</button>
+            <button className="quick-action-btn" onClick={() => navigate('/study')}>Study Now</button>
+            <button className="quick-action-btn" onClick={() => navigate('/add-card')}>Add New Card</button>
+            <button className="quick-action-btn" onClick={() => navigate('/decks')}>View Decks</button>
+            <button className="quick-action-btn" onClick={() => navigate('/card-builder')}>Card Builder</button>
         </div>
     );
 }

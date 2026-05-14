@@ -50,7 +50,7 @@ function StudyCard({ card, isFlipped, onFlip }: { card: StudyCardData; isFlipped
     );
 }
 
-function DeckOption({ id, name, description, cardsDue, onClick }: DeckStudyInfo & { onClick: () => void }) {
+function DeckOption({ name, description, cardsDue, onClick }: Omit<DeckStudyInfo, 'id'> & { onClick: () => void }) {
     return (
         <div className="deck-option" onClick={onClick}>
             <div className="deck-info">
@@ -87,8 +87,17 @@ function StudyInterface({ deck, userId, onExit }: { deck: DeckStudyInfo; userId:
 
     const handleRate = async (rating: string) => {
         const currentCard = cards[currentIndex];
-        await submitReview(currentCard.id, rating, userId, deck.id, currentCard);
-        setCurrentIndex(i => i + 1);
+        if (rating === 'retry') {
+            // Re-queue at the end of the session — don't log as a completed review
+            setCards(prev => [
+                ...prev.slice(0, currentIndex),
+                ...prev.slice(currentIndex + 1),
+                currentCard,
+            ]);
+        } else {
+            await submitReview(currentCard.id, rating, userId, deck.id, currentCard);
+            setCurrentIndex(i => i + 1);
+        }
         setIsFlipped(false);
     };
 

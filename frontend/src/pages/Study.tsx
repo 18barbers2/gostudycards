@@ -197,6 +197,8 @@ export function Study() {
     const [selectedDeck, setSelectedDeck] = useState<DeckStudyInfo | null>(null);
 
     useEffect(() => {
+        if (selectedDeck) return;
+        setLoading(true);
         async function load() {
             const allDecks = await getDecks(userId);
             const withDue = await Promise.all(
@@ -209,7 +211,7 @@ export function Study() {
             setLoading(false);
         }
         load();
-    }, []);
+    }, [selectedDeck]);
 
     return (
         <Layout>

@@ -77,6 +77,25 @@
     border-top: 1px solid var(--border-subtle);
 }
 
+.navbar-logout {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.navbar-logout:hover {
+    background: var(--border-subtle);
+    color: var(--color-danger);
+}
+
 .navbar-toggle {
     background: none;
     border: none;
@@ -107,6 +126,8 @@
 
 .navbar--collapsed .navbar-footer {
     justify-content: center;
+    gap: 4px;
+    padding: 8px;
 }
 
 /* ── Mobile — top bar (hide toggle, go horizontal) ── */

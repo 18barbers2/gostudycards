@@ -13,6 +13,7 @@
     z-index: 100;
     box-shadow: #1a1a1a 0px 0px 10px;
     transition: width 0.2s ease;
+    overflow: hidden;
 }
 
 .navbar.navbar--collapsed {

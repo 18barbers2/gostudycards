@@ -11,7 +11,7 @@
 
 /* Skeleton tile — shown while decks are loading, mirrors .deck-tile proportions */
 .deck-tile-skeleton {
-    width: 200px;
+    width: 100%;
     height: 320px;
     background-color: var(--bg-secondary);
     border-left: 10px solid var(--bg-tertiary);
@@ -34,7 +34,7 @@
 }
 
 .add-deck-tile {
-    width: 200px;
+    width: 100%;
     height: 320px;
     background: transparent;
     color: var(--text-muted);
@@ -60,7 +60,7 @@
 }
 
 .add-deck-form-tile {
-    width: 200px;
+    width: 100%;
     height: 320px;
     background: transparent;
     border: 1.5px dashed var(--border-default);
@@ -117,4 +117,18 @@
 
 .add-deck-cancel:hover {
     color: var(--text-secondary);
+}
+
+@media (max-width: 770px) {
+    .decks {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .deck-tile,
+    .deck-tile-skeleton,
+    .add-deck-tile,
+    .add-deck-form-tile {
+        height: 200px;
+    }
 }

@@ -300,23 +300,32 @@
     background-color: var(--border-default);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 770px) {
     .add-card-page {
         overflow-y: auto;
         height: auto;
     }
 
     .workspace {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        overflow: visible;
+        min-height: unset;
+        flex: none;
     }
 
     /* On mobile, input-column can grow freely since the page itself scrolls */
     .input-column {
         overflow: visible;
+        min-height: unset;
+        flex: none;
+        height: auto;
     }
 
     .input-section {
         overflow-y: visible;
+        flex: none;
+        min-height: unset;
     }
 
     .deck-selector {

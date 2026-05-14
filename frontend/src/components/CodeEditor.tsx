@@ -4,6 +4,7 @@ import '../css/CodeEditor.css';
 
 export interface CodeEditorHandle {
     insertAtCursor: (text: string) => void;
+    applyFormat: (format: string) => void;
 }
 
 interface CodeEditorProps {
@@ -22,7 +23,35 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
 
     useImperativeHandle(ref, () => ({
-        insertAtCursor: (text: string) => { /* ... */ }
+        insertAtCursor: (text: string) => { /* ... */ },
+        applyFormat: (format: string) => {
+            const textarea = textareaRef.current;
+            if (!textarea) return;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selected = textarea.value.substring(start, end);
+            let wrapped = selected;
+            switch (format) {
+                case 'bold':           wrapped = `<b>${selected}</b>`;                                 break;
+                case 'italic':         wrapped = `<i>${selected}</i>`;                                 break;
+                case 'underline':      wrapped = `<u>${selected}</u>`;                                 break;
+                case 'strikethrough':  wrapped = `<s>${selected}</s>`;                                 break;
+                case 'superscript':    wrapped = `<sup>${selected}</sup>`;                             break;
+                case 'subscript':      wrapped = `<sub>${selected}</sub>`;                             break;
+                case 'ordered_list':   wrapped = `<ol><li>${selected}</li></ol>`;                      break;
+                case 'unordered_list': wrapped = `<ul><li>${selected}</li></ul>`;                      break;
+                case 'center_align':   wrapped = `<div style="text-align:center;">${selected}</div>`;  break;
+                case 'highlight':      wrapped = `<mark>${selected}</mark>`;                           break;
+                case 'clear':          wrapped = selected;                                             break;
+                default:               wrapped = selected;
+            }
+            const newValue = textarea.value.substring(0, start) + wrapped + textarea.value.substring(end);
+            onChange(newValue);
+            setTimeout(() => {
+                textarea.focus();
+                textarea.setSelectionRange(start + wrapped.length, start + wrapped.length);
+            }, 0);
+        },
     }));
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

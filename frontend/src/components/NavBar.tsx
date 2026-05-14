@@ -1,11 +1,13 @@
 import '../css/NavBar.css';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 export function NavBar() {
     const location = useLocation();
+    const navigate = useNavigate();
+    const { logout } = useAuth();
 
-    
     const [collapsed, setCollapsed] = useState(
         () => localStorage.getItem('navCollapsed') === 'true'
     );
@@ -47,6 +49,10 @@ export function NavBar() {
                 ))}
             </ul>
             <div className="navbar-footer">
+                <button className="navbar-logout" onClick={() => { logout(); navigate('/login'); }}>
+                    <span className="material-symbols-outlined">logout</span>
+                    {!collapsed && <span className="nav-label">Logout</span>}
+                </button>
                 <button className="navbar-toggle" onClick={toggleCollapsed}>
                     <span className="material-symbols-outlined">
                         {collapsed ? 'chevron_right' : 'chevron_left'}

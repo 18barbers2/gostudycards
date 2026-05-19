@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import '../css/CardBuilder.css';
 import { Layout } from '../components/Layout/Layout';
 import { EditorFormatControls } from '../components/EditorFormatControls';
-import CodeEditor from '../components/CodeEditor.tsx';
+import CodeEditor, { type CodeEditorHandle } from '../components/CodeEditor.tsx';
 import PreviewPanel from '../components/PreviewPanel.tsx';
 import { getDecks } from '../api/decks';
 import { getTemplate, createTemplate, updateFullTemplate } from '../api/templates';
@@ -34,6 +34,8 @@ export default function CardBuilder() {
     const [previewSide, setPreviewSide] = useState<'front' | 'back'>('front');
     const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
     const [saveMessage, setSaveMessage] = useState('');
+
+    const codeEditorRef = useRef<CodeEditorHandle>(null);
 
     // Prevents the [selectedDeckId] effect from firing a duplicate template fetch
     // on the initial mount (the mount effect already starts that fetch directly).
@@ -101,6 +103,10 @@ export default function CardBuilder() {
 
     const handleFlip = () => {
         setPreviewSide(prev => prev === 'front' ? 'back' : 'front');
+    };
+
+    const handleFormat = (format: string) => {
+        codeEditorRef.current?.applyFormat(format);
     };
 
     const handleInsert = (_text: string) => {
@@ -172,10 +178,10 @@ export default function CardBuilder() {
                 {/* Editor controls — tabs and format toolbar are both editor-level tools */}
                 <div className='editor-controls'>
                     <Tabs activeTab={cardTextInputMode} onClick={handleTabChange} />
-                    <EditorFormatControls handleFormat={() => {}} />
+                    <EditorFormatControls handleFormat={handleFormat} disabled={cardTextInputMode === 'style'} />
                 </div>
                 <div className='workspace'>
-                    <CodeEditor value={currentHtml} onChange={handleHtmlChange} filename={filename} />
+                    <CodeEditor ref={codeEditorRef} value={currentHtml} onChange={handleHtmlChange} filename={filename} />
                     <PreviewPanel side={previewSide} template={previewTemplate} style={styleHtml} data={{}} onFlip={handleFlip} onInsert={handleInsert} />
                 </div>
             </div>

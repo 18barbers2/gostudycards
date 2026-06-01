@@ -29,7 +29,7 @@ function PreviewPanel({ side, template, style, data, onFlip, onInsert, showInser
             </div>
             {showInsertBar && (
                 <div className='preview-insert-bar'>
-                    <span className='preview-insert-label'>Insert variable (TODO: ADD FUNCTINALITY HERE SO IT PULLS EACH VARIABLE):</span>
+                    <span className='preview-insert-label'></span>
                 </div>
             )}
         </div>

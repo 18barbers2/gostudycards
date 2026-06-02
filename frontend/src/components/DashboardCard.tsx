@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import '../css/DashboardCard.css';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 interface DashboardCardProps {
     title: string;
@@ -39,10 +40,26 @@ export function StudyProgressCardContent({ dueCards, totalCards }: { dueCards: n
 }
 
 export function WeeklyActivityCardContent( { data } : {data: { date: string; count: number;}[]}) {
+
+    const formatted = data.map(d => ({
+        ...d, 
+        label: new Date(d.date).toLocaleDateString('en-US', {weekday: 'short'}),
+    }));
+
+
+
     return (
-        <div>
-            <p className="card-placeholder">Activity graph coming soon.</p>
-        </div>
+        <ResponsiveContainer width="100%" height={160}>
+            <BarChart data={formatted} barSize={20}>
+                <XAxis dataKey="label" tick={{ fontSize: 11, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} />
+                <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} width={24} />
+                <Tooltip
+                    contentStyle={{ background: 'var(--bg-secondary)', border: 'none', borderRadius: 8, fontSize: 12 }}
+                    cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+                />
+                <Bar dataKey="count" fill="#15a967" radius={[4, 4, 0, 0]} />
+            </BarChart>
+        </ResponsiveContainer>
     );
 }
 

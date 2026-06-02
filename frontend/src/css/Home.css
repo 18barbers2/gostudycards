@@ -21,7 +21,10 @@
 
 .welcome          { grid-area: welcome; }
 .study-progress   { grid-area: study-progress; }
-.weekly-activity  { grid-area: weekly-activity; }
+
+WeeklyActivityCardContent  { 
+    grid-area: weekly-activity;
+}
 .mastery-distribution { grid-area: mastery-distribution; }
 .quick-actions    { grid-area: quick-actions; }
 

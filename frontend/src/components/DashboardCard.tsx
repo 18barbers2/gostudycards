@@ -38,7 +38,7 @@ export function StudyProgressCardContent({ dueCards, totalCards }: { dueCards: n
     );
 }
 
-export function WeeklyActivityCardContent() {
+export function WeeklyActivityCardContent( { data } : {data: { date: string; count: number;}[]}) {
     return (
         <div>
             <p className="card-placeholder">Activity graph coming soon.</p>
@@ -46,7 +46,7 @@ export function WeeklyActivityCardContent() {
     );
 }
 
-export function PieChartCardContent() {
+export function PieChartCardContent( { data } : { data: { new: number; learning: number; mastered: number}} ) {
     return (
         <div>
             <p className="card-placeholder">Mastery distribution coming soon.</p>

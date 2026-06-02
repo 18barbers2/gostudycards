@@ -13,7 +13,7 @@ export function Home() {
                 </div>
                 <div className='home-page-container'>
                     <DashboardCard className='welcome' title='Welcome back!'>
-                        <GreetingCardContent userName='Sam' deckCount={5} cardCount={120} />
+                        <GreetingCardContent userName='User' deckCount={5} cardCount={120} />
                     </DashboardCard>
                     <DashboardCard className='study-progress' title='Study Progress'>
                         <StudyProgressCardContent dueCards={1} totalCards={100} />

@@ -253,6 +253,43 @@ export function getWeeklyActivity(): { date: string; count: number }[] {
     }));
 }
 
+export function getDashboardStats() {
+
+    const decks = getDecks();
+    const srsMap = loadSRSMap();
+    const now = new Date();
+
+    let totalCards = 0;
+    let dueCount = 0;
+    let newCount = 0;
+    let learningCount = 0;
+    let masteredCount = 0;
+
+    for (const deck of decks){
+        const cards = getCards(deck.id);
+        totalCards += cards.length;
+
+        for (const card of cards){
+            const srs = srsMap[card.id];
+            if (new Date(srs?.nextReviewAt ?? card.nextReviewAt) <= now) dueCount++;
+            
+            if (!srs || srs.reviewCount === 0) newCount++;
+
+            else if (srs.interval < 21 ) learningCount++;
+            else masteredCount++;
+        }
+    }
+
+    return {
+        deckCount: decks.length,
+        totalCards: totalCards,
+        dueCount: dueCount,
+        weeklyActivity: getWeeklyActivity(),
+        masteryDistribution: { new: newCount, learning: learningCount, mastered: masteredCount }
+    };
+
+}
+
 // ── Cleanup ───────────────────────────────────────────────────────────────────
 
 export function clearGuestData(): void {

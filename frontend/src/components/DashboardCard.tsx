@@ -49,7 +49,7 @@ export function WeeklyActivityCardContent( { data } : {data: { date: string; cou
 
 
     return (
-        <ResponsiveContainer width="100%" height={160}>
+        <ResponsiveContainer width="100%" height="95%">
             <BarChart data={formatted} barSize={20}>
                 <XAxis dataKey="label" tick={{ fontSize: 11, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} />
                 <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} width={24} />

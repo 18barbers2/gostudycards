@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import '../css/DashboardCard.css';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Legend, Cell } from 'recharts';
 
 interface DashboardCardProps {
     title: string;
@@ -64,9 +64,24 @@ export function WeeklyActivityCardContent( { data } : {data: { date: string; cou
 }
 
 export function PieChartCardContent( { data } : { data: { new: number; learning: number; mastered: number}} ) {
+    const chartData = [
+    { name: 'New', value: data.new, color: "#5b8cf5" },
+    { name: 'Learning', value: data.learning, color: "#f5a623" },
+    { name: 'Mastered', value: data.mastered, color: "#4caf82" },
+    ].filter(d => d.value > 0); // don't show empty slices
+    
+    
     return (
         <div>
-            <p className="card-placeholder">Mastery distribution coming soon.</p>
+            <ResponsiveContainer width="100%" height={380}>
+                <PieChart>
+                    <Pie data={chartData} cx="50%" cy="50%" innerRadius={45} dataKey="value">
+                        {chartData.map((_, i) => (
+                        <Cell key={i} fill={_.color} />
+                    ))}
+                    </Pie>
+                </PieChart>
+            </ResponsiveContainer>
         </div>
     );
 }

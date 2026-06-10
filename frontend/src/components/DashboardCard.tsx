@@ -75,7 +75,7 @@ export function PieChartCardContent( { data } : { data: { new: number; learning:
         <div>
             <ResponsiveContainer width="100%" height={380}>
                 <PieChart>
-                    <Pie data={chartData} cx="50%" cy="50%" innerRadius={45} dataKey="value">
+                    <Pie data={chartData} cx="50%" cy="50%" innerRadius={45} dataKey="value" stroke='none'>
                         {chartData.map((entry, i) => (
                         <Cell key={i} fill={entry.color} />
                     ))}

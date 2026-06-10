@@ -76,10 +76,19 @@ export function PieChartCardContent( { data } : { data: { new: number; learning:
             <ResponsiveContainer width="100%" height={380}>
                 <PieChart>
                     <Pie data={chartData} cx="50%" cy="50%" innerRadius={45} dataKey="value">
-                        {chartData.map((_, i) => (
-                        <Cell key={i} fill={_.color} />
+                        {chartData.map((entry, i) => (
+                        <Cell key={i} fill={entry.color} />
                     ))}
                     </Pie>
+                    <Legend 
+                        iconType='circle'
+                        iconSize={8} 
+                        wrapperStyle={{ fontSize: 12 }}
+                        formatter={(value, entry) => {
+                            const payload = entry?.payload as { value: number };
+                            return `${value} - ${payload?.value}`;
+                        }}
+                    />
                 </PieChart>
             </ResponsiveContainer>
         </div>

@@ -299,3 +299,40 @@ export function clearGuestData(): void {
     localStorage.removeItem(CARD_SRS_KEY);
     localStorage.removeItem(REVIEW_LOGS_KEY);
 }
+
+// Initialization
+
+export function initGuestSession(): void {
+
+    // Don't overwrite if they've already been using the app
+    if (localStorage.getItem(REVIEW_LOGS_KEY)) return;
+
+
+    // See SRS states
+    const srsMap = {
+        'j1': { interval: 30, easeFactor: 2.8, nextReviewAt: future(14), reviewCount: 12 },
+        'j2': { interval: 7,  easeFactor: 2.5, nextReviewAt: future(3),  reviewCount: 4  },
+        'j3': { interval: 1,  easeFactor: 2.5, nextReviewAt: past(1),    reviewCount: 1  },
+    };
+
+    localStorage.setItem(CARD_SRS_KEY, JSON.stringify(srsMap))
+
+
+    // Seed 7 days of review activity
+    const logs = generateFakeReviewLogs();
+    localStorage.setItem(REVIEW_LOGS_KEY, JSON.stringify(logs))
+}
+
+function future(arg0: number) {
+    throw new Error('Function not implemented.');
+}
+
+
+function past(arg0: number) {
+    throw new Error('Function not implemented.');
+}
+
+
+function generateFakeReviewLogs() {
+    throw new Error('Function not implemented.');
+}

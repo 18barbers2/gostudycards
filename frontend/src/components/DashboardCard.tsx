@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import '../css/DashboardCard.css';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Legend, Cell } from 'recharts';
 
 interface DashboardCardProps {
     title: string;
@@ -38,18 +39,58 @@ export function StudyProgressCardContent({ dueCards, totalCards }: { dueCards: n
     );
 }
 
-export function WeeklyActivityCardContent() {
+export function WeeklyActivityCardContent( { data } : {data: { date: string; count: number;}[]}) {
+
+    const formatted = data.map(d => ({
+        ...d, 
+        label: new Date(d.date).toLocaleDateString('en-US', {weekday: 'short'}),
+    }));
+
+
+
     return (
-        <div>
-            <p className="card-placeholder">Activity graph coming soon.</p>
-        </div>
+        <ResponsiveContainer width="100%" height="95%">
+            <BarChart data={formatted} barSize={20}>
+                <XAxis dataKey="label" tick={{ fontSize: 11, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} />
+                <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: 'var(--text-muted)' }} axisLine={false} tickLine={false} width={24} />
+                <Tooltip
+                    contentStyle={{ background: 'var(--bg-secondary)', border: 'none', borderRadius: 8, fontSize: 12 }}
+                    cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+                />
+                <Bar dataKey="count" fill="#15a967" radius={[4, 4, 0, 0]} />
+            </BarChart>
+        </ResponsiveContainer>
     );
 }
 
-export function PieChartCardContent() {
+export function PieChartCardContent( { data } : { data: { new: number; learning: number; mastered: number}} ) {
+    const chartData = [
+    { name: 'New', value: data.new, color: "#5b8cf5" },
+    { name: 'Learning', value: data.learning, color: "#f5a623" },
+    { name: 'Mastered', value: data.mastered, color: "#4caf82" },
+    ].filter(d => d.value > 0); // don't show empty slices
+    
+    
     return (
         <div>
-            <p className="card-placeholder">Mastery distribution coming soon.</p>
+            <ResponsiveContainer width="100%" height={380}>
+                <PieChart>
+                    <Pie data={chartData} cx="50%" cy="50%" innerRadius={45} dataKey="value" stroke='none'>
+                        {chartData.map((entry, i) => (
+                        <Cell key={i} fill={entry.color} />
+                    ))}
+                    </Pie>
+                    <Legend 
+                        iconType='circle'
+                        iconSize={8} 
+                        wrapperStyle={{ fontSize: 12 }}
+                        formatter={(value, entry) => {
+                            const payload = entry?.payload as { value: number };
+                            return `${value} - ${payload?.value}`;
+                        }}
+                    />
+                </PieChart>
+            </ResponsiveContainer>
         </div>
     );
 }

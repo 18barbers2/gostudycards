@@ -253,6 +253,43 @@ export function getWeeklyActivity(): { date: string; count: number }[] {
     }));
 }
 
+export function getDashboardStats() {
+
+    const decks = getDecks();
+    const srsMap = loadSRSMap();
+    const now = new Date();
+
+    let totalCards = 0;
+    let dueCount = 0;
+    let newCount = 0;
+    let learningCount = 0;
+    let masteredCount = 0;
+
+    for (const deck of decks){
+        const cards = getCards(deck.id);
+        totalCards += cards.length;
+
+        for (const card of cards){
+            const srs = srsMap[card.id];
+            if (new Date(srs?.nextReviewAt ?? card.nextReviewAt) <= now) dueCount++;
+            
+            if (!srs || srs.reviewCount === 0) newCount++;
+
+            else if (srs.interval < 21 ) learningCount++;
+            else masteredCount++;
+        }
+    }
+
+    return {
+        deckCount: decks.length,
+        totalCards: totalCards,
+        dueCount: dueCount,
+        weeklyActivity: getWeeklyActivity(),
+        masteryDistribution: { new: newCount, learning: learningCount, mastered: masteredCount }
+    };
+
+}
+
 // ── Cleanup ───────────────────────────────────────────────────────────────────
 
 export function clearGuestData(): void {
@@ -261,4 +298,70 @@ export function clearGuestData(): void {
     localStorage.removeItem(TEMPLATES_KEY);
     localStorage.removeItem(CARD_SRS_KEY);
     localStorage.removeItem(REVIEW_LOGS_KEY);
+}
+
+// Initialization
+
+export function initGuestSession(): void {
+
+    // Don't overwrite if they've already been using the app
+    if (localStorage.getItem(REVIEW_LOGS_KEY)) return;
+
+
+    // See SRS states
+    const srsMap = {
+        'j1': { interval: 30, easeFactor: 2.8, nextReviewAt: future(14), reviewCount: 12 },
+        'j2': { interval: 7,  easeFactor: 2.5, nextReviewAt: future(3),  reviewCount: 4  },
+        'j3': { interval: 1,  easeFactor: 2.5, nextReviewAt: past(1),    reviewCount: 1  },
+    };
+
+    localStorage.setItem(CARD_SRS_KEY, JSON.stringify(srsMap))
+
+
+    // Seed 7 days of review activity
+    const logs = generateFakeReviewLogs();
+    localStorage.setItem(REVIEW_LOGS_KEY, JSON.stringify(logs))
+}
+
+function future(days: number) {
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    return d.toISOString;
+}
+
+
+function past(days: number) {
+    const d = new Date();
+    d.setDate(d.getDate() - days);
+    return d.toISOString;
+}
+
+
+function generateFakeReviewLogs() {
+    const allCardIds = MOCK_CARDS.map(c => c.id);
+    const logs: ReviewLog[] = [];
+    const ratings: ReviewLog['rating'][] = ['retry', 'hard', 'medium', 'easy'];
+
+    // Loop over 7 days (a week )
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        const count = Math.floor(Math.random() * 12) + 3;
+        
+        // Add a random number of reviewLogs for each day
+        for (let j = 0; j < count; j++) {
+            logs.push({
+                id: crypto.randomUUID(),
+                cardId: allCardIds[j % allCardIds.length],
+                deckId: 'mock',
+                userId: 'guest',
+                rating: ratings[Math.floor(Math.random() * ratings.length)],
+                reviewedAt: date.toISOString(),
+                previousInterval: 1,
+                newInterval: 1,
+            });
+        }
+    }
+
+    return logs;
 }

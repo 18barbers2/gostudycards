@@ -338,6 +338,30 @@ function past(days: number) {
 
 
 function generateFakeReviewLogs() {
-    throw new Error('Function not implemented.');
+    const allCardIds = MOCK_CARDS.map(c => c.id);
+    const logs: ReviewLog[] = [];
+    const ratings: ReviewLog['rating'][] = ['retry', 'hard', 'medium', 'easy'];
 
+    // Loop over 7 days (a week )
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        const count = Math.floor(Math.random() * 12) + 3;
+        
+        // Add a random number of reviewLogs for each day
+        for (let j = 0; j < count; j++) {
+            logs.push({
+                id: crypto.randomUUID(),
+                cardId: allCardIds[j % allCardIds.length],
+                deckId: 'mock',
+                userId: 'guest',
+                rating: ratings[Math.floor(Math.random() * ratings.length)],
+                reviewedAt: date.toISOString(),
+                previousInterval: 1,
+                newInterval: 1,
+            });
+        }
+    }
+
+    return logs;
 }

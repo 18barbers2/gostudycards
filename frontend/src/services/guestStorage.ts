@@ -323,16 +323,21 @@ export function initGuestSession(): void {
     localStorage.setItem(REVIEW_LOGS_KEY, JSON.stringify(logs))
 }
 
-function future(arg0: number) {
-    throw new Error('Function not implemented.');
+function future(days: number) {
+    const d = new Date();
+    d.setDate(d.getDate() + days);
+    return d.toISOString;
 }
 
 
-function past(arg0: number) {
-    throw new Error('Function not implemented.');
+function past(days: number) {
+    const d = new Date();
+    d.setDate(d.getDate() - days);
+    return d.toISOString;
 }
 
 
 function generateFakeReviewLogs() {
     throw new Error('Function not implemented.');
+
 }

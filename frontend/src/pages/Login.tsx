@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import '../css/Login.css'
 import { useAuth } from "../context/AuthContext";
+import { initGuestSession } from "../services/guestStorage";
 
 
 export default function Login() {
@@ -11,8 +12,10 @@ export default function Login() {
 
     const handleGuest = () =>  {
         // Wire to loginAsGuest() later
+        initGuestSession();
         loginAsGuest();
         navigate('/');
+
     };
 
     return (

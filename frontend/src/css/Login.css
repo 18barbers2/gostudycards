@@ -8,6 +8,11 @@
     overflow: hidden;
 }
 
+.login-button:disabled{
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .login-card {
     background: var(--panel, #252830);
     border: 1px solid var(--border, rgba(255,255,255,0.08));
@@ -114,4 +119,16 @@
 
 .login-note span {
   color: rgba(91,140,245,0.7);
+}
+
+.login-button--ghost {
+    background: var(--surface, #2d3038);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text, #e8eaf0);
+}
+
+.login-button--ghost:hover {
+    background: #33363f;
+    border-color: rgba(255,255,255,0.2);
+    color: var(--text, #e8eaf0);
 }

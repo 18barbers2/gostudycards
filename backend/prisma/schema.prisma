@@ -16,8 +16,8 @@ model User {
   id        String   @id @default(uuid())
   email     String   @unique
   username  String   @unique
+  passwordHash String
   createdAt DateTime @default(now())
-
   decks       Deck[]
   reviewLogs  ReviewLog[]
 }

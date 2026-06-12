@@ -24,7 +24,7 @@ export default function Login() {
                 <h1 className="login-title">GoStudyCards</h1>
                 <p className="login-subtitle">Your spaced repetition study companion.</p>
 
-                <button className="login-button login-button--primary">Sign In</button>
+                <button className="login-button login-button--primary" disabled title="authentication coming soon...">Sign In</button>
 
                 <div className="login-divider">
                     <span className="login-divider-line"/>

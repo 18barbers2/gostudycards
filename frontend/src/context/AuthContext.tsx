@@ -53,6 +53,9 @@ export function AuthProvider({ children } : any ) {
         setIsGuest(false);
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('isGuest');
+        localStorage.removeItem('token')
+        localStorage.removeItem('username')
+        localStorage.removeItem('userId')
         clearGuestData();
     };
 

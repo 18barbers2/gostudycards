@@ -1,13 +1,11 @@
+import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
-import dotenv from 'dotenv'
 import deckRoutes from './routes/decks.js'
 import cardRoutes from './routes/cards.js'
 import templateRoutes from './routes/templates.js'
 import reviewLogRoutes from './routes/review-logs.js'
 import authRoutes from './routes/auth.js'
-
-dotenv.config()
 
 const app = express()
 app.use(cors({

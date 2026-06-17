@@ -1,13 +1,16 @@
 import { createContext, useContext, useState } from "react";
 import { clearGuestData } from "../services/guestStorage";
 
+
+type LoginData = {token: string, userId: string, username: string};
+
 interface AuthContextType {
     isAuthenticated: boolean;
     isGuest: boolean;
     token: string | null;
     userId: string | null;
     username: string | null;
-    login: () => void;
+    login: (_data: LoginData) => void;
     loginAsGuest: () => void;
     logout: () => void;
 }
@@ -18,7 +21,7 @@ const AuthContext = createContext<AuthContextType>({
     token: null,
     userId: null,
     username: null,
-    login: () => {},
+    login: (_data: LoginData) => {},
     loginAsGuest: () => {},
     logout: () => {},
 });
@@ -34,11 +37,17 @@ export function AuthProvider({ children } : any ) {
     const [username, setUsername] = useState(() => localStorage.getItem('username'));
 
 
-    const login = () => {
+    const login = (data: {token: string, userId: string, username: string}) => {
         setIsAuthenticated(true);
         setIsGuest(false);
+        setToken(data.token);
+        setUserId(data.userId);
+        setUsername(data.username);
         localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('isGuest', 'false')
+        localStorage.setItem('isGuest', 'false');
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.userId);
+        localStorage.setItem('username', data.username);
     };
 
     const loginAsGuest = () => {

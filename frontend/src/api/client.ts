@@ -8,7 +8,6 @@ function getAuthHeader(): Record<string, string> {
     return token ? { 'Authorization': `Bearer ${token}`} : {};
 }
 
-
 export async function get(path: string) {
     const res = await fetch(`${BASE_URL}${path}`,{
         headers: { ...getAuthHeader() }
@@ -20,7 +19,7 @@ export async function get(path: string) {
 export async function del(path: string) {
     const res = await fetch(`${BASE_URL}${path}`, { 
         method: 'DELETE',
-        headers: { ...getAuthHeader()}
+        headers: { ...getAuthHeader() }
      });
     if (!res.ok) throw new Error(`DELETE ${path} failed: ${res.status}`)
 }
@@ -28,7 +27,7 @@ export async function del(path: string) {
 export async function patch(path: string, body: unknown) {
     const res = await fetch(`${BASE_URL}${path}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...getAuthHeader() },
         body: JSON.stringify(body)
     })
     if (!res.ok) throw new Error(`PATCH ${path} failed: ${res.status}`)

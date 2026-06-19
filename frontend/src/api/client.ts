@@ -1,6 +1,14 @@
  
 const BASE_URL = import.meta.env.VITE_API_URL;
 
+
+// Get Auth Header
+function getAuthHeader(): Record<string, string> {
+    const token = localStorage.getItem('token');
+    return token ? { 'Authorization': `Bearer ${token}`} : {};
+}
+
+
 export async function get(path: string) {
     const res = await fetch(`${BASE_URL}${path}`)
     if(!res.ok) throw new Error(`GET ${path} failed: ${res.status}`)

@@ -6,6 +6,7 @@ import cardRoutes from './routes/cards.js'
 import templateRoutes from './routes/templates.js'
 import reviewLogRoutes from './routes/review-logs.js'
 import authRoutes from './routes/auth.js'
+import { requireAuth } from './middleware/auth.js'
 
 const app = express()
 app.use(cors({
@@ -13,11 +14,11 @@ app.use(cors({
   }
 ))
 app.use(express.json())
-app.use('/api/decks', deckRoutes)
-app.use('/api/cards', cardRoutes)
-app.use('/api/templates', templateRoutes)
-app.use('/api/review-logs', reviewLogRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/decks', requireAuth, deckRoutes)
+app.use('/api/cards', requireAuth, cardRoutes)
+app.use('/api/templates', requireAuth, templateRoutes)
+app.use('/api/review-logs', requireAuth, reviewLogRoutes)
 
 // Health check route — confirms server is running
 app.get('/health', (req, res) => {

@@ -132,3 +132,45 @@
     border-color: rgba(255,255,255,0.2);
     color: var(--text, #e8eaf0);
 }
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.login-form input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 16px;
+    border-radius: 11px;
+    background: var(--surface, #2d3038);
+    border: 1px solid var(--border, rgba(255,255,255,0.08));
+    color: var(--text, #e8eaf0);
+    font-family: inherit;
+    font-size: 0.88rem;
+    transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.login-form input::placeholder {
+    color: var(--muted, #6b7080);
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: rgba(91,140,245,0.45);
+    background: #33363f;
+}
+
+.login-error {
+    color: #e06a6a;
+    font-size: 0.78rem;
+    text-align: center;
+    margin: 2px 0 0;
+    line-height: 1.4;
+}
+
+.login-note span {
+    cursor: pointer;
+}

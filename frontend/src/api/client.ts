@@ -28,7 +28,10 @@ export async function post(path: string, body: unknown) {
         headers:{ 'Content-Type': 'application/json'},
         body: JSON.stringify(body)
     })
-    if(!res.ok) throw new Error(`POST ${path} failed: ${res.status}`)
+    if(!res.ok) {
+        const message = await res.json().then(b => b?.error).catch(() => null)
+        throw new Error(message || `POST ${path} failed: ${res.status}`)
+    }
     return res.json()
 }
 

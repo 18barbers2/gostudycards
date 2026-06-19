@@ -10,13 +10,18 @@ function getAuthHeader(): Record<string, string> {
 
 
 export async function get(path: string) {
-    const res = await fetch(`${BASE_URL}${path}`)
+    const res = await fetch(`${BASE_URL}${path}`,{
+        headers: { ...getAuthHeader() }
+    });
     if(!res.ok) throw new Error(`GET ${path} failed: ${res.status}`)
     return res.json()
 }
 
 export async function del(path: string) {
-    const res = await fetch(`${BASE_URL}${path}`, { method: 'DELETE' })
+    const res = await fetch(`${BASE_URL}${path}`, { 
+        method: 'DELETE',
+        headers: { ...getAuthHeader()}
+     });
     if (!res.ok) throw new Error(`DELETE ${path} failed: ${res.status}`)
 }
 

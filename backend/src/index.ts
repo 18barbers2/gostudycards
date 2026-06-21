@@ -10,6 +10,8 @@ import { requireAuth } from './middleware/auth.js'
 import rateLimit from 'express-rate-limit'
 
 const app = express()
+app.set('trust proxy', 1)
+
 const allowedOrigins = [
     'https://gostudycards.com',
     'https://www.gostudycards.com',

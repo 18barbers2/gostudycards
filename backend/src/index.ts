@@ -10,10 +10,22 @@ import { requireAuth } from './middleware/auth.js'
 import rateLimit from 'express-rate-limit'
 
 const app = express()
+const allowedOrigins = [
+    'https://gostudycards.com',
+    'https://www.gostudycards.com',
+    'https://gostudycards.vercel.app',
+    'http://localhost:5173'
+]
+
 app.use(cors({
-    origin: process.env.ALLOWED_ORIGIN || 'http://localhost:5173'
-  }
-))
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}))
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,

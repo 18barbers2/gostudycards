@@ -1,5 +1,3 @@
-console.log('index.ts starting...')
-
 import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
@@ -53,9 +51,6 @@ try {
     const PORT = process.env.PORT || 3001;
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`)
-        console.log(`Environment: ${process.env.NODE_ENV}`)
-        console.log(`JWT_SECRET exists: ${!!process.env.JWT_SECRET}`)
-        console.log(`DATABASE_URL exists: ${!!process.env.DATABASE_URL}`)
     })
 } catch (err) {
     console.error('Failed to start server:', err)

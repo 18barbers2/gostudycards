@@ -1,23 +1,32 @@
+import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
-import dotenv from 'dotenv'
 import deckRoutes from './routes/decks.js'
 import cardRoutes from './routes/cards.js'
 import templateRoutes from './routes/templates.js'
 import reviewLogRoutes from './routes/review-logs.js'
-
-dotenv.config()
+import authRoutes from './routes/auth.js'
+import { requireAuth } from './middleware/auth.js'
+import rateLimit from 'express-rate-limit'
 
 const app = express()
 app.use(cors({
     origin: process.env.ALLOWED_ORIGIN || 'http://localhost:5173'
   }
 ))
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: process.env.NODE_ENV === 'production' ? 10 : 100, 
+  message: { error: 'Too many attempts, please try again later' }
+});
+
 app.use(express.json())
-app.use('/api/decks', deckRoutes)
-app.use('/api/cards', cardRoutes)
-app.use('/api/templates', templateRoutes)
-app.use('/api/review-logs', reviewLogRoutes)
+app.use('/api/auth', authLimiter, authRoutes)
+app.use('/api/decks', requireAuth, deckRoutes)
+app.use('/api/cards', requireAuth, cardRoutes)
+app.use('/api/templates', requireAuth, templateRoutes)
+app.use('/api/review-logs', requireAuth, reviewLogRoutes)
 
 // Health check route — confirms server is running
 app.get('/health', (req, res) => {

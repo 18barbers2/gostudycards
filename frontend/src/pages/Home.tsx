@@ -3,6 +3,7 @@ import { DashboardCard, GreetingCardContent, StudyProgressCardContent, WeeklyAct
 import { Layout } from '../components/Layout/Layout';
 import { useEffect, useState } from 'react';
 import { fetchDashboardStats } from '../api/dashboard';
+import { useAuth } from '../context/AuthContext';
 
 type DashboardStats =  {
     deckCount: number;
@@ -18,6 +19,8 @@ export function Home() {
 
     const [stats, setStats] = useState<DashboardStats | null>(null);
 
+    const { username } = useAuth();
+
     useEffect(() => {
         fetchDashboardStats().then(setStats);
     }, []);
@@ -30,7 +33,7 @@ export function Home() {
                 </div>
                 <div className='home-page-container'>
                     <DashboardCard className='welcome' title='Welcome back!'>
-                        <GreetingCardContent userName='User' deckCount={stats?.deckCount ?? 0} cardCount={stats?.totalCards ?? 0} />
+                        <GreetingCardContent userName={username ?? 'there'} deckCount={stats?.deckCount ?? 0} cardCount={stats?.totalCards ?? 0} />
                     </DashboardCard>
                     <DashboardCard className='study-progress' title='Study Progress'>
                         <StudyProgressCardContent dueCards={stats?.dueCount ?? 0} totalCards={stats?.totalCards ?? 0} />

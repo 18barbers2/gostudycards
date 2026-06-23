@@ -1,8 +1,15 @@
 import * as guest from '../services/guestStorage';
 import type { Deck } from '../types';
+import { isGuest } from './helpers';
+import { get } from './client'
 
-export async function getDecks(_userId: string): Promise<Deck[]> {
-    return guest.getDecks();
+export async function getDecks(userId: string): Promise<Deck[]> {
+    if(isGuest()){
+        return guest.getDecks();
+    }
+    else{
+        return get(`/api/decks?userId=${userId}`);
+    }
 }
 
 export async function createDeck(name: string, description: string | undefined, ownerId: string): Promise<Deck> {

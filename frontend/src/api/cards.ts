@@ -1,10 +1,7 @@
 import * as guest from '../services/guestStorage';
 import * as client from './client';
 import type { CardEntry } from '../types';
-
-function isGuest(): boolean {
-    return localStorage.getItem('isGuest') === 'true';
-}
+import { isGuest } from './helpers';
 
 // SM-2 SRS calculation — mirrors the backend logic for guest-side use
 function calculateSRS(card: CardEntry, rating: string): Partial<CardEntry> {

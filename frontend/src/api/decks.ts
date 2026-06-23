@@ -1,7 +1,7 @@
 import * as guest from '../services/guestStorage';
 import type { Deck } from '../types';
 import { isGuest } from './helpers';
-import { get } from './client'
+import { get, del } from './client'
 
 export async function getDecks(userId: string): Promise<Deck[]> {
     if(isGuest()){
@@ -23,5 +23,11 @@ export async function getDeck(deckId: string): Promise<Deck> {
 }
 
 export async function deleteDeck(deckId: string): Promise<void> {
-    return guest.deleteDeck(deckId);
+
+    if(isGuest()){
+        return guest.deleteDeck(deckId);
+    }
+    else{
+        return del(`/api/decks/${deckId}`);
+    }
 }

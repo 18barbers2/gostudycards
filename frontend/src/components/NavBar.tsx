@@ -51,7 +51,7 @@ export function NavBar() {
             <div className="navbar-footer">
                 <button className="navbar-logout" onClick={() => { logout(); navigate('/login'); }}>
                     <span className="material-symbols-outlined">logout</span>
-                    {!collapsed && <span className="nav-label">Logout</span>}
+                    <span className="nav-label">Logout</span>
                 </button>
                 <button className="navbar-toggle" onClick={toggleCollapsed}>
                     <span className="material-symbols-outlined">

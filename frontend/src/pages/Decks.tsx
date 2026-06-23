@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react';
 import type { Deck } from '../types';
 import { getDecks, createDeck, deleteDeck } from '../api/decks';
 import { Layout } from '../components/Layout/Layout.tsx';
+import { useAuth } from '../context/AuthContext.tsx';
 
 const TEMP_USER_ID = 'test-user-1'; // Temporary until guest/auth is implemented
 
 export function Decks() {
+    const { userId } = useAuth();
     const [decks, setDecks] = useState<Deck[]>([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
@@ -15,15 +17,15 @@ export function Decks() {
     const [newDesc, setNewDesc] = useState('');
 
     useEffect(() => {
-        getDecks(TEMP_USER_ID)
+        getDecks( userId ?? '')
             .then(data => setDecks(data))
             .catch(err => console.error(err))
             .finally(() => setLoading(false));
-    }, []);
+    }, [userId]);
 
     function handleCreate(e: React.FormEvent) {
         e.preventDefault();
-        createDeck(newName, newDesc || undefined, TEMP_USER_ID)
+        createDeck(newName, newDesc || undefined, userId ?? '')
             .then(deck => setDecks(prev => [...prev, deck]))
             .catch(err => console.error(err))
             .finally(() => { setShowForm(false); setNewName(''); setNewDesc(''); });

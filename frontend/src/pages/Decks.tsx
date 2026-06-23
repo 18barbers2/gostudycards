@@ -96,7 +96,7 @@ export function Decks() {
                                         value={newDesc}
                                         onChange={e => setNewDesc(e.target.value)}
                                     />
-                                    <button className='add-deck-submit' type='submit' disabled={creating}>Create</button>
+                                    <button className='add-deck-submit' type='submit' disabled={creating}>{creating ? 'Creating ...' : 'Create Deck'}</button>
                                     <button className='add-deck-cancel' type='button' onClick={() => setShowForm(false)}>Cancel</button>
                                 </form>
                             ) : (

@@ -15,6 +15,7 @@ export function Decks() {
     const [showForm, setShowForm] = useState(false);
     const [newName, setNewName] = useState('');
     const [newDesc, setNewDesc] = useState('');
+    const [creating, setCreating] = useState(false);
 
     useEffect(() => {
         getDecks( userId ?? '')
@@ -24,11 +25,17 @@ export function Decks() {
     }, [userId]);
 
     function handleCreate(e: React.FormEvent) {
+        if (creating) return;
         e.preventDefault();
+        setCreating(true);
         createDeck(newName, newDesc || undefined, userId ?? '')
             .then(deck => setDecks(prev => [...prev, deck]))
             .catch(err => console.error(err))
-            .finally(() => { setShowForm(false); setNewName(''); setNewDesc(''); });
+            .finally(() => { 
+                setCreating(false); 
+                setShowForm(false); 
+                setNewName(''); 
+                setNewDesc(''); });
     }
 
     return (
@@ -89,7 +96,7 @@ export function Decks() {
                                         value={newDesc}
                                         onChange={e => setNewDesc(e.target.value)}
                                     />
-                                    <button className='add-deck-submit' type='submit'>Create</button>
+                                    <button className='add-deck-submit' type='submit' disabled={creating}>Create</button>
                                     <button className='add-deck-cancel' type='button' onClick={() => setShowForm(false)}>Cancel</button>
                                 </form>
                             ) : (

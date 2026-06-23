@@ -17,9 +17,17 @@ export async function createDeck(name: string, description: string | undefined, 
 }
 
 export async function getDeck(deckId: string): Promise<Deck> {
-    const deck = guest.getDeck(deckId);
-    if (!deck) throw new Error(`Deck ${deckId} not found`);
-    return deck;
+
+    if(isGuest()){
+        const deck = guest.getDeck(deckId);
+        if (!deck) throw new Error(`Deck ${deckId} not found`);
+        return deck;
+    }
+    else{
+        const deck = await get(`/api/decks/${deckId}`);
+        if(!deck) throw new Error(`Deck ${deckId} not found`);
+        return deck;
+    }
 }
 
 export async function deleteDeck(deckId: string): Promise<void> {

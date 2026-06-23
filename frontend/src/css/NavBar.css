@@ -137,8 +137,33 @@
 
 /* ── Mobile — top bar (hide toggle, go horizontal) ── */
 @media (max-width: 1024px) {
-    .navbar-footer {
+    /* Lay nav items and footer side by side across the top bar */
+    .navbar {
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    /* The collapse toggle is meaningless in top-bar mode; keep logout */
+    .navbar-toggle {
         display: none;
+    }
+
+    .navbar-footer {
+        padding: 0;
+        align-items: stretch;
+        border-top: none;
+        border-left: 1px solid var(--border-subtle);
+    }
+
+    .navbar-logout,
+    .navbar--collapsed .navbar-logout {
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        padding: 6px 14px;
+        border-radius: 0;
+        font-size: 0.7rem;
     }
 
     /* Always show labels on mobile regardless of collapsed state */

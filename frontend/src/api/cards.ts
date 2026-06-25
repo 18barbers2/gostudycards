@@ -69,7 +69,13 @@ export async function submitReview(
 }
 
 export async function getCards(deckId: string): Promise<CardEntry[]> {
-    return guest.getCards(deckId);
+    if(isGuest()){
+        return guest.getCards(deckId);
+    }
+    else {
+        return client.get(`/api/cards?deckId=${deckId}`);
+    }
+
 }
 
 export async function getFieldUsageCount(deckId: string, fieldName: string): Promise<number> {

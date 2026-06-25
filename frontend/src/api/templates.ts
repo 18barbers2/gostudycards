@@ -16,9 +16,15 @@ export async function updateTemplate(
     templateId: string,
     fields: Array<{ name: string; isDefault: boolean }>
 ): Promise<CardTemplate> {
-    const result = guest.updateTemplate(templateId, fields);
-    if (!result) throw new Error(`Template ${templateId} not found`);
-    return result;
+    if(isGuest()){
+        const result = guest.updateTemplate(templateId, fields);
+        if (!result) throw new Error(`Template ${templateId} not found`);
+        return result;
+
+    }
+    else{
+        return client.patch(`/api/templates/${templateId}`, { fields });
+    }
 }
 
 export async function updateFullTemplate(
@@ -28,9 +34,14 @@ export async function updateFullTemplate(
     style: string,
     fields: Array<{ name: string; isDefault: boolean }>
 ): Promise<CardTemplate> {
-    const result = guest.updateFullTemplate(templateId, frontTemplate, backTemplate, style, fields);
-    if (!result) throw new Error(`Template ${templateId} not found`);
-    return result;
+    if(isGuest()){
+        const result = guest.updateFullTemplate(templateId, frontTemplate, backTemplate, style, fields);
+        if (!result) throw new Error(`Template ${templateId} not found`);
+        return result;
+    }
+    else{
+        return client.patch(`/api/templates/${templateId}`, { fields, frontTemplate, backTemplate, style });
+    }
 }
 
 export async function createTemplate(
@@ -41,5 +52,11 @@ export async function createTemplate(
     style: string,
     fields: Array<{ name: string; isDefault: boolean }>
 ): Promise<CardTemplate> {
-    return guest.createTemplate(deckId, ownerId, frontTemplate, backTemplate, style, fields);
+
+    if(isGuest()){
+        return guest.createTemplate(deckId, ownerId, frontTemplate, backTemplate, style, fields);
+    }
+    else{
+        return client.post(`/api/templates/`, { deckId , ownerId, frontTemplate, backTemplate, style, fields })
+    }
 }

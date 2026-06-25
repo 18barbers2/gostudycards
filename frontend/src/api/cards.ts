@@ -114,5 +114,10 @@ export async function createCard(
     deckId: string,
     data: Record<string, string>
 ): Promise<CardEntry> {
-    return guest.createCard(templateId, deckId, data);
+    if(isGuest()){
+        return guest.createCard(templateId, deckId, data);
+    }
+    else {
+        return client.post(`/api/cards/`, { templateId, deckId, data });
+    }
 }

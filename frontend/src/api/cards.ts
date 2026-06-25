@@ -86,12 +86,18 @@ export async function renameFieldInCards(deckId: string, oldName: string, newNam
         return guest.renameFieldInCards(deckId, oldName, newName);
     }
     else{
-        
+        return client.patch(`/api/cards/rename-field`, { deckId, oldName, newName });
     }
 }
 
 export async function removeFieldFromCards(deckId: string, fieldName: string): Promise<void> {
-    return guest.removeFieldFromCards(deckId, fieldName);
+    if(isGuest()){
+        return guest.removeFieldFromCards(deckId, fieldName);
+    }
+    else{
+        return client.patch(`/api/cards/remove-field`, { deckId, fieldName });
+    }
+
 }
 
 export async function deleteCard(cardId: string): Promise<void> {

@@ -11,6 +11,7 @@ import { getDecks, createDeck } from '../api/decks';
 import { getTemplate, createTemplate, updateTemplate } from '../api/templates';
 import { getFieldUsageCount, createCard, removeFieldFromCards, renameFieldInCards } from '../api/cards';
 import type { Deck, CardTemplate } from '../types';
+import { useAuth } from '../context/AuthContext.tsx';
 
 const TEMP_USER_ID = 'test-user-1';
 
@@ -27,6 +28,9 @@ const DEFAULT_TEMPLATE_FIELDS = DEFAULT_FIELD_NAMES.map(name => ({ name, isDefau
 type ActiveField = 'question' | 'answer' | 'hint' | string;
 
 export default function AddCard() {
+
+    const { userId } = useAuth();
+
     // Read navigation state — future deck detail page can pass a pre-selected deckId
     const location = useLocation();
 
@@ -83,7 +87,7 @@ export default function AddCard() {
     // Load decks on mount; if a deckId was passed via nav state, pre-select it.
     // Also kick off the template fetch immediately so both requests run in parallel.
     useEffect(() => {
-        getDecks(TEMP_USER_ID)
+        getDecks(userId || '')
             .then(data => {
                 setDecks(data);
                 const preselected = location.state?.deckId;

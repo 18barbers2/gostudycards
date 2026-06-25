@@ -75,7 +75,6 @@ export async function getCards(deckId: string): Promise<CardEntry[]> {
     else {
         return client.get(`/api/cards?deckId=${deckId}`);
     }
-
 }
 
 export async function getFieldUsageCount(deckId: string, fieldName: string): Promise<number> {
@@ -83,7 +82,12 @@ export async function getFieldUsageCount(deckId: string, fieldName: string): Pro
 }
 
 export async function renameFieldInCards(deckId: string, oldName: string, newName: string): Promise<void> {
-    return guest.renameFieldInCards(deckId, oldName, newName);
+    if(isGuest()){
+        return guest.renameFieldInCards(deckId, oldName, newName);
+    }
+    else{
+        
+    }
 }
 
 export async function removeFieldFromCards(deckId: string, fieldName: string): Promise<void> {

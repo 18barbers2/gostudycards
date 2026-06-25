@@ -7,6 +7,8 @@ import PreviewPanel from '../components/PreviewPanel.tsx';
 import { getDecks } from '../api/decks';
 import { getTemplate, createTemplate, updateFullTemplate } from '../api/templates';
 import type { CardTemplate, Deck } from '../types';
+import { useAuth } from '../context/AuthContext.tsx';
+
 
 const TEMP_USER_ID = 'test-user-1';
 
@@ -24,6 +26,7 @@ export function Tabs({ activeTab, onClick }: { activeTab: CardTextInputMode; onC
 }
 
 export default function CardBuilder() {
+    const { userId } = useAuth();
     const [decks, setDecks] = useState<Deck[]>([]);
     const [selectedDeckId, setSelectedDeckId] = useState<string>('');
     const [existingTemplate, setExistingTemplate] = useState<CardTemplate | null>(null);
@@ -42,7 +45,7 @@ export default function CardBuilder() {
     const skipNextTemplateLoad = useRef(false);
 
     useEffect(() => {
-        getDecks(TEMP_USER_ID)
+        getDecks(userId ?? '')
             .then(data => {
                 setDecks(data);
                 if (data.length > 0) {

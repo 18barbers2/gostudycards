@@ -1,8 +1,15 @@
 import * as guest from '../services/guestStorage';
+import * as client from './client';
 import type { CardTemplate } from '../types';
+import { isGuest } from './helpers';
 
 export async function getTemplate(deckId: string): Promise<CardTemplate | null> {
-    return guest.getTemplate(deckId);
+    if(isGuest()){
+        return guest.getTemplate(deckId);
+    }
+    else{
+        return client.get(`/api/templates?deckId=${ deckId }`);
+    }
 }
 
 export async function updateTemplate(

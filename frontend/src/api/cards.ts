@@ -101,7 +101,12 @@ export async function removeFieldFromCards(deckId: string, fieldName: string): P
 }
 
 export async function deleteCard(cardId: string): Promise<void> {
-    return guest.deleteCard(cardId);
+    if(isGuest()){
+        return guest.deleteCard(cardId);
+    }
+    else {
+        return client.del(`/api/cards/${cardId}`);
+    }
 }
 
 export async function createCard(

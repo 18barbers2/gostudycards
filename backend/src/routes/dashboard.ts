@@ -27,15 +27,14 @@ router.get('/', async (req, res) => {
             }
         })
     
-        // Get due cards for this user
-        const dueCards = await prisma.cardEntry.findMany({
-            where: {
-                deck: {
-                    ownerId: userId
-                },
-                nextReviewAt: { lte: new Date() },
-            }
+        // Get all cards
+        const allCards = await prisma.cardEntry.findMany({
+        where: {
+            deck: { ownerId: userId }
+        }
         })
+
+        const dueCount = allCards.filter(card => new Date(card.nextReviewAt) <= new Date()).length;
     
         // Calculate date from 7 days ago
         const sevenDaysAgo = new Date();
@@ -56,16 +55,11 @@ router.get('/', async (req, res) => {
             return d.toISOString().slice(0, 10);
         });
     
+        // Map weekly activity
         const weeklyActivity = days.map(date => ({
             date,
             count: reviewedLast7Days.filter(l => l.reviewedAt.toISOString().slice(0, 10) === date).length,
         }));
-    
-        const allCards = await prisma.cardEntry.findMany({
-        where: {
-            deck: { ownerId: userId }
-        }
-        })
     
         let learningCount = 0;
         let masteredCount = 0;
@@ -86,7 +80,7 @@ router.get('/', async (req, res) => {
         res.json({
             deckCount, 
             totalCards, 
-            dueCount: dueCards.length, 
+            dueCount, 
             weeklyActivity, 
             masteryDistribution: { new: newCount, learning: learningCount, mastered: masteredCount }
         })

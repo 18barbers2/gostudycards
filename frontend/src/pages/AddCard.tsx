@@ -13,8 +13,6 @@ import { getFieldUsageCount, createCard, removeFieldFromCards, renameFieldInCard
 import type { Deck, CardTemplate } from '../types';
 import { useAuth } from '../context/AuthContext.tsx';
 
-const TEMP_USER_ID = 'test-user-1';
-
 // Default Q/A/H field names — always shown regardless of template
 const DEFAULT_FIELD_NAMES = ['Question', 'Answer', 'Hint'];
 
@@ -134,7 +132,7 @@ export default function AddCard() {
     // Creates a new deck inline and auto-selects it so the user can save cards immediately
     const handleCreateDeck = (e: React.FormEvent) => {
         e.preventDefault();
-        createDeck(newDeckName, undefined, TEMP_USER_ID)
+        createDeck(newDeckName, undefined, userId ?? '')
             .then(deck => {
                 setDecks(prev => [...prev, deck]);
                 setSelectedDeckId(deck.id);
@@ -271,7 +269,7 @@ export default function AddCard() {
         if (!activeTemplate) {
             try {
                 activeTemplate = await createTemplate(
-                    selectedDeckId, TEMP_USER_ID,
+                    selectedDeckId, userId ?? '',
                     DEFAULT_FRONT, DEFAULT_BACK, '',
                     DEFAULT_TEMPLATE_FIELDS
                 );

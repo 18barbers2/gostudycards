@@ -6,8 +6,6 @@ import { getDecks, createDeck, deleteDeck } from '../api/decks';
 import { Layout } from '../components/Layout/Layout.tsx';
 import { useAuth } from '../context/AuthContext.tsx';
 
-const TEMP_USER_ID = 'test-user-1'; // Temporary until guest/auth is implemented
-
 export function Decks() {
     const { userId } = useAuth();
     const [decks, setDecks] = useState<Deck[]>([]);

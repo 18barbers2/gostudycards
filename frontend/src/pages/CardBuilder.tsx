@@ -9,9 +9,6 @@ import { getTemplate, createTemplate, updateFullTemplate } from '../api/template
 import type { CardTemplate, Deck } from '../types';
 import { useAuth } from '../context/AuthContext.tsx';
 
-
-const TEMP_USER_ID = 'test-user-1';
-
 // Track which side of the card the user is editing
 type CardTextInputMode = 'front' | 'back' | 'style';
 
@@ -120,6 +117,8 @@ export default function CardBuilder() {
         if (!selectedDeckId) return;
         setSaveStatus('saving');
 
+        const { userId } = useAuth();
+
         // Parse {{token}} fields from both front and back, deduplicating across sides
         const tokenRegex = /\{\{(\w+)\}\}/g;
         const fieldNames = new Set<string>();
@@ -132,7 +131,7 @@ export default function CardBuilder() {
             if (existingTemplate) {
                 await updateFullTemplate(existingTemplate.id, frontHtml, backHtml, styleHtml, fields);
             } else {
-                const created = await createTemplate(selectedDeckId, TEMP_USER_ID, frontHtml, backHtml, styleHtml, fields);
+                const created = await createTemplate(selectedDeckId, userId ?? '', frontHtml, backHtml, styleHtml, fields);
                 setExistingTemplate(created);
             }
             setSaveStatus('saved');

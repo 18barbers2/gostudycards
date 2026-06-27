@@ -7,8 +7,7 @@ import PreviewPanel from '../components/PreviewPanel.tsx';
 import { getDecks } from '../api/decks';
 import { getTemplate, createTemplate, updateFullTemplate } from '../api/templates';
 import type { CardTemplate, Deck } from '../types';
-
-const TEMP_USER_ID = 'test-user-1';
+import { useAuth } from '../context/AuthContext.tsx';
 
 // Track which side of the card the user is editing
 type CardTextInputMode = 'front' | 'back' | 'style';
@@ -24,6 +23,7 @@ export function Tabs({ activeTab, onClick }: { activeTab: CardTextInputMode; onC
 }
 
 export default function CardBuilder() {
+    const { userId } = useAuth();
     const [decks, setDecks] = useState<Deck[]>([]);
     const [selectedDeckId, setSelectedDeckId] = useState<string>('');
     const [existingTemplate, setExistingTemplate] = useState<CardTemplate | null>(null);
@@ -42,7 +42,7 @@ export default function CardBuilder() {
     const skipNextTemplateLoad = useRef(false);
 
     useEffect(() => {
-        getDecks(TEMP_USER_ID)
+        getDecks(userId ?? '')
             .then(data => {
                 setDecks(data);
                 if (data.length > 0) {
@@ -117,6 +117,8 @@ export default function CardBuilder() {
         if (!selectedDeckId) return;
         setSaveStatus('saving');
 
+        const { userId } = useAuth();
+
         // Parse {{token}} fields from both front and back, deduplicating across sides
         const tokenRegex = /\{\{(\w+)\}\}/g;
         const fieldNames = new Set<string>();
@@ -129,7 +131,7 @@ export default function CardBuilder() {
             if (existingTemplate) {
                 await updateFullTemplate(existingTemplate.id, frontHtml, backHtml, styleHtml, fields);
             } else {
-                const created = await createTemplate(selectedDeckId, TEMP_USER_ID, frontHtml, backHtml, styleHtml, fields);
+                const created = await createTemplate(selectedDeckId, userId ?? '', frontHtml, backHtml, styleHtml, fields);
                 setExistingTemplate(created);
             }
             setSaveStatus('saved');

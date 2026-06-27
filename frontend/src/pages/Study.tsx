@@ -199,8 +199,7 @@ function StudyInterface({ deck, userId, onExit }: { deck: DeckStudyInfo; userId:
 
 
 export function Study() {
-    const { isGuest } = useAuth();
-    const userId = isGuest ? 'guest' : 'authenticated-user'; // TODO: replace with real userId from auth
+    const { isGuest, userId } = useAuth();
     const [decks, setDecks] = useState<DeckStudyInfo[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedDeck, setSelectedDeck] = useState<DeckStudyInfo | null>(null);
@@ -209,7 +208,7 @@ export function Study() {
         if (selectedDeck) return;
         setLoading(true);
         async function load() {
-            const allDecks = await getDecks(userId);
+            const allDecks = await getDecks(userId || '');
             const withDue = await Promise.all(
                 allDecks.map(async (deck) => {
                     const due = await getDueCards(deck.id);
@@ -220,7 +219,7 @@ export function Study() {
             setLoading(false);
         }
         load();
-    }, [selectedDeck]);
+    }, [selectedDeck, userId]);
 
     return (
         <Layout>
@@ -242,7 +241,7 @@ export function Study() {
                 </div>
             )}
             {selectedDeck && (
-                <StudyInterface deck={selectedDeck} userId={userId} onExit={() => setSelectedDeck(null)} />
+                <StudyInterface deck={selectedDeck} userId={userId ?? ''} onExit={() => setSelectedDeck(null)} />
             )}
         </Layout>
     );

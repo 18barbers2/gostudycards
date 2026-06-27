@@ -5,6 +5,7 @@ import deckRoutes from './routes/decks.js'
 import cardRoutes from './routes/cards.js'
 import templateRoutes from './routes/templates.js'
 import reviewLogRoutes from './routes/review-logs.js'
+import dashboardRoutes from './routes/dashboard.js'
 import authRoutes from './routes/auth.js'
 import { requireAuth } from './middleware/auth.js'
 import rateLimit from 'express-rate-limit'
@@ -41,6 +42,8 @@ app.use('/api/decks', requireAuth, deckRoutes)
 app.use('/api/cards', requireAuth, cardRoutes)
 app.use('/api/templates', requireAuth, templateRoutes)
 app.use('/api/review-logs', requireAuth, reviewLogRoutes)
+app.use('/api/dashboard', requireAuth, dashboardRoutes)
+
 
 // Health check route — confirms server is running
 app.get('/health', (req, res) => {

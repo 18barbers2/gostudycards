@@ -11,8 +11,7 @@ import { getDecks, createDeck } from '../api/decks';
 import { getTemplate, createTemplate, updateTemplate } from '../api/templates';
 import { getFieldUsageCount, createCard, removeFieldFromCards, renameFieldInCards } from '../api/cards';
 import type { Deck, CardTemplate } from '../types';
-
-const TEMP_USER_ID = 'test-user-1';
+import { useAuth } from '../context/AuthContext.tsx';
 
 // Default Q/A/H field names — always shown regardless of template
 const DEFAULT_FIELD_NAMES = ['Question', 'Answer', 'Hint'];
@@ -27,6 +26,9 @@ const DEFAULT_TEMPLATE_FIELDS = DEFAULT_FIELD_NAMES.map(name => ({ name, isDefau
 type ActiveField = 'question' | 'answer' | 'hint' | string;
 
 export default function AddCard() {
+
+    const { userId } = useAuth();
+
     // Read navigation state — future deck detail page can pass a pre-selected deckId
     const location = useLocation();
 
@@ -83,7 +85,7 @@ export default function AddCard() {
     // Load decks on mount; if a deckId was passed via nav state, pre-select it.
     // Also kick off the template fetch immediately so both requests run in parallel.
     useEffect(() => {
-        getDecks(TEMP_USER_ID)
+        getDecks(userId || '')
             .then(data => {
                 setDecks(data);
                 const preselected = location.state?.deckId;
@@ -130,7 +132,7 @@ export default function AddCard() {
     // Creates a new deck inline and auto-selects it so the user can save cards immediately
     const handleCreateDeck = (e: React.FormEvent) => {
         e.preventDefault();
-        createDeck(newDeckName, undefined, TEMP_USER_ID)
+        createDeck(newDeckName, undefined, userId ?? '')
             .then(deck => {
                 setDecks(prev => [...prev, deck]);
                 setSelectedDeckId(deck.id);
@@ -267,7 +269,7 @@ export default function AddCard() {
         if (!activeTemplate) {
             try {
                 activeTemplate = await createTemplate(
-                    selectedDeckId, TEMP_USER_ID,
+                    selectedDeckId, userId ?? '',
                     DEFAULT_FRONT, DEFAULT_BACK, '',
                     DEFAULT_TEMPLATE_FIELDS
                 );

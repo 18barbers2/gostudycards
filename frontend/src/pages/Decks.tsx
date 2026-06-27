@@ -4,29 +4,36 @@ import { useState, useEffect } from 'react';
 import type { Deck } from '../types';
 import { getDecks, createDeck, deleteDeck } from '../api/decks';
 import { Layout } from '../components/Layout/Layout.tsx';
-
-const TEMP_USER_ID = 'test-user-1'; // Temporary until guest/auth is implemented
+import { useAuth } from '../context/AuthContext.tsx';
 
 export function Decks() {
+    const { userId } = useAuth();
     const [decks, setDecks] = useState<Deck[]>([]);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
     const [newName, setNewName] = useState('');
     const [newDesc, setNewDesc] = useState('');
+    const [creating, setCreating] = useState(false);
 
     useEffect(() => {
-        getDecks(TEMP_USER_ID)
+        getDecks( userId ?? '')
             .then(data => setDecks(data))
             .catch(err => console.error(err))
             .finally(() => setLoading(false));
-    }, []);
+    }, [userId]);
 
     function handleCreate(e: React.FormEvent) {
+        if (creating) return;
         e.preventDefault();
-        createDeck(newName, newDesc || undefined, TEMP_USER_ID)
+        setCreating(true);
+        createDeck(newName, newDesc || undefined, userId ?? '')
             .then(deck => setDecks(prev => [...prev, deck]))
             .catch(err => console.error(err))
-            .finally(() => { setShowForm(false); setNewName(''); setNewDesc(''); });
+            .finally(() => { 
+                setCreating(false); 
+                setShowForm(false); 
+                setNewName(''); 
+                setNewDesc(''); });
     }
 
     return (
@@ -36,7 +43,7 @@ export function Decks() {
                 <div className='page-title-row'>
                     <h1 className='page-title'>Decks</h1>
                 </div>
-<p>This is the Decks page. Here you will be able to view and manage your decks of cards.</p>
+                    <p>This is the Decks page. Here you will be able to view and manage your decks of cards.</p>
                 <div className='decks'>
                     {loading ? (
                         // Show skeleton tiles while the deck list is being fetched
@@ -87,7 +94,7 @@ export function Decks() {
                                         value={newDesc}
                                         onChange={e => setNewDesc(e.target.value)}
                                     />
-                                    <button className='add-deck-submit' type='submit'>Create</button>
+                                    <button className='add-deck-submit' type='submit' disabled={creating}>{creating ? 'Creating ...' : 'Create Deck'}</button>
                                     <button className='add-deck-cancel' type='button' onClick={() => setShowForm(false)}>Cancel</button>
                                 </form>
                             ) : (

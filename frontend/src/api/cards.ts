@@ -1,10 +1,7 @@
 import * as guest from '../services/guestStorage';
 import * as client from './client';
 import type { CardEntry } from '../types';
-
-function isGuest(): boolean {
-    return localStorage.getItem('isGuest') === 'true';
-}
+import { isGuest } from './helpers';
 
 // SM-2 SRS calculation — mirrors the backend logic for guest-side use
 function calculateSRS(card: CardEntry, rating: string): Partial<CardEntry> {
@@ -72,23 +69,49 @@ export async function submitReview(
 }
 
 export async function getCards(deckId: string): Promise<CardEntry[]> {
-    return guest.getCards(deckId);
+    if(isGuest()){
+        return guest.getCards(deckId);
+    }
+    else {
+        return client.get(`/api/cards?deckId=${deckId}`);
+    }
 }
 
 export async function getFieldUsageCount(deckId: string, fieldName: string): Promise<number> {
-    return guest.getFieldUsageCount(deckId, fieldName);
+    if(isGuest()){
+        return guest.getFieldUsageCount(deckId, fieldName);
+    }
+    else{
+        return client.get(`/api/cards/field-count?deckId=${deckId}&fieldName=${fieldName}`);
+    }
 }
 
 export async function renameFieldInCards(deckId: string, oldName: string, newName: string): Promise<void> {
-    return guest.renameFieldInCards(deckId, oldName, newName);
+    if(isGuest()){
+        return guest.renameFieldInCards(deckId, oldName, newName);
+    }
+    else{
+        return client.patch(`/api/cards/rename-field`, { deckId, oldName, newName });
+    }
 }
 
 export async function removeFieldFromCards(deckId: string, fieldName: string): Promise<void> {
-    return guest.removeFieldFromCards(deckId, fieldName);
+    if(isGuest()){
+        return guest.removeFieldFromCards(deckId, fieldName);
+    }
+    else{
+        return client.patch(`/api/cards/remove-field`, { deckId, fieldName });
+    }
+
 }
 
 export async function deleteCard(cardId: string): Promise<void> {
-    return guest.deleteCard(cardId);
+    if(isGuest()){
+        return guest.deleteCard(cardId);
+    }
+    else {
+        return client.del(`/api/cards/${cardId}`);
+    }
 }
 
 export async function createCard(
@@ -96,5 +119,10 @@ export async function createCard(
     deckId: string,
     data: Record<string, string>
 ): Promise<CardEntry> {
-    return guest.createCard(templateId, deckId, data);
+    if(isGuest()){
+        return guest.createCard(templateId, deckId, data);
+    }
+    else {
+        return client.post(`/api/cards/`, { templateId, deckId, data });
+    }
 }

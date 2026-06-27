@@ -37,7 +37,7 @@ export async function patch(path: string, body: unknown) {
 export async function post(path: string, body: unknown) {
     const res = await fetch(`${BASE_URL}${path}`, {
         method: 'POST',
-        headers:{ 'Content-Type': 'application/json'},
+        headers:{ 'Content-Type': 'application/json', ...getAuthHeader() },
         body: JSON.stringify(body)
     })
     if(!res.ok) {

@@ -25,7 +25,9 @@ export function Tabs({ activeTab, onClick }: { activeTab: CardTextInputMode; onC
 export default function CardBuilder() {
     const { userId } = useAuth();
     const [decks, setDecks] = useState<Deck[]>([]);
-    const [selectedDeckId, setSelectedDeckId] = useState<string>('');
+    const [selectedDeckId, setSelectedDeckId] = useState<string>(() => 
+        localStorage.getItem('lastSelectedDeckId') ?? ''
+    );
     const [existingTemplate, setExistingTemplate] = useState<CardTemplate | null>(null);
     const [frontHtml, setFrontHtml] = useState('<h2>{{Question}}</h2>\n<p>{{Hint}}</p>');
     const [backHtml, setBackHtml] = useState('<p>{{Answer}}</p>');
@@ -46,9 +48,12 @@ export default function CardBuilder() {
             .then(data => {
                 setDecks(data);
                 if (data.length > 0) {
-                    const initialId = data[0].id;
+                    const savedId = localStorage.getItem('lastSelectedDeckId');
+                    const validSavedId = savedId && data.find(d => d.id == savedId);
+                    const initialId = validSavedId ? savedId : data[0].id;
                     skipNextTemplateLoad.current = true;
                     setSelectedDeckId(initialId);
+                    localStorage.setItem('lastSelectedDeckId', initialId)
                     getTemplate(initialId)
                         .then(t => {
                             setExistingTemplate(t);
@@ -117,8 +122,6 @@ export default function CardBuilder() {
         if (!selectedDeckId) return;
         setSaveStatus('saving');
 
-        const { userId } = useAuth();
-
         // Parse {{token}} fields from both front and back, deduplicating across sides
         const tokenRegex = /\{\{(\w+)\}\}/g;
         const fieldNames = new Set<string>();
@@ -157,7 +160,8 @@ export default function CardBuilder() {
                         <select
                             className='deck-selector'
                             value={selectedDeckId}
-                            onChange={e => setSelectedDeckId(e.target.value)}
+                            onChange={e => {setSelectedDeckId(e.target.value); localStorage.setItem('lastSelectedDeckId', e.target.value)}
+}
                         >
                             {decks.length === 0 && <option value=''>No decks yet</option>}
                             {decks.map(deck => (

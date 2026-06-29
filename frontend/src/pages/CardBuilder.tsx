@@ -49,7 +49,7 @@ export default function CardBuilder() {
                 setDecks(data);
                 if (data.length > 0) {
                     const savedId = localStorage.getItem('lastSelectedDeckId');
-                    const validSavedId = savedId && data.find(d => d.id == savedId);
+                    const validSavedId = savedId && data.find(d => d.id === savedId);
                     const initialId = validSavedId ? savedId : data[0].id;
                     skipNextTemplateLoad.current = true;
                     setSelectedDeckId(initialId);

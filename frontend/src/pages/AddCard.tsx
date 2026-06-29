@@ -90,12 +90,19 @@ export default function AddCard() {
         getDecks(userId || '')
             .then(data => {
                 setDecks(data);
+                // Check if preselected deck
                 const preselected = location.state?.deckId;
+                // Check if there is a lastSelectedDeck
+                const savedId = localStorage.getItem('lastSelectedDeckId');
+                // If the selected Id exists and is equal to the savedId
+                const validSavedId = savedId && data.find(d => d.id === savedId);
+                // Set initial ID to preselected, data else if it's a valid saved id, assign to first depending on if it's empty
                 const initialId = (preselected && data.some((d: { id: string }) => d.id === preselected))
                     ? preselected
-                    : data.length > 0 ? data[0].id : '';
+                    : validSavedId ? savedId : data.length > 0 ? data[0].id : '';
                 skipNextTemplateLoad.current = true;
                 setSelectedDeckId(initialId);
+                localStorage.setItem('lastSelectedId', initialId)
                 if (initialId) {
                     getTemplate(initialId)
                         .then(t => setTemplate(t))
@@ -142,6 +149,7 @@ export default function AddCard() {
             .then(deck => {
                 setDecks(prev => [...prev, deck]);
                 setSelectedDeckId(deck.id);
+                localStorage.setItem('lastSelectedDeckId', deck.id);
                 setNewDeckName('');
                 setShowNewDeckForm(false);
             })
@@ -368,7 +376,7 @@ export default function AddCard() {
                             <select
                                 className='deck-selector'
                                 value={selectedDeckId}
-                                onChange={e => setSelectedDeckId(e.target.value)}
+                                onChange={e => { setSelectedDeckId(e.target.value); localStorage.setItem('lastSelectedDeckId', e.target.value) }}
                             >
                                 {decks.length === 0 && <option value=''>No decks yet</option>}
                                 {decks.map(deck => (

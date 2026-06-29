@@ -33,7 +33,9 @@ export default function AddCard() {
     const location = useLocation();
 
     const [decks, setDecks] = useState<Deck[]>([]);
-    const [selectedDeckId, setSelectedDeckId] = useState<string>('');
+    const [selectedDeckId, setSelectedDeckId] = useState<string>(() => 
+        localStorage.getItem('lastSelectedDeckId') ?? ''
+    );
 
     // Inline deck creation form (shown when user clicks "+ New Deck")
     const [showNewDeckForm, setShowNewDeckForm] = useState(false);
@@ -113,6 +115,10 @@ export default function AddCard() {
         }
         setTemplate(undefined); // loading
         setExtraFieldValues({});
+        setCustomFields([]);
+        setQuestion('');
+        setAnswer('');
+        setHint('');
         getTemplate(selectedDeckId)
             .then(t => setTemplate(t))
             .catch(() => setTemplate(null));

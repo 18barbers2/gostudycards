@@ -68,7 +68,7 @@ export function Decks() {
                                     key={deck.id}
                                     deckId={deck.id}
                                     title={deck.name}
-                                    createdBy={deck.ownerId}
+                                    description={deck.description ?? ''}
                                     onDelete={(id) => {
                                         deleteDeck(id)
                                             .then(() => setDecks(prev => prev.filter(d => d.id !== id)))

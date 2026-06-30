@@ -78,6 +78,7 @@ export function DeckTile({ title, createdBy, deckId, onDelete, onRename }: DeckT
 
             <div className='deck-content'>
                 <h3 className='deck-title'>{ title }</h3>
+                {/* Removed the below because it's not needed */}
                 {/* <p className='created-by'>{createdBy}</p> */}
             </div>
         </div>

@@ -80,10 +80,6 @@ export default function AddCard() {
     // A Map from custom field ID → FieldInputHandle for toolbar routing
     const customFieldRefs = useRef<Map<string, FieldInputHandle>>(new Map());
 
-    // Prevents the [selectedDeckId] effect from firing a duplicate template fetch
-    // on the initial mount (the mount effect already starts that fetch directly).
-    const skipNextTemplateLoad = useRef(false);
-
     // Load decks on mount; if a deckId was passed via nav state, pre-select it.
     // Also kick off the template fetch immediately so both requests run in parallel.
     useEffect(() => {
@@ -100,7 +96,6 @@ export default function AddCard() {
                 const initialId = (preselected && data.some((d: { id: string }) => d.id === preselected))
                     ? preselected
                     : validSavedId ? savedId : data.length > 0 ? data[0].id : '';
-                skipNextTemplateLoad.current = true;
                 setSelectedDeckId(initialId);
                 localStorage.setItem('lastSelectedId', initialId)
                 if (initialId) {
@@ -116,10 +111,6 @@ export default function AddCard() {
     // Skipped on initial mount because the mount effect already handles that fetch.
     useEffect(() => {
         if (!selectedDeckId) return;
-        if (skipNextTemplateLoad.current) {
-            skipNextTemplateLoad.current = false;
-            return;
-        }
         setTemplate(undefined); // loading
         setExtraFieldValues({});
         setCustomFields([]);

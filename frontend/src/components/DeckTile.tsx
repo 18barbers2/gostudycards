@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface DeckTileProps {
     title?: string;
-    createdBy?: string;
+    description?: string;
     deckId?: string;
     stats?: {
         cards: number;
@@ -18,7 +18,7 @@ interface DeckTileProps {
     onRename?: (deckId: string) => void;
 }
 
-export function DeckTile({ title, createdBy, deckId, onDelete, onRename }: DeckTileProps){
+export function DeckTile({ title, description, deckId, onDelete, onRename }: DeckTileProps){
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -78,7 +78,10 @@ export function DeckTile({ title, createdBy, deckId, onDelete, onRename }: DeckT
 
             <div className='deck-content'>
                 <h3 className='deck-title'>{ title }</h3>
-                <p className='created-by'>{createdBy}</p>
+                {/* Removed the below because it's not needed */}
+                {/* <p className='created-by'>{createdBy}</p> */}
+                <p className='deck-description'>{description }</p>
+
             </div>
         </div>
     );

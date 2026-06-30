@@ -47,7 +47,7 @@
     margin: 10px;
 }
 
-.created-by {
+.deck-description {
     color: var(--text-label);
     position: absolute;
     bottom: 0px;

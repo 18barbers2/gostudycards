@@ -1,5 +1,6 @@
 import { useRef, useState, useImperativeHandle, forwardRef } from 'react';
 import '../css/CodeEditor.css';
+import { html as beautifyHtml, css as beautifyCss } from 'js-beautify'
 
 
 export interface CodeEditorHandle {
@@ -22,6 +23,16 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const lineCount = (value.split('\n').length);
 
 
+    // Handle format using beautifier
+    const handleFormat = () => {
+        const isCSS = filename?.endsWith('.css');
+        const formatted = isCSS
+            ? beautifyCss(value, { indent_size: 2 })
+            : beautifyHtml(value, { indent_size: 2, wrap_line_length: 0 });
+        onChange(formatted);
+    };
+
+    
     useImperativeHandle(ref, () => ({
         insertAtCursor: (text: string) => { /* ... */ },
         applyFormat: (format: string) => {
@@ -58,7 +69,7 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         onChange(e.target.value);
     };
 
-    const handleScroll = () => { /* sync lineNumRef.scrollTop to textarea */ };
+    const handleScroll = () => { /* sync lineNumRef.scrollTop to textarea */ };    
 
     return (
         <div className="code-editor">
@@ -66,6 +77,7 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
                 <div className="code-editor-dot"></div>
                 <span className="code-editor-filename">{filename}</span>
                 <span className="code-editor-hint">Use {'{{variable}}'} for dynamic fields</span>
+                <button className="code-editor-format-button" onClick={handleFormat}>Format</button>
             </div>
 
             <div className='code-editor-body'>

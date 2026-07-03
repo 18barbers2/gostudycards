@@ -25,11 +25,6 @@ export function EditorFormatControls({ handleFormat, disabled = false }: { handl
                 <button className={btn('button-middle')} disabled={disabled} onClick={() => handleFormat('unordered_list')}><span className='material-symbols-outlined'>format_list_bulleted</span></button>
                 <button className={btn('button-right')} disabled={disabled} onClick={() => handleFormat('center_align')}><span className='material-symbols-outlined'>format_align_center</span></button>
             </div>
-            <div className='button-group'>
-                <button className='button-left disabled'><span className='material-symbols-outlined'>image</span></button>
-                <button className='button-middle disabled'><span className='material-symbols-outlined'>mic</span></button>
-                <button className='button-right disabled'><span className='material-symbols-outlined'>function</span></button>
-            </div>
         </div>
     );
 }

@@ -28,7 +28,13 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         const isCSS = filename?.endsWith('.css');
         const formatted = isCSS
             ? beautifyCss(value, { indent_size: 2 })
-            : beautifyHtml(value, { indent_size: 2, wrap_line_length: 0 });
+            : beautifyHtml(value, { 
+                indent_size: 2, 
+                wrap_line_length: 0,
+                indent_inner_html: true,
+                end_with_newline: true,
+                extra_liners: ['head', 'body', '/html'],
+            });
         onChange(formatted);
     };
 
@@ -71,9 +77,25 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
 
     const handleScroll = () => { /* sync lineNumRef.scrollTop to textarea */ };    
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key == 'Tab'){
+            e.preventDefault();
+            const textarea = textareaRef.current;
+            if(!textarea) return;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const newValue = value.substring(0, start) + '  ' + value.substring(end);
+            onChange(newValue);
+            setTimeout(() => {
+                textarea.setSelectionRange(start + 2, start + 2)
+            }, 0);
+
+        }
+    };
+
     return (
         <div className="code-editor">
-            <div className="code-editor-header">
+            <div className="code-editor-header">    
                 <div className="code-editor-dot"></div>
                 <span className="code-editor-filename">{filename}</span>
                 <span className="code-editor-hint">Use {'{{variable}}'} for dynamic fields</span>
@@ -92,6 +114,7 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
                     value={value}
                     onChange={handleChange}
                     onScroll={handleScroll}
+                    onKeyDown={handleKeyDown}
                     spellCheck={false}
                 />
                 </div>

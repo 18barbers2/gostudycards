@@ -34,6 +34,7 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
                 indent_inner_html: true,
                 end_with_newline: true,
                 extra_liners: ['head', 'body', '/html'],
+                wrap_attributes: 'preserve'
             });
         onChange(formatted);
     };

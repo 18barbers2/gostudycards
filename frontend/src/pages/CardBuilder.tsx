@@ -41,7 +41,6 @@ export default function CardBuilder() {
 
     // Prevents the [selectedDeckId] effect from firing a duplicate template fetch
     // on the initial mount (the mount effect already starts that fetch directly).
-    const skipNextTemplateLoad = useRef(false);
 
     useEffect(() => {
         getDecks(userId ?? '')
@@ -51,7 +50,6 @@ export default function CardBuilder() {
                     const savedId = localStorage.getItem('lastSelectedDeckId');
                     const validSavedId = savedId && data.find(d => d.id === savedId);
                     const initialId = validSavedId ? savedId : data[0].id;
-                    skipNextTemplateLoad.current = true;
                     setSelectedDeckId(initialId);
                     localStorage.setItem('lastSelectedDeckId', initialId)
                     getTemplate(initialId)
@@ -71,13 +69,8 @@ export default function CardBuilder() {
 
     // When the selected deck changes, load its existing template (if any) and
     // pre-populate the editor so the user can see and edit what was previously saved.
-    // Skipped on initial mount because the mount effect already handles that fetch.
     useEffect(() => {
         if (!selectedDeckId) return;
-        if (skipNextTemplateLoad.current) {
-            skipNextTemplateLoad.current = false;
-            return;
-        }
         setExistingTemplate(null);
         getTemplate(selectedDeckId)
             .then(t => {

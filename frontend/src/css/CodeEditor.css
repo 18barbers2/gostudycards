@@ -40,10 +40,27 @@
 }
 
 .code-editor-hint {
-    margin-left: auto;
     font-size: 11px;
     color: var(--text-muted);
     opacity: 0.6;
+}
+
+.code-editor-format-button {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 3px 10px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+}
+
+.code-editor-format-button:hover {
+    color: var(--text-primary);
+    border-color: var(--border-color-secondary);
 }
 
 .code-editor-body {
@@ -88,6 +105,9 @@
     outline: none;
     caret-color: var(--text-primary);
     tab-size: 2;
+    white-space: pre;
+    overflow-x: auto;
+    word-wrap: normal;
 }
 
 .code-editor-textarea::placeholder {

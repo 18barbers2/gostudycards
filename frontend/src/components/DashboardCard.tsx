@@ -10,7 +10,7 @@ interface DashboardCardProps {
 
 export function GreetingCardContent({ userName, deckCount, cardCount }: { userName: string; deckCount: number; cardCount: number }) {
     return (
-        <div>
+        <div className="greeting-content">
             <p className="greeting-text">Hi {userName}, ready to continue studying?</p>
             <div className="greeting-stats">
                 <div className="stat">

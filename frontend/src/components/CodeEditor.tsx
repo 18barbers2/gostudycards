@@ -1,5 +1,6 @@
 import { useRef, useState, useImperativeHandle, forwardRef } from 'react';
 import '../css/CodeEditor.css';
+import { html as beautifyHtml, css as beautifyCss } from 'js-beautify'
 
 
 export interface CodeEditorHandle {
@@ -22,6 +23,23 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
     const lineCount = (value.split('\n').length);
 
 
+    // Handle format using beautifier
+    const handleFormat = () => {
+        const isCSS = filename?.endsWith('.css');
+        const formatted = isCSS
+            ? beautifyCss(value, { indent_size: 2 })
+            : beautifyHtml(value, { 
+                indent_size: 2, 
+                wrap_line_length: 0,
+                indent_inner_html: true,
+                end_with_newline: true,
+                extra_liners: ['head', 'body', '/html'],
+                wrap_attributes: 'preserve'
+            });
+        onChange(formatted);
+    };
+
+    
     useImperativeHandle(ref, () => ({
         insertAtCursor: (text: string) => { /* ... */ },
         applyFormat: (format: string) => {
@@ -58,14 +76,31 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
         onChange(e.target.value);
     };
 
-    const handleScroll = () => { /* sync lineNumRef.scrollTop to textarea */ };
+    const handleScroll = () => { /* sync lineNumRef.scrollTop to textarea */ };    
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key == 'Tab'){
+            e.preventDefault();
+            const textarea = textareaRef.current;
+            if(!textarea) return;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const newValue = value.substring(0, start) + '  ' + value.substring(end);
+            onChange(newValue);
+            setTimeout(() => {
+                textarea.setSelectionRange(start + 2, start + 2)
+            }, 0);
+
+        }
+    };
 
     return (
         <div className="code-editor">
-            <div className="code-editor-header">
+            <div className="code-editor-header">    
                 <div className="code-editor-dot"></div>
                 <span className="code-editor-filename">{filename}</span>
                 <span className="code-editor-hint">Use {'{{variable}}'} for dynamic fields</span>
+                <button className="code-editor-format-button" onClick={handleFormat}>Format</button>
             </div>
 
             <div className='code-editor-body'>
@@ -80,6 +115,7 @@ const CodeEditor = forwardRef<CodeEditorHandle, CodeEditorProps>(
                     value={value}
                     onChange={handleChange}
                     onScroll={handleScroll}
+                    onKeyDown={handleKeyDown}
                     spellCheck={false}
                 />
                 </div>

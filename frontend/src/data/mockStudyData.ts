@@ -14,14 +14,12 @@ export const MOCK_TEMPLATES: CardTemplate[] = [
     // Back:  English meaning with a soft label
     {
         id: 'tmpl-1', deckId: '1', ownerId: '1ilkimen2',
-        frontTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+        frontTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">Japanese</div>
   <div style="font-size:3.8rem;color:white;line-height:1;font-weight:400;">{{Kanji}}</div>
   <div style="font-size:0.68rem;letter-spacing:0.14em;color:rgba(91,140,245,0.85);background:rgba(91,140,245,0.1);border:1px solid rgba(91,140,245,0.25);border-radius:999px;padding:4px 14px;">{{Romaji}}</div>
 </div>`,
-        backTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        backTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">English</div>
   <div style="width:28px;height:1px;background:rgba(91,140,245,0.3);"></div>
   <div style="font-size:1.6rem;color:white;font-weight:300;">{{English}}</div>
@@ -39,18 +37,14 @@ export const MOCK_TEMPLATES: CardTemplate[] = [
     // Back:  conjugation table feel + meaning muted below
     {
         id: 'tmpl-2', deckId: '2', ownerId: '1ilkimen2',
-        frontTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        frontTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">infinitive</div>
   <div style="font-size:2.2rem;color:white;font-weight:400;letter-spacing:-0.01em;">{{Verb}}</div>
-  <div style="font-size:0.65rem;letter-spacing:0.12em;color:rgba(91,140,245,0.8);background:rgba(91,140,245,0.1);border:1px solid rgba(91,140,245,0.22);border-radius:999px;padding:3px 12px;">{{Ending}}</div>
-</div>`,
-        backTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+  <div style="font-size:0.65rem;letter-spacing:0.12em;color:rgba(91,140,245,0.8);background:rgba(91,140,245,0.1);border:1px solid rgba(91,140,245,0.22);border-radius:999px;padding:3px 12px;">{{Ending}}</div></div>`,
+        backTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
   <div style="font-size:1.1rem;color:white;letter-spacing:0.04em;">{{Conjugation}}</div>
   <div style="width:28px;height:1px;background:rgba(91,140,245,0.3);margin:2px 0;"></div>
-  <div style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-style:italic;">{{Meaning}}</div>
-</div>`,
+  <div style="font-size:0.8rem;color:rgba(255,255,255,0.5);font-style:italic;">{{Meaning}}</div></div>`,
         style: '', createdAt: ALWAYS_DUE, updatedAt: ALWAYS_DUE,
         fields: [
             { id: 'f2-1', name: 'Verb', isDefault: true },
@@ -65,13 +59,11 @@ export const MOCK_TEMPLATES: CardTemplate[] = [
     // Back:  formula large + example muted
     {
         id: 'tmpl-3', deckId: '3', ownerId: 'mathprofessor',
-        frontTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        frontTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">calculus</div>
   <div style="font-size:1.4rem;color:#8cb4ff;font-family:monospace;background:rgba(91,140,245,0.08);padding:8px 20px;border-radius:10px;border:1px solid rgba(91,140,245,0.2);letter-spacing:0.02em;">{{Rule}}</div>
 </div>`,
-        backTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        backTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
   <div style="font-size:1.3rem;color:white;font-family:monospace;">{{Formula}}</div>
   <div style="width:28px;height:1px;background:rgba(91,140,245,0.3);margin:2px 0;"></div>
   <div style="font-size:0.75rem;color:rgba(255,255,255,0.45);font-family:monospace;">{{Example}}</div>
@@ -89,14 +81,12 @@ export const MOCK_TEMPLATES: CardTemplate[] = [
     // Back:  capital city large
     {
         id: 'tmpl-4', deckId: '4', ownerId: 'geoking99',
-        frontTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        frontTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">capital of</div>
   <div style="font-size:2rem;color:white;font-weight:500;letter-spacing:-0.02em;">{{Country}}</div>
   <div style="font-size:0.62rem;letter-spacing:0.12em;color:rgba(91,140,245,0.8);background:rgba(91,140,245,0.1);border:1px solid rgba(91,140,245,0.22);border-radius:999px;padding:3px 12px;">{{Continent}}</div>
 </div>`,
-        backTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        backTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">capital</div>
   <div style="font-size:2.2rem;color:white;font-weight:300;">{{Capital}}</div>
 </div>`,
@@ -113,13 +103,11 @@ export const MOCK_TEMPLATES: CardTemplate[] = [
     // Back:  definition clean
     {
         id: 'tmpl-5', deckId: '5', ownerId: 'nurserachel',
-        frontTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        frontTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
   <div style="font-size:2rem;color:white;font-weight:400;letter-spacing:0.04em;">{{Term}}</div>
   <div style="font-size:0.62rem;letter-spacing:0.14em;color:rgba(91,140,245,0.8);background:rgba(91,140,245,0.1);border:1px solid rgba(91,140,245,0.22);border-radius:999px;padding:3px 12px;">{{Type}}</div>
 </div>`,
-        backTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        backTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
   <div style="width:28px;height:1px;background:rgba(91,140,245,0.3);"></div>
   <div style="font-size:1rem;color:white;line-height:1.5;text-align:center;max-width:90%;">{{Definition}}</div>
 </div>`,
@@ -136,13 +124,11 @@ export const MOCK_TEMPLATES: CardTemplate[] = [
     // Back:  explanation + example in monospace
     {
         id: 'tmpl-6', deckId: '6', ownerId: 'codewizard',
-        frontTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        frontTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">python</div>
   <div style="font-size:1.2rem;color:#8cb4ff;font-family:monospace;background:rgba(91,140,245,0.08);padding:10px 20px;border-radius:10px;border:1px solid rgba(91,140,245,0.2);">{{Concept}}</div>
 </div>`,
-        backTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        backTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
   <div style="font-size:0.9rem;color:white;text-align:center;">{{Explanation}}</div>
   <div style="width:28px;height:1px;background:rgba(91,140,245,0.3);margin:2px 0;"></div>
   <div style="font-size:0.78rem;color:rgba(140,180,255,0.75);font-family:monospace;">{{Example}}</div>
@@ -160,14 +146,11 @@ export const MOCK_TEMPLATES: CardTemplate[] = [
     // Back:  notable works
     {
         id: 'tmpl-7', deckId: '7', ownerId: 'musiclover88',
-        frontTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        frontTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">composer</div>
   <div style="font-size:1.5rem;color:white;font-weight:300;letter-spacing:-0.01em;text-align:center;">{{Composer}}</div>
-  <div style="font-size:0.62rem;letter-spacing:0.1em;color:rgba(91,140,245,0.8);background:rgba(91,140,245,0.1);border:1px solid rgba(91,140,245,0.22);border-radius:999px;padding:3px 12px;">{{Era}}</div>
-</div>`,
-        backTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+  <div style="font-size:0.62rem;letter-spacing:0.1em;color:rgba(91,140,245,0.8);background:rgba(91,140,245,0.1);border:1px solid rgba(91,140,245,0.22);border-radius:999px;padding:3px 12px;">{{Era}}</div></div>`,
+        backTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">notable works</div>
   <div style="width:28px;height:1px;background:rgba(91,140,245,0.3);"></div>
   <div style="font-size:0.9rem;color:white;text-align:center;line-height:1.5;">{{Notable Works}}</div>
@@ -185,13 +168,11 @@ export const MOCK_TEMPLATES: CardTemplate[] = [
     // Back:  English translation
     {
         id: 'tmpl-8', deckId: '8', ownerId: '1ilkimen2',
-        frontTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        frontTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
   <div style="font-size:2.2rem;color:white;font-style:italic;font-weight:300;letter-spacing:0.01em;">{{French}}</div>
   <div style="font-size:0.62rem;letter-spacing:0.14em;color:rgba(91,140,245,0.8);background:rgba(91,140,245,0.1);border:1px solid rgba(91,140,245,0.22);border-radius:999px;padding:3px 12px;">français</div>
 </div>`,
-        backTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        backTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">English</div>
   <div style="font-size:1.6rem;color:white;font-weight:300;">{{English}}</div>
 </div>`,
@@ -207,14 +188,12 @@ export const MOCK_TEMPLATES: CardTemplate[] = [
     // Back:  year large, significance muted below
     {
         id: 'tmpl-9', deckId: '9', ownerId: 'historybuff',
-        frontTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        frontTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">US history</div>
   <div style="font-size:1.1rem;color:white;font-weight:500;line-height:1.35;text-align:center;max-width:88%;">{{Event}}</div>
   <div style="font-size:0.62rem;letter-spacing:0.12em;color:rgba(91,140,245,0.8);background:rgba(91,140,245,0.1);border:1px solid rgba(91,140,245,0.22);border-radius:999px;padding:3px 12px;">{{Century}}</div>
 </div>`,
-        backTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        backTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
   <div style="font-size:2.2rem;color:white;font-weight:300;">{{Year}}</div>
   <div style="width:28px;height:1px;background:rgba(91,140,245,0.3);"></div>
   <div style="font-size:0.78rem;color:rgba(255,255,255,0.5);text-align:center;line-height:1.4;max-width:88%;">{{Significance}}</div>
@@ -233,14 +212,12 @@ export const MOCK_TEMPLATES: CardTemplate[] = [
     // Back:  case declension table-style
     {
         id: 'tmpl-10', deckId: '10', ownerId: '1ilkimen2',
-        frontTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+        frontTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">deutsch</div>
   <div style="font-size:2rem;color:white;font-weight:400;letter-spacing:0.01em;">{{Article + Noun}}</div>
   <div style="font-size:0.62rem;letter-spacing:0.14em;color:rgba(91,140,245,0.8);background:rgba(91,140,245,0.1);border:1px solid rgba(91,140,245,0.22);border-radius:999px;padding:3px 12px;">{{Gender}}</div>
 </div>`,
-        backTemplate: `
-<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        backTemplate: `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
   <div style="font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.28);">cases</div>
   <div style="width:28px;height:1px;background:rgba(91,140,245,0.3);"></div>
   <div style="font-size:0.9rem;color:white;font-family:monospace;letter-spacing:0.04em;line-height:1.6;">{{Cases}}</div>

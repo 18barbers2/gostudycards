@@ -105,6 +105,9 @@
     outline: none;
     caret-color: var(--text-primary);
     tab-size: 2;
+    white-space: pre;
+    overflow-x: auto;
+    word-wrap: normal;
 }
 
 .code-editor-textarea::placeholder {

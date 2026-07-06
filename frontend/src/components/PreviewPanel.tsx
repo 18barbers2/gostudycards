@@ -20,7 +20,7 @@ function PreviewPanel({ side, template, style, data, onFlip, onInsert, showInser
                 <span className='preview-side-badge'>{side}</span>
             </div>
             <div className='preview-pane-body'>
-                <div className='preview-card-wrapper'>
+                <div className='preview-card-wrapper' onClick={onFlip}>
                     <Card id='' deckId='' template={template} style={style} data={data} />
                 </div>
                 <button className='preview-flip-hint' onClick={onFlip}>

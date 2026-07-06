@@ -27,11 +27,19 @@
 .greeting-stats {
     display: flex;
     gap: 32px;
+    margin-top: 20px;
+}
+
+.greeting-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
 }
 
 .stat-number {
     display: block;
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: 700;
     color: var(--text-primary);
     line-height: 1;

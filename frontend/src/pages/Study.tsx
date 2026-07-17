@@ -1,12 +1,12 @@
-import { Layout } from "../components/Layout/Layout.tsx";
+import { Layout } from '../components/Layout/Layout.tsx';
 import '../css/Study.css';
-import { useState, useEffect } from "react";
-import Card from "../components/Card.tsx";
-import { useAuth } from "../context/AuthContext.tsx";
-import { getDecks } from "../api/decks.ts";
-import { getDueCards, submitReview } from "../api/cards.ts";
-import { getTemplate } from "../api/templates.ts";
-import type { CardEntry, CardTemplate } from "../types/index.ts";
+import { useState, useEffect } from 'react';
+import Card from '../components/Card.tsx';
+import { useAuth } from '../context/AuthContext.tsx';
+import { getDecks } from '../api/decks.ts';
+import { getDueCards, submitReview } from '../api/cards.ts';
+import { getTemplate } from '../api/templates.ts';
+import type { CardEntry, CardTemplate } from '../types/index.ts';
 
 export interface DeckStudyInfo {
     id: string;
@@ -24,12 +24,17 @@ interface StudyCardData {
     backData: Record<string, string>;
 }
 
-function StudyCard({ card, isFlipped, onFlip }: { card: StudyCardData; isFlipped: boolean; onFlip: () => void }) {
+function StudyCard({
+    card,
+    isFlipped,
+    onFlip,
+}: {
+    card: StudyCardData;
+    isFlipped: boolean;
+    onFlip: () => void;
+}) {
     return (
-        <div
-            className={`flashcard ${isFlipped ? 'flipped' : ''}`}
-            onClick={onFlip}
-        >
+        <div className={`flashcard ${isFlipped ? 'flipped' : ''}`} onClick={onFlip}>
             <div className="card-face card-front">
                 <Card
                     template={card.frontTemplate}
@@ -50,7 +55,12 @@ function StudyCard({ card, isFlipped, onFlip }: { card: StudyCardData; isFlipped
     );
 }
 
-function DeckOption({ name, description, cardsDue, onClick }: Omit<DeckStudyInfo, 'id'> & { onClick: () => void }) {
+function DeckOption({
+    name,
+    description,
+    cardsDue,
+    onClick,
+}: Omit<DeckStudyInfo, 'id'> & { onClick: () => void }) {
     return (
         <div className="deck-option" onClick={onClick}>
             <div className="deck-info">
@@ -65,7 +75,15 @@ function DeckOption({ name, description, cardsDue, onClick }: Omit<DeckStudyInfo
     );
 }
 
-function StudyInterface({ deck, userId, onExit }: { deck: DeckStudyInfo; userId: string; onExit: () => void }) {
+function StudyInterface({
+    deck,
+    userId,
+    onExit,
+}: {
+    deck: DeckStudyInfo;
+    userId: string;
+    onExit: () => void;
+}) {
     const [cards, setCards] = useState<CardEntry[]>([]);
     const [template, setTemplate] = useState<CardTemplate | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -89,20 +107,20 @@ function StudyInterface({ deck, userId, onExit }: { deck: DeckStudyInfo; userId:
         const currentCard = cards[currentIndex];
         if (rating === 'retry') {
             // Re-queue at the end of the session — don't log as a completed review
-            setCards(prev => [
+            setCards((prev) => [
                 ...prev.slice(0, currentIndex),
                 ...prev.slice(currentIndex + 1),
                 currentCard,
             ]);
         } else {
             await submitReview(currentCard.id, rating, userId, deck.id, currentCard);
-            setCurrentIndex(i => i + 1);
+            setCurrentIndex((i) => i + 1);
         }
         setIsFlipped(false);
     };
 
     const handleSkip = () => {
-        setCurrentIndex(i => i + 1);
+        setCurrentIndex((i) => i + 1);
         setIsFlipped(false);
     };
 
@@ -129,10 +147,15 @@ function StudyInterface({ deck, userId, onExit }: { deck: DeckStudyInfo; userId:
                     <div className="deck-name">{deck.name}</div>
                 </div>
                 <div className="flashcard-container">
-                    <p>Session complete! You reviewed {cards.length} card{cards.length !== 1 ? 's' : ''}.</p>
+                    <p>
+                        Session complete! You reviewed {cards.length} card
+                        {cards.length !== 1 ? 's' : ''}.
+                    </p>
                 </div>
                 <div className="study-session-controls">
-                    <button className="end-session-button" onClick={onExit}>Back to Decks</button>
+                    <button className="end-session-button" onClick={onExit}>
+                        Back to Decks
+                    </button>
                 </div>
             </div>
         );
@@ -145,7 +168,9 @@ function StudyInterface({ deck, userId, onExit }: { deck: DeckStudyInfo; userId:
                     <h1 className="page-title">Study</h1>
                 </div>
                 <p>No template found for this deck.</p>
-                <button className="end-session-button" onClick={onExit}>Back to Decks</button>
+                <button className="end-session-button" onClick={onExit}>
+                    Back to Decks
+                </button>
             </div>
         );
     }
@@ -170,33 +195,68 @@ function StudyInterface({ deck, userId, onExit }: { deck: DeckStudyInfo; userId:
                     <div className="deck-name">{deck.name}</div>
                 </div>
                 <div className="study-progress">
-                    <span>Card <strong>{currentIndex + 1}</strong> of <strong>{cards.length}</strong></span>
-                    <span><strong>{cards.length - currentIndex}</strong> remaining</span>
+                    <span>
+                        Card <strong>{currentIndex + 1}</strong> of <strong>{cards.length}</strong>
+                    </span>
+                    <span>
+                        <strong>{cards.length - currentIndex}</strong> remaining
+                    </span>
                 </div>
             </div>
 
             <div className="flashcard-container">
-                <StudyCard card={studyCard} isFlipped={isFlipped} onFlip={() => setIsFlipped(f => !f)} />
+                <StudyCard
+                    card={studyCard}
+                    isFlipped={isFlipped}
+                    onFlip={() => setIsFlipped((f) => !f)}
+                />
             </div>
 
             <div className="difficulty-section">
                 <div className="difficulty-label">How well did you know this?</div>
                 <div className="difficulty-buttons">
-                    <button className="difficulty-button button-retry" onClick={() => handleRate('retry')} disabled={!isFlipped}>RETRY</button>
-                    <button className="difficulty-button button-hard" onClick={() => handleRate('hard')} disabled={!isFlipped}>HARD</button>
-                    <button className="difficulty-button button-medium" onClick={() => handleRate('medium')} disabled={!isFlipped}>MEDIUM</button>
-                    <button className="difficulty-button button-easy" onClick={() => handleRate('easy')} disabled={!isFlipped}>EASY</button>
+                    <button
+                        className="difficulty-button button-retry"
+                        onClick={() => handleRate('retry')}
+                        disabled={!isFlipped}
+                    >
+                        RETRY
+                    </button>
+                    <button
+                        className="difficulty-button button-hard"
+                        onClick={() => handleRate('hard')}
+                        disabled={!isFlipped}
+                    >
+                        HARD
+                    </button>
+                    <button
+                        className="difficulty-button button-medium"
+                        onClick={() => handleRate('medium')}
+                        disabled={!isFlipped}
+                    >
+                        MEDIUM
+                    </button>
+                    <button
+                        className="difficulty-button button-easy"
+                        onClick={() => handleRate('easy')}
+                        disabled={!isFlipped}
+                    >
+                        EASY
+                    </button>
                 </div>
             </div>
 
             <div className="study-session-controls">
-                <button className="end-session-button" onClick={onExit}>End Session</button>
-                <button className="skip-card-button" onClick={handleSkip}>Skip Card</button>
+                <button className="end-session-button" onClick={onExit}>
+                    End Session
+                </button>
+                <button className="skip-card-button" onClick={handleSkip}>
+                    Skip Card
+                </button>
             </div>
         </div>
     );
 }
-
 
 export function Study() {
     const { isGuest, userId } = useAuth();
@@ -212,10 +272,15 @@ export function Study() {
             const withDue = await Promise.all(
                 allDecks.map(async (deck) => {
                     const due = await getDueCards(deck.id);
-                    return { id: deck.id, name: deck.name, description: deck.description, cardsDue: due.length };
+                    return {
+                        id: deck.id,
+                        name: deck.name,
+                        description: deck.description,
+                        cardsDue: due.length,
+                    };
                 })
             );
-            setDecks(withDue.filter(d => d.cardsDue > 0));
+            setDecks(withDue.filter((d) => d.cardsDue > 0));
             setLoading(false);
         }
         load();
@@ -232,16 +297,16 @@ export function Study() {
                     {loading && <p>Loading decks...</p>}
                     {!loading && decks.length === 0 && <p>No cards due for review right now.</p>}
                     {decks.map((deck) => (
-                        <DeckOption
-                            key={deck.id}
-                            {...deck}
-                            onClick={() => setSelectedDeck(deck)}
-                        />
+                        <DeckOption key={deck.id} {...deck} onClick={() => setSelectedDeck(deck)} />
                     ))}
                 </div>
             )}
             {selectedDeck && (
-                <StudyInterface deck={selectedDeck} userId={userId ?? ''} onExit={() => setSelectedDeck(null)} />
+                <StudyInterface
+                    deck={selectedDeck}
+                    userId={userId ?? ''}
+                    onExit={() => setSelectedDeck(null)}
+                />
             )}
         </Layout>
     );

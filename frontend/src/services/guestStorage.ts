@@ -8,10 +8,10 @@ import { MOCK_DECKS } from '../data/decks';
 import { MOCK_CARDS, MOCK_TEMPLATES } from '../data/mockStudyData';
 import type { Deck, CardEntry, CardTemplate, CardField, ReviewLog } from '../types';
 
-const DECKS_KEY     = 'gsc_decks';
-const CARDS_KEY     = 'gsc_cards';
+const DECKS_KEY = 'gsc_decks';
+const CARDS_KEY = 'gsc_cards';
 const TEMPLATES_KEY = 'gsc_templates';
-const CARD_SRS_KEY  = 'gsc_card_srs';
+const CARD_SRS_KEY = 'gsc_card_srs';
 const REVIEW_LOGS_KEY = 'gsc_review_logs';
 
 type CardSRSState = {
@@ -45,10 +45,10 @@ export function getDecks(): Deck[] {
 }
 
 export function getDeck(deckId: string): Deck | null {
-    const mock = MOCK_DECKS.find(d => d.id === deckId);
+    const mock = MOCK_DECKS.find((d) => d.id === deckId);
     if (mock) return mock;
     const guestDecks = loadJSON<Deck>(DECKS_KEY);
-    return guestDecks.find(d => d.id === deckId) ?? null;
+    return guestDecks.find((d) => d.id === deckId) ?? null;
 }
 
 export function createDeck(name: string, description: string | undefined, ownerId: string): Deck {
@@ -69,23 +69,36 @@ export function createDeck(name: string, description: string | undefined, ownerI
 export function deleteDeck(deckId: string): void {
     // Sample decks (MOCK_DECKS) are read-only — silently ignore attempts to delete them
     const decks = loadJSON<Deck>(DECKS_KEY);
-    saveJSON(DECKS_KEY, decks.filter(d => d.id !== deckId));
+    saveJSON(
+        DECKS_KEY,
+        decks.filter((d) => d.id !== deckId)
+    );
     // Clean up any cards and templates that belong to this deck too
     const cards = loadJSON<CardEntry>(CARDS_KEY);
-    saveJSON(CARDS_KEY, cards.filter(c => c.deckId !== deckId));
+    saveJSON(
+        CARDS_KEY,
+        cards.filter((c) => c.deckId !== deckId)
+    );
     const templates = loadJSON<CardTemplate>(TEMPLATES_KEY);
-    saveJSON(TEMPLATES_KEY, templates.filter(t => t.deckId !== deckId));
+    saveJSON(
+        TEMPLATES_KEY,
+        templates.filter((t) => t.deckId !== deckId)
+    );
 }
 
 // ── Cards ─────────────────────────────────────────────────────────────────────
 
 export function getCards(deckId: string): CardEntry[] {
-    const mockCards = MOCK_CARDS.filter(c => c.deckId === deckId);
-    const guestCards = loadJSON<CardEntry>(CARDS_KEY).filter(c => c.deckId === deckId);
+    const mockCards = MOCK_CARDS.filter((c) => c.deckId === deckId);
+    const guestCards = loadJSON<CardEntry>(CARDS_KEY).filter((c) => c.deckId === deckId);
     return [...mockCards, ...guestCards];
 }
 
-export function createCard(templateId: string, deckId: string, data: Record<string, string>): CardEntry {
+export function createCard(
+    templateId: string,
+    deckId: string,
+    data: Record<string, string>
+): CardEntry {
     const card: CardEntry = {
         id: crypto.randomUUID(),
         templateId,
@@ -103,16 +116,19 @@ export function createCard(templateId: string, deckId: string, data: Record<stri
 
 export function deleteCard(cardId: string): void {
     const cards = loadJSON<CardEntry>(CARDS_KEY);
-    saveJSON(CARDS_KEY, cards.filter(c => c.id !== cardId));
+    saveJSON(
+        CARDS_KEY,
+        cards.filter((c) => c.id !== cardId)
+    );
 }
 
 export function getFieldUsageCount(deckId: string, fieldName: string): number {
-    return getCards(deckId).filter(c => fieldName in c.data).length;
+    return getCards(deckId).filter((c) => fieldName in c.data).length;
 }
 
 export function renameFieldInCards(deckId: string, oldName: string, newName: string): void {
     const cards = loadJSON<CardEntry>(CARDS_KEY);
-    const updated = cards.map(c => {
+    const updated = cards.map((c) => {
         if (c.deckId !== deckId || !(oldName in c.data)) return c;
         const data = { ...c.data, [newName]: c.data[oldName] };
         delete data[oldName];
@@ -123,7 +139,7 @@ export function renameFieldInCards(deckId: string, oldName: string, newName: str
 
 export function removeFieldFromCards(deckId: string, fieldName: string): void {
     const cards = loadJSON<CardEntry>(CARDS_KEY);
-    const updated = cards.map(c => {
+    const updated = cards.map((c) => {
         if (c.deckId !== deckId) return c;
         const data = { ...c.data };
         delete data[fieldName];
@@ -135,9 +151,9 @@ export function removeFieldFromCards(deckId: string, fieldName: string): void {
 // ── Templates ─────────────────────────────────────────────────────────────────
 
 export function getTemplate(deckId: string): CardTemplate | null {
-    const guestTemplate = loadJSON<CardTemplate>(TEMPLATES_KEY).find(t => t.deckId === deckId);
+    const guestTemplate = loadJSON<CardTemplate>(TEMPLATES_KEY).find((t) => t.deckId === deckId);
     if (guestTemplate) return guestTemplate;
-    return MOCK_TEMPLATES.find(t => t.deckId === deckId) ?? null;
+    return MOCK_TEMPLATES.find((t) => t.deckId === deckId) ?? null;
 }
 
 export function createTemplate(
@@ -156,7 +172,11 @@ export function createTemplate(
         backTemplate,
         style,
         // The backend normally generates field IDs — we do it ourselves here
-        fields: fields.map(f => ({ id: crypto.randomUUID(), name: f.name, isDefault: f.isDefault })),
+        fields: fields.map((f) => ({
+            id: crypto.randomUUID(),
+            name: f.name,
+            isDefault: f.isDefault,
+        })),
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
     };
@@ -170,15 +190,22 @@ export function updateTemplate(
     fields: Array<{ name: string; isDefault: boolean }>
 ): CardTemplate | null {
     const templates = loadJSON<CardTemplate>(TEMPLATES_KEY);
-    const existing = templates.find(t => t.id === templateId);
+    const existing = templates.find((t) => t.id === templateId);
     if (!existing) return null;
     // Preserve IDs for existing fields so references stay stable; generate new IDs for new fields
-    const updatedFields: CardField[] = fields.map(f => {
-        const match = existing.fields.find(ef => ef.name === f.name);
+    const updatedFields: CardField[] = fields.map((f) => {
+        const match = existing.fields.find((ef) => ef.name === f.name);
         return { id: match?.id ?? crypto.randomUUID(), name: f.name, isDefault: f.isDefault };
     });
-    const updated: CardTemplate = { ...existing, fields: updatedFields, updatedAt: new Date().toISOString() };
-    saveJSON(TEMPLATES_KEY, templates.map(t => t.id === templateId ? updated : t));
+    const updated: CardTemplate = {
+        ...existing,
+        fields: updatedFields,
+        updatedAt: new Date().toISOString(),
+    };
+    saveJSON(
+        TEMPLATES_KEY,
+        templates.map((t) => (t.id === templateId ? updated : t))
+    );
     return updated;
 }
 
@@ -190,10 +217,10 @@ export function updateFullTemplate(
     fields: Array<{ name: string; isDefault: boolean }>
 ): CardTemplate | null {
     const templates = loadJSON<CardTemplate>(TEMPLATES_KEY);
-    const existing = templates.find(t => t.id === templateId);
+    const existing = templates.find((t) => t.id === templateId);
     if (!existing) return null;
-    const updatedFields: CardField[] = fields.map(f => {
-        const match = existing.fields.find(ef => ef.name === f.name);
+    const updatedFields: CardField[] = fields.map((f) => {
+        const match = existing.fields.find((ef) => ef.name === f.name);
         return { id: match?.id ?? crypto.randomUUID(), name: f.name, isDefault: f.isDefault };
     });
     const updated: CardTemplate = {
@@ -204,7 +231,10 @@ export function updateFullTemplate(
         fields: updatedFields,
         updatedAt: new Date().toISOString(),
     };
-    saveJSON(TEMPLATES_KEY, templates.map(t => t.id === templateId ? updated : t));
+    saveJSON(
+        TEMPLATES_KEY,
+        templates.map((t) => (t.id === templateId ? updated : t))
+    );
     return updated;
 }
 
@@ -229,8 +259,8 @@ export function getDueCards(deckId: string): CardEntry[] {
     const srsMap = loadSRSMap();
     const now = new Date();
     return cards
-        .map(card => ({ ...card, ...srsMap[card.id] }))
-        .filter(card => new Date(card.nextReviewAt) <= now);
+        .map((card) => ({ ...card, ...srsMap[card.id] }))
+        .filter((card) => new Date(card.nextReviewAt) <= now);
 }
 
 // ── Review logs ───────────────────────────────────────────────────────────────
@@ -247,14 +277,13 @@ export function getWeeklyActivity(): { date: string; count: number }[] {
         d.setDate(d.getDate() - (6 - i));
         return d.toISOString().slice(0, 10);
     });
-    return days.map(date => ({
+    return days.map((date) => ({
         date,
-        count: logs.filter(l => l.reviewedAt.slice(0, 10) === date).length,
+        count: logs.filter((l) => l.reviewedAt.slice(0, 10) === date).length,
     }));
 }
 
 export function getDashboardStats() {
-
     const decks = getDecks();
     const srsMap = loadSRSMap();
     const now = new Date();
@@ -265,17 +294,16 @@ export function getDashboardStats() {
     let learningCount = 0;
     let masteredCount = 0;
 
-    for (const deck of decks){
+    for (const deck of decks) {
         const cards = getCards(deck.id);
         totalCards += cards.length;
 
-        for (const card of cards){
+        for (const card of cards) {
             const srs = srsMap[card.id];
             if (new Date(srs?.nextReviewAt ?? card.nextReviewAt) <= now) dueCount++;
-            
-            if (!srs || srs.reviewCount === 0) newCount++;
 
-            else if (srs.interval < 21 ) learningCount++;
+            if (!srs || srs.reviewCount === 0) newCount++;
+            else if (srs.interval < 21) learningCount++;
             else masteredCount++;
         }
     }
@@ -285,9 +313,8 @@ export function getDashboardStats() {
         totalCards: totalCards,
         dueCount: dueCount,
         weeklyActivity: getWeeklyActivity(),
-        masteryDistribution: { new: newCount, learning: learningCount, mastered: masteredCount }
+        masteryDistribution: { new: newCount, learning: learningCount, mastered: masteredCount },
     };
-
 }
 
 // ── Cleanup ───────────────────────────────────────────────────────────────────
@@ -303,24 +330,21 @@ export function clearGuestData(): void {
 // Initialization
 
 export function initGuestSession(): void {
-
     // Don't overwrite if they've already been using the app
     if (localStorage.getItem(REVIEW_LOGS_KEY)) return;
 
-
     // See SRS states
     const srsMap = {
-        'j1': { interval: 30, easeFactor: 2.8, nextReviewAt: future(14), reviewCount: 12 },
-        'j2': { interval: 7,  easeFactor: 2.5, nextReviewAt: future(3),  reviewCount: 4  },
-        'j3': { interval: 1,  easeFactor: 2.5, nextReviewAt: past(1),    reviewCount: 1  },
+        j1: { interval: 30, easeFactor: 2.8, nextReviewAt: future(14), reviewCount: 12 },
+        j2: { interval: 7, easeFactor: 2.5, nextReviewAt: future(3), reviewCount: 4 },
+        j3: { interval: 1, easeFactor: 2.5, nextReviewAt: past(1), reviewCount: 1 },
     };
 
-    localStorage.setItem(CARD_SRS_KEY, JSON.stringify(srsMap))
-
+    localStorage.setItem(CARD_SRS_KEY, JSON.stringify(srsMap));
 
     // Seed 7 days of review activity
     const logs = generateFakeReviewLogs();
-    localStorage.setItem(REVIEW_LOGS_KEY, JSON.stringify(logs))
+    localStorage.setItem(REVIEW_LOGS_KEY, JSON.stringify(logs));
 }
 
 function future(days: number) {
@@ -329,16 +353,14 @@ function future(days: number) {
     return d.toISOString;
 }
 
-
 function past(days: number) {
     const d = new Date();
     d.setDate(d.getDate() - days);
     return d.toISOString;
 }
 
-
 function generateFakeReviewLogs() {
-    const allCardIds = MOCK_CARDS.map(c => c.id);
+    const allCardIds = MOCK_CARDS.map((c) => c.id);
     const logs: ReviewLog[] = [];
     const ratings: ReviewLog['rating'][] = ['retry', 'hard', 'medium', 'easy'];
 
@@ -347,7 +369,7 @@ function generateFakeReviewLogs() {
         const date = new Date();
         date.setDate(date.getDate() - i);
         const count = Math.floor(Math.random() * 12) + 3;
-        
+
         // Add a random number of reviewLogs for each day
         for (let j = 0; j < count; j++) {
             logs.push({

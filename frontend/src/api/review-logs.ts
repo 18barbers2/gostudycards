@@ -5,7 +5,9 @@ function isGuest(): boolean {
     return localStorage.getItem('isGuest') === 'true';
 }
 
-export async function getWeeklyActivity(_userId: string): Promise<{ date: string; count: number }[]> {
+export async function getWeeklyActivity(
+    _userId: string
+): Promise<{ date: string; count: number }[]> {
     if (isGuest()) return guest.getWeeklyActivity();
     return client.get(`/api/review-logs/weekly?userId=${_userId}`);
 }

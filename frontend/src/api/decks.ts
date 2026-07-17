@@ -1,46 +1,44 @@
 import * as guest from '../services/guestStorage';
 import type { Deck } from '../types';
 import { isGuest } from './helpers';
-import { get, del, post} from './client'
+import { get, del, post } from './client';
 
 export async function getDecks(userId: string): Promise<Deck[]> {
-    if(isGuest()){
+    if (isGuest()) {
         return guest.getDecks();
-    }
-    else{
+    } else {
         return get(`/api/decks?userId=${userId}`);
     }
 }
 
-export async function createDeck(name: string, description: string | undefined, ownerId: string): Promise<Deck> {
-    if(isGuest()){
+export async function createDeck(
+    name: string,
+    description: string | undefined,
+    ownerId: string
+): Promise<Deck> {
+    if (isGuest()) {
         return guest.createDeck(name, description, ownerId);
-    }
-    else{
+    } else {
         return post(`/api/decks/`, { name, description, ownerId });
     }
 }
 
 export async function getDeck(deckId: string): Promise<Deck> {
-
-    if(isGuest()){
+    if (isGuest()) {
         const deck = guest.getDeck(deckId);
         if (!deck) throw new Error(`Deck ${deckId} not found`);
         return deck;
-    }
-    else{
+    } else {
         const deck = await get(`/api/decks/${deckId}`);
-        if(!deck) throw new Error(`Deck ${deckId} not found`);
+        if (!deck) throw new Error(`Deck ${deckId} not found`);
         return deck;
     }
 }
 
 export async function deleteDeck(deckId: string): Promise<void> {
-
-    if(isGuest()){
+    if (isGuest()) {
         return guest.deleteDeck(deckId);
-    }
-    else{
+    } else {
         return del(`/api/decks/${deckId}`);
     }
 }

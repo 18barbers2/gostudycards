@@ -5,14 +5,16 @@ export const MOCK_DECKS: Deck[] = [
         id: '1',
         name: 'Japanese JLPT N5 Vocabulary',
         cardIds: ['j1', 'j2', 'j3', 'j4', 'j5', 'j6', 'j7', 'j8'],
-        description: 'Essential vocabulary for JLPT N5 level. Covers greetings, numbers, and basic daily conversation.',
+        description:
+            'Essential vocabulary for JLPT N5 level. Covers greetings, numbers, and basic daily conversation.',
         ownerId: '1ilkimen2',
     },
     {
         id: '2',
         name: 'Spanish Verbs - Present Tense',
         cardIds: ['s1', 's2', 's3', 's4', 's5'],
-        description: 'Common Spanish verbs conjugated in present tense. Includes regular -ar, -er, and -ir verbs.',
+        description:
+            'Common Spanish verbs conjugated in present tense. Includes regular -ar, -er, and -ir verbs.',
         ownerId: '1ilkimen2',
     },
     {
@@ -54,7 +56,8 @@ export const MOCK_DECKS: Deck[] = [
         id: '8',
         name: 'French Food Vocabulary',
         cardIds: ['f1', 'f2', 'f3', 'f4', 'f5', 'f6'],
-        description: 'Learn the French names for common foods, cooking methods, and restaurant phrases.',
+        description:
+            'Learn the French names for common foods, cooking methods, and restaurant phrases.',
         ownerId: '1ilkimen2',
     },
     {

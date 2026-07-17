@@ -18,7 +18,7 @@ interface DeckTileProps {
     onRename?: (deckId: string) => void;
 }
 
-export function DeckTile({ title, description, deckId, onDelete, onRename }: DeckTileProps){
+export function DeckTile({ title, description, deckId, onDelete, onRename }: DeckTileProps) {
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -28,26 +28,45 @@ export function DeckTile({ title, description, deckId, onDelete, onRename }: Dec
     }
 
     return (
-        <div className='deck-tile' onClick={() => deckId && navigate(`/decks/${deckId}`)}>
+        <div className="deck-tile" onClick={() => deckId && navigate(`/decks/${deckId}`)}>
             <button
-                className='deck-menu'
-                onClick={(e) => { e.stopPropagation(); setMenuOpen(o => !o); }}
-            >⋯</button>
+                className="deck-menu"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setMenuOpen((o) => !o);
+                }}
+            >
+                ⋯
+            </button>
 
             {menuOpen && (
                 <>
-                    <div className='deck-menu-backdrop' onClick={(e) => { e.stopPropagation(); closeMenu(); }} />
-                    <div className='deck-menu-dropdown'>
+                    <div
+                        className="deck-menu-backdrop"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            closeMenu();
+                        }}
+                    />
+                    <div className="deck-menu-dropdown">
                         <button
-                            className='deck-menu-item'
+                            className="deck-menu-item"
                             disabled
-                            onClick={(e) => { e.stopPropagation(); onRename?.(deckId!); closeMenu(); }}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onRename?.(deckId!);
+                                closeMenu();
+                            }}
                         >
                             Rename
                         </button>
                         <button
-                            className='deck-menu-item deck-menu-item--danger'
-                            onClick={(e) => { e.stopPropagation(); setShowDeleteModal(true); closeMenu(); }}
+                            className="deck-menu-item deck-menu-item--danger"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowDeleteModal(true);
+                                closeMenu();
+                            }}
                         >
                             Delete
                         </button>
@@ -55,33 +74,49 @@ export function DeckTile({ title, description, deckId, onDelete, onRename }: Dec
                 </>
             )}
 
-            {showDeleteModal && createPortal(
-                <>
-                    <div className='modal-overlay' onClick={(e) => { e.stopPropagation(); setShowDeleteModal(false); }} />
-                    <div className='modal-dialog' onClick={(e) => e.stopPropagation()}>
-                        <h3 className='modal-title'>Delete deck?</h3>
-                        <p className='modal-body'>
-                            <strong>"{title}"</strong> and all its cards will be permanently deleted. This can't be undone.
-                        </p>
-                        <div className='modal-actions'>
-                            <button className='modal-btn modal-btn--cancel' onClick={() => setShowDeleteModal(false)}>
-                                Cancel
-                            </button>
-                            <button className='modal-btn modal-btn--danger' onClick={() => { onDelete?.(deckId!); setShowDeleteModal(false); }}>
-                                Delete
-                            </button>
+            {showDeleteModal &&
+                createPortal(
+                    <>
+                        <div
+                            className="modal-overlay"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setShowDeleteModal(false);
+                            }}
+                        />
+                        <div className="modal-dialog" onClick={(e) => e.stopPropagation()}>
+                            <h3 className="modal-title">Delete deck?</h3>
+                            <p className="modal-body">
+                                <strong>"{title}"</strong> and all its cards will be permanently
+                                deleted. This can't be undone.
+                            </p>
+                            <div className="modal-actions">
+                                <button
+                                    className="modal-btn modal-btn--cancel"
+                                    onClick={() => setShowDeleteModal(false)}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="modal-btn modal-btn--danger"
+                                    onClick={() => {
+                                        onDelete?.(deckId!);
+                                        setShowDeleteModal(false);
+                                    }}
+                                >
+                                    Delete
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </>,
-                document.body
-            )}
+                    </>,
+                    document.body
+                )}
 
-            <div className='deck-content'>
-                <h3 className='deck-title'>{ title }</h3>
+            <div className="deck-content">
+                <h3 className="deck-title">{title}</h3>
                 {/* Removed the below because it's not needed */}
                 {/* <p className='created-by'>{createdBy}</p> */}
-                <p className='deck-description'>{description }</p>
-
+                <p className="deck-description">{description}</p>
             </div>
         </div>
     );

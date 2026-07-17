@@ -47,7 +47,9 @@
     justify-content: center;
     gap: 8px;
     font-size: var(--font-size-sm);
-    transition: color 0.15s, border-color 0.15s;
+    transition:
+        color 0.15s,
+        border-color 0.15s;
 }
 
 .add-deck-tile:hover {

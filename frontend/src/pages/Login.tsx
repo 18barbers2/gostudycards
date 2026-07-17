@@ -1,13 +1,11 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import '../css/Login.css'
-import { useAuth } from "../context/AuthContext";
-import { initGuestSession } from "../services/guestStorage";
-import { post } from "../api/client";
-
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../css/Login.css';
+import { useAuth } from '../context/AuthContext';
+import { initGuestSession } from '../services/guestStorage';
+import { post } from '../api/client';
 
 export default function Login() {
-
     const { login, loginAsGuest } = useAuth();
 
     const navigate = useNavigate();
@@ -19,28 +17,28 @@ export default function Login() {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
-    const handleGuest = () =>  {
+    const handleGuest = () => {
         // Wire to loginAsGuest() later
         initGuestSession();
         loginAsGuest();
         navigate('/');
-
     };
 
     const toggleMode = () => {
-        setMode(prev => (prev === 'login' ? 'register' : 'login'));
+        setMode((prev) => (prev === 'login' ? 'register' : 'login'));
         setError(null);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-        console.log(import.meta.env.VITE_API_URL)
+        console.log(import.meta.env.VITE_API_URL);
         e.preventDefault();
         setError(null);
         setLoading(true);
         try {
-            const data = mode === 'login'
-                ? await post('/api/auth/login', { email, password })
-                : await post('/api/auth/register', { email, username, password });
+            const data =
+                mode === 'login'
+                    ? await post('/api/auth/login', { email, password })
+                    : await post('/api/auth/register', { email, username, password });
             login(data);
             navigate('/');
         } catch (err) {
@@ -60,7 +58,7 @@ export default function Login() {
                         type="email"
                         placeholder="Email"
                         value={email}
-                        onChange={e => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         autoComplete="email"
                     />
                     {mode === 'register' && (
@@ -68,7 +66,7 @@ export default function Login() {
                             type="text"
                             placeholder="Username"
                             value={username}
-                            onChange={e => setUsername(e.target.value)}
+                            onChange={(e) => setUsername(e.target.value)}
                             autoComplete="username"
                         />
                     )}
@@ -76,7 +74,7 @@ export default function Login() {
                         type="password"
                         placeholder="Password"
                         value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value)}
                         autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
                     />
 
@@ -87,27 +85,32 @@ export default function Login() {
                         className="login-button login-button--primary"
                         disabled={loading}
                     >
-                        {loading
-                            ? 'Please wait…'
-                            : mode === 'login' ? 'Sign In' : 'Create account'}
+                        {loading ? 'Please wait…' : mode === 'login' ? 'Sign In' : 'Create account'}
                     </button>
                 </form>
 
                 <div className="login-divider">
-                    <span className="login-divider-line"/>
+                    <span className="login-divider-line" />
                     <span className="login-divider-text">or</span>
-                    <span className="login-divider-line"/>
+                    <span className="login-divider-line" />
                 </div>
 
-                <button className="login-button login-button--ghost" onClick={handleGuest}>Continue as Guest</button>
+                <button className="login-button login-button--ghost" onClick={handleGuest}>
+                    Continue as Guest
+                </button>
 
                 <p className="login-note">
-                    {mode === 'login'
-                        ? <>Need an account? <span onClick={toggleMode}>Create one</span></>
-                        : <>Already have an account? <span onClick={toggleMode}>Sign in</span></>}
+                    {mode === 'login' ? (
+                        <>
+                            Need an account? <span onClick={toggleMode}>Create one</span>
+                        </>
+                    ) : (
+                        <>
+                            Already have an account? <span onClick={toggleMode}>Sign in</span>
+                        </>
+                    )}
                 </p>
             </div>
         </div>
-    )
-
+    );
 }

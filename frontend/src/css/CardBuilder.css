@@ -1,4 +1,3 @@
-
 .card-builder-page {
     display: flex;
     flex-direction: column;
@@ -52,8 +51,12 @@
     font-weight: 500;
 }
 
-.save-status--saved  { color: var(--color-success); }
-.save-status--error  { color: var(--color-danger-hover); }
+.save-status--saved {
+    color: var(--color-success);
+}
+.save-status--error {
+    color: var(--color-danger-hover);
+}
 
 /** Controls **/
 

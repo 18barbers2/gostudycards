@@ -50,7 +50,9 @@
     font-size: var(--font-size-sm);
     cursor: pointer;
     white-space: nowrap;
-    transition: color 0.15s, background-color 0.15s;
+    transition:
+        color 0.15s,
+        background-color 0.15s;
 }
 
 .new-deck-btn:hover {
@@ -91,7 +93,9 @@
     border-radius: var(--border-radius);
     font-size: var(--font-size-sm);
     cursor: pointer;
-    transition: color 0.15s, background-color 0.15s;
+    transition:
+        color 0.15s,
+        background-color 0.15s;
 }
 
 .inline-deck-form button:hover {
@@ -130,9 +134,18 @@
 
 /* Field removal animation — slight inflate then shrink + fade */
 @keyframes field-pop-out {
-    0%   { transform: scale(1);    opacity: 1; }
-    20%  { transform: scale(1.02); opacity: 1; }
-    100% { transform: scale(0.88); opacity: 0; }
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    20% {
+        transform: scale(1.02);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.88);
+        opacity: 0;
+    }
 }
 
 .field-wrapper--removing {
@@ -161,7 +174,9 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    transition: color 0.15s, border-color 0.15s;
+    transition:
+        color 0.15s,
+        border-color 0.15s;
 }
 
 .add-field-button:hover {
@@ -227,8 +242,12 @@
     white-space: nowrap;
 }
 
-.save-status--saved { color: var(--color-success); }
-.save-status--error { color: var(--color-danger-hover); }
+.save-status--saved {
+    color: var(--color-success);
+}
+.save-status--error {
+    color: var(--color-danger-hover);
+}
 
 .save-card-button:disabled {
     opacity: 0.5;

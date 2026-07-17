@@ -54,7 +54,9 @@
     border-radius: 6px;
     padding: 3px 10px;
     cursor: pointer;
-    transition: color 0.2s, border-color 0.2s;
+    transition:
+        color 0.2s,
+        border-color 0.2s;
     white-space: nowrap;
 }
 
@@ -71,7 +73,9 @@
 
 .code-editor-line-numbers {
     position: absolute;
-    top: 0; left: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
     width: 38px;
     display: flex;
     flex-direction: column;
@@ -94,7 +98,10 @@
 
 .code-editor-textarea {
     position: absolute;
-    top: 0; left: 38px; right: 0; bottom: 0;
+    top: 0;
+    left: 38px;
+    right: 0;
+    bottom: 0;
     background: transparent;
     border: none;
     color: var(--text-primary);

@@ -1,4 +1,4 @@
-export function parseTemplate ( template : string, data : any): string {
+export function parseTemplate(template: string, data: any): string {
     let result = template.trim();
 
     for (let key in data) {

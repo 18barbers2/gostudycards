@@ -8,27 +8,33 @@
     overflow: hidden;
 }
 
-.login-button:disabled{
-  cursor: not-allowed;
-  opacity: 0.5;
+.login-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
 .login-card {
     background: var(--panel, #252830);
-    border: 1px solid var(--border, rgba(255,255,255,0.08));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
     border-radius: 20px;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
     padding: 52px 48px 44px;
     width: 100%;
     max-width: 400px;
     display: flex;
     flex-direction: column;
-    animation: loginFadeUp 1.0s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: loginFadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes loginFadeUp {
-    from { opacity: 0; transform: translateY(18px);}
-    to { opacity: 1; transform: translateY(0px);}
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }
 
 .login-title {
@@ -64,29 +70,31 @@
     gap: 10px;
 }
 
-.login-button:active { transform: scale(0.985); }
+.login-button:active {
+    transform: scale(0.985);
+}
 
 .login-button--primary {
-  background: linear-gradient(135deg, #3a4a6b, #4a5a8a);
-  border: 1px solid rgba(91,140,245,0.28);
-  color: var(--text, #e8eaf0);
+    background: linear-gradient(135deg, #3a4a6b, #4a5a8a);
+    border: 1px solid rgba(91, 140, 245, 0.28);
+    color: var(--text, #e8eaf0);
 }
 
 .login-button--primary:hover {
-  background: linear-gradient(135deg, #4a5a80, #5a6a9a);
-  border-color: rgba(91,140,245,0.45);
+    background: linear-gradient(135deg, #4a5a80, #5a6a9a);
+    border-color: rgba(91, 140, 245, 0.45);
 }
 
 .login-button--ghost {
-  background: transparent;
-  border: 1px solid var(--border, rgba(255,255,255,0.08));
-  color: var(--muted, #6b7080);
+    background: transparent;
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    color: var(--muted, #6b7080);
 }
 
 .login-button--ghost:hover {
-  background: var(--surface, #2d3038);
-  color: var(--text, #e8eaf0);
-  border-color: rgba(255,255,255,0.14);
+    background: var(--surface, #2d3038);
+    color: var(--text, #e8eaf0);
+    border-color: rgba(255, 255, 255, 0.14);
 }
 
 .login-divider {
@@ -99,7 +107,7 @@
 .login-divider-line {
     flex: 1;
     height: 1px;
-    background: var(--border, rgba(255,255,255,0.08));
+    background: var(--border, rgba(255, 255, 255, 0.08));
     margin: 0px 10px;
 }
 
@@ -109,31 +117,31 @@
 }
 
 .login-note {
-  margin-top: 28px;
-  font-size: 0.72rem;
-  color: var(--muted, #6b7080);
-  text-align: center;
-  line-height: 1.6;
-  opacity: 0.7;
+    margin-top: 28px;
+    font-size: 0.72rem;
+    color: var(--muted, #6b7080);
+    text-align: center;
+    line-height: 1.6;
+    opacity: 0.7;
 }
 
 .login-note span {
-  color: rgba(91,140,245,0.7);
+    color: rgba(91, 140, 245, 0.7);
 }
 
 .login-button--ghost {
     background: var(--surface, #2d3038);
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     color: var(--text, #e8eaf0);
 }
 
 .login-button--ghost:hover {
     background: #33363f;
-    border-color: rgba(255,255,255,0.2);
+    border-color: rgba(255, 255, 255, 0.2);
     color: var(--text, #e8eaf0);
 }
 
-.login-form{
+.login-form {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -146,11 +154,13 @@
     padding: 13px 16px;
     border-radius: 11px;
     background: var(--surface, #2d3038);
-    border: 1px solid var(--border, rgba(255,255,255,0.08));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
     color: var(--text, #e8eaf0);
     font-family: inherit;
     font-size: 0.88rem;
-    transition: border-color 0.18s ease, background 0.18s ease;
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease;
 }
 
 .login-form input::placeholder {
@@ -159,7 +169,7 @@
 
 .login-form input:focus {
     outline: none;
-    border-color: rgba(91,140,245,0.45);
+    border-color: rgba(91, 140, 245, 0.45);
     background: #33363f;
 }
 

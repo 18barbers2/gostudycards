@@ -26,10 +26,10 @@ export interface CardEntry {
     data: Record<string, string>; // e.g. { Question: "...", Answer: "...", Hint: "..." }
     // SRS scheduling
     nextReviewAt: string;
-    interval: number;      // days until next review
-    easeFactor: number;    // difficulty multiplier
+    interval: number; // days until next review
+    easeFactor: number; // difficulty multiplier
     reviewCount: number;
-    masteredAt?: string;   // set once when interval first crosses the mastered threshold
+    masteredAt?: string; // set once when interval first crosses the mastered threshold
 }
 
 // One record written per review event — used to power activity histograms and stats
@@ -38,10 +38,10 @@ export interface ReviewLog {
     cardId: string;
     deckId: string;
     userId: string;
-    reviewedAt: string;              // ISO timestamp — group by date for the histogram
+    reviewedAt: string; // ISO timestamp — group by date for the histogram
     rating: 'retry' | 'hard' | 'medium' | 'easy';
-    previousInterval: number;        // interval before this review
-    newInterval: number;             // interval after this review
+    previousInterval: number; // interval before this review
+    newInterval: number; // interval after this review
 }
 
 // A deck of cards

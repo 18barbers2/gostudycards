@@ -1,7 +1,7 @@
-import '../css/Card.css'
+import '../css/Card.css';
 
 //TODO: add in an interface for CardProps
-import { parseTemplate } from "../utils/templateParser";
+import { parseTemplate } from '../utils/templateParser';
 
 interface CardProps {
     id: string;
@@ -12,8 +12,7 @@ interface CardProps {
 }
 
 // TODO: replace props with the template and data props
-function Card( props : CardProps) {
-
+function Card(props: CardProps) {
     const html = parseTemplate(props.template, props.data);
 
     const baseDoc = `
@@ -43,16 +42,7 @@ function Card( props : CardProps) {
             <body>${html}</body>
             </html>`;
 
-
-
-
-    return( 
-        <iframe className='card-iframe'
-            title='Card'
-            sandbox=''
-            srcDoc={baseDoc}>
-        </iframe>
-    );
+    return <iframe className="card-iframe" title="Card" sandbox="" srcDoc={baseDoc}></iframe>;
 }
 
 export default Card;

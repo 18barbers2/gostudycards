@@ -6,10 +6,9 @@ export interface DeckProps {
     ownerId?: string;
     createdAt?: string;
     updatedAt?: string;
-    
 }
-export function Deck({ }: DeckProps) {
-    return (<div>This is a Deck</div>);
+export function Deck({}: DeckProps) {
+    return <div>This is a Deck</div>;
 }
 
 export default Deck;

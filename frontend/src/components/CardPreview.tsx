@@ -7,19 +7,14 @@ interface CardPreviewProps {
     onFlip: () => void;
 }
 
-export function CardPreview({ data, template, side, onFlip}: CardPreviewProps) {
-
+export function CardPreview({ data, template, side, onFlip }: CardPreviewProps) {
     return (
-        <div className='card-preview'>
-            <p>
-                Preview - {side === 'front' ? 'Front' : 'Back'}
-            </p>
+        <div className="card-preview">
+            <p>Preview - {side === 'front' ? 'Front' : 'Back'}</p>
             <Card template={template} data={data} id={''} deckId={''}></Card>
-            <button onClick={onFlip}>
-                Flip Card
-            </button>
+            <button onClick={onFlip}>Flip Card</button>
         </div>
     );
 }
 
-export default CardPreview
+export default CardPreview;

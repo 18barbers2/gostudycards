@@ -4,11 +4,10 @@ import type { CardTemplate } from '../types';
 import { isGuest } from './helpers';
 
 export async function getTemplate(deckId: string): Promise<CardTemplate | null> {
-    if(isGuest()){
+    if (isGuest()) {
         return guest.getTemplate(deckId);
-    }
-    else{
-        return client.get(`/api/templates?deckId=${ deckId }`);
+    } else {
+        return client.get(`/api/templates?deckId=${deckId}`);
     }
 }
 
@@ -16,13 +15,11 @@ export async function updateTemplate(
     templateId: string,
     fields: Array<{ name: string; isDefault: boolean }>
 ): Promise<CardTemplate> {
-    if(isGuest()){
+    if (isGuest()) {
         const result = guest.updateTemplate(templateId, fields);
         if (!result) throw new Error(`Template ${templateId} not found`);
         return result;
-
-    }
-    else{
+    } else {
         return client.patch(`/api/templates/${templateId}`, { fields });
     }
 }
@@ -34,13 +31,23 @@ export async function updateFullTemplate(
     style: string,
     fields: Array<{ name: string; isDefault: boolean }>
 ): Promise<CardTemplate> {
-    if(isGuest()){
-        const result = guest.updateFullTemplate(templateId, frontTemplate, backTemplate, style, fields);
+    if (isGuest()) {
+        const result = guest.updateFullTemplate(
+            templateId,
+            frontTemplate,
+            backTemplate,
+            style,
+            fields
+        );
         if (!result) throw new Error(`Template ${templateId} not found`);
         return result;
-    }
-    else{
-        return client.patch(`/api/templates/${templateId}`, { fields, frontTemplate, backTemplate, style });
+    } else {
+        return client.patch(`/api/templates/${templateId}`, {
+            fields,
+            frontTemplate,
+            backTemplate,
+            style,
+        });
     }
 }
 
@@ -52,11 +59,16 @@ export async function createTemplate(
     style: string,
     fields: Array<{ name: string; isDefault: boolean }>
 ): Promise<CardTemplate> {
-
-    if(isGuest()){
+    if (isGuest()) {
         return guest.createTemplate(deckId, ownerId, frontTemplate, backTemplate, style, fields);
-    }
-    else{
-        return client.post(`/api/templates/`, { deckId , ownerId, frontTemplate, backTemplate, style, fields })
+    } else {
+        return client.post(`/api/templates/`, {
+            deckId,
+            ownerId,
+            frontTemplate,
+            backTemplate,
+            style,
+            fields,
+        });
     }
 }

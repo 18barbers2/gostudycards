@@ -19,21 +19,39 @@
     min-height: 0;
 }
 
-.welcome          { grid-area: welcome; }
-.study-progress   { grid-area: study-progress; }
+.welcome {
+    grid-area: welcome;
+}
+.study-progress {
+    grid-area: study-progress;
+}
 
-WeeklyActivityCardContent  { 
+WeeklyActivityCardContent {
     grid-area: weekly-activity;
 }
-.mastery-distribution { grid-area: mastery-distribution; }
-.quick-actions    { grid-area: quick-actions; }
+.mastery-distribution {
+    grid-area: mastery-distribution;
+}
+.quick-actions {
+    grid-area: quick-actions;
+}
 
 /* Per-card colour accents on the top border */
-.dashboard-card.welcome           { border-top-color: var(--card-accent-welcome); }
-.dashboard-card.study-progress    { border-top-color: var(--card-accent-progress); }
-.dashboard-card.weekly-activity   { border-top-color: var(--card-accent-activity); }
-.dashboard-card.mastery-distribution { border-top-color: var(--card-accent-mastery); }
-.dashboard-card.quick-actions     { border-top-color: var(--card-accent-actions); }
+.dashboard-card.welcome {
+    border-top-color: var(--card-accent-welcome);
+}
+.dashboard-card.study-progress {
+    border-top-color: var(--card-accent-progress);
+}
+.dashboard-card.weekly-activity {
+    border-top-color: var(--card-accent-activity);
+}
+.dashboard-card.mastery-distribution {
+    border-top-color: var(--card-accent-mastery);
+}
+.dashboard-card.quick-actions {
+    border-top-color: var(--card-accent-actions);
+}
 
 @media (max-width: 768px) {
     .home-page-container {

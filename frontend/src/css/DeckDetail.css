@@ -80,9 +80,15 @@
     gap: 3px;
 }
 
-.stat-tile--due      { border-top-color: #e74c3c; }
-.stat-tile--new      { border-top-color: var(--accent-blue); }
-.stat-tile--mastered { border-top-color: var(--color-success); }
+.stat-tile--due {
+    border-top-color: #e74c3c;
+}
+.stat-tile--new {
+    border-top-color: var(--accent-blue);
+}
+.stat-tile--mastered {
+    border-top-color: var(--color-success);
+}
 
 .stat-number {
     font-size: 24px;
@@ -91,9 +97,15 @@
     color: var(--text-primary);
 }
 
-.stat-tile--due      .stat-number { color: #e74c3c; }
-.stat-tile--new      .stat-number { color: var(--accent-blue); }
-.stat-tile--mastered .stat-number { color: var(--color-success); }
+.stat-tile--due .stat-number {
+    color: #e74c3c;
+}
+.stat-tile--new .stat-number {
+    color: var(--accent-blue);
+}
+.stat-tile--mastered .stat-number {
+    color: var(--color-success);
+}
 
 .stat-label {
     font-size: 11px;
@@ -119,7 +131,10 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    transition: background-color 0.15s, transform 0.1s, box-shadow 0.15s;
+    transition:
+        background-color 0.15s,
+        transform 0.1s,
+        box-shadow 0.15s;
     box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
 }
 
@@ -199,7 +214,9 @@
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.15s, border-color 0.15s;
+    transition:
+        background-color 0.15s,
+        border-color 0.15s;
 }
 
 .add-card-inline-btn:hover {
@@ -276,10 +293,18 @@
     flex-shrink: 0;
 }
 
-.card-row.status-new      .card-row-bar { background: var(--accent-blue); }
-.card-row.status-due      .card-row-bar { background: #e74c3c; }
-.card-row.status-learning .card-row-bar { background: #f59e0b; }
-.card-row.status-mastered .card-row-bar { background: var(--color-success); }
+.card-row.status-new .card-row-bar {
+    background: var(--accent-blue);
+}
+.card-row.status-due .card-row-bar {
+    background: #e74c3c;
+}
+.card-row.status-learning .card-row-bar {
+    background: #f59e0b;
+}
+.card-row.status-mastered .card-row-bar {
+    background: var(--color-success);
+}
 
 .card-row-content {
     flex: 1;
@@ -316,10 +341,22 @@
     text-transform: uppercase;
 }
 
-.badge-new      { background: rgba(74, 158, 255, 0.15); color: var(--accent-blue); }
-.badge-due      { background: rgba(231,  76,  60, 0.15); color: #e74c3c; }
-.badge-learning { background: rgba(245, 158,  11, 0.15); color: #f59e0b; }
-.badge-mastered { background: rgba( 39, 174,  96, 0.15); color: var(--color-success); }
+.badge-new {
+    background: rgba(74, 158, 255, 0.15);
+    color: var(--accent-blue);
+}
+.badge-due {
+    background: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+}
+.badge-learning {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+}
+.badge-mastered {
+    background: rgba(39, 174, 96, 0.15);
+    color: var(--color-success);
+}
 
 .card-row-chevron {
     color: var(--text-muted);
@@ -510,7 +547,9 @@
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.15s, border-color 0.15s;
+    transition:
+        background-color 0.15s,
+        border-color 0.15s;
 }
 
 .card-delete-btn:hover {

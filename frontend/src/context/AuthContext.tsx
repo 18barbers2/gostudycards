@@ -1,8 +1,7 @@
-import { createContext, useContext, useState } from "react";
-import { clearGuestData } from "../services/guestStorage";
+import { createContext, useContext, useState } from 'react';
+import { clearGuestData } from '../services/guestStorage';
 
-
-type LoginData = {token: string, userId: string, username: string};
+type LoginData = { token: string; userId: string; username: string };
 
 interface AuthContextType {
     isAuthenticated: boolean;
@@ -26,18 +25,17 @@ const AuthContext = createContext<AuthContextType>({
     logout: () => {},
 });
 
-
-export function AuthProvider({ children } : any ) {
-
-    const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem('isAuthenticated') === 'true');
+export function AuthProvider({ children }: any) {
+    const [isAuthenticated, setIsAuthenticated] = useState(
+        () => localStorage.getItem('isAuthenticated') === 'true'
+    );
     const [isGuest, setIsGuest] = useState(() => localStorage.getItem('isGuest') === 'true');
 
     const [token, setToken] = useState(() => localStorage.getItem('token'));
     const [userId, setUserId] = useState(() => localStorage.getItem('userId'));
     const [username, setUsername] = useState(() => localStorage.getItem('username'));
 
-
-    const login = (data: {token: string, userId: string, username: string}) => {
+    const login = (data: { token: string; userId: string; username: string }) => {
         setIsAuthenticated(true);
         setIsGuest(false);
         setToken(data.token);
@@ -54,7 +52,7 @@ export function AuthProvider({ children } : any ) {
         setIsAuthenticated(true);
         setIsGuest(true);
         localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('isGuest', 'true')
+        localStorage.setItem('isGuest', 'true');
     };
 
     const logout = () => {
@@ -62,14 +60,25 @@ export function AuthProvider({ children } : any ) {
         setIsGuest(false);
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('isGuest');
-        localStorage.removeItem('token')
-        localStorage.removeItem('username')
-        localStorage.removeItem('userId')
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
+        localStorage.removeItem('userId');
         clearGuestData();
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, isGuest, token, userId, username, login, loginAsGuest, logout }}>
+        <AuthContext.Provider
+            value={{
+                isAuthenticated,
+                isGuest,
+                token,
+                userId,
+                username,
+                login,
+                loginAsGuest,
+                logout,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );

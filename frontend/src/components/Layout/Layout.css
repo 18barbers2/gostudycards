@@ -45,7 +45,7 @@
 /* Mobile styles */
 @media (max-width: 1024px) {
     .app-container {
-        flex-direction: column;  /* Stack vertically */
+        flex-direction: column; /* Stack vertically */
     }
 
     /* Override collapsed width — specificity must match .navbar.navbar--collapsed */

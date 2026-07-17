@@ -12,12 +12,33 @@ import { useAuth } from '../context/AuthContext.tsx';
 // Track which side of the card the user is editing
 type CardTextInputMode = 'front' | 'back' | 'style';
 
-export function Tabs({ activeTab, onClick }: { activeTab: CardTextInputMode; onClick: (mode: CardTextInputMode) => void }) {
+export function Tabs({
+    activeTab,
+    onClick,
+}: {
+    activeTab: CardTextInputMode;
+    onClick: (mode: CardTextInputMode) => void;
+}) {
     return (
-        <div className='tab-group'>
-            <button className={`tab-button ${activeTab === 'front' ? 'active' : ''}`} onClick={() => onClick('front')}>Front</button>
-            <button className={`tab-button ${activeTab === 'back' ? 'active' : ''}`} onClick={() => onClick('back')}>Back</button>
-            <button className={`tab-button ${activeTab === 'style' ? 'active' : ''}`} onClick={() => onClick('style')}>Style</button>
+        <div className="tab-group">
+            <button
+                className={`tab-button ${activeTab === 'front' ? 'active' : ''}`}
+                onClick={() => onClick('front')}
+            >
+                Front
+            </button>
+            <button
+                className={`tab-button ${activeTab === 'back' ? 'active' : ''}`}
+                onClick={() => onClick('back')}
+            >
+                Back
+            </button>
+            <button
+                className={`tab-button ${activeTab === 'style' ? 'active' : ''}`}
+                onClick={() => onClick('style')}
+            >
+                Style
+            </button>
         </div>
     );
 }
@@ -25,13 +46,15 @@ export function Tabs({ activeTab, onClick }: { activeTab: CardTextInputMode; onC
 export default function CardBuilder() {
     const { userId } = useAuth();
     const [decks, setDecks] = useState<Deck[]>([]);
-    const [selectedDeckId, setSelectedDeckId] = useState<string>(() => 
-        localStorage.getItem('lastSelectedDeckId') ?? ''
+    const [selectedDeckId, setSelectedDeckId] = useState<string>(
+        () => localStorage.getItem('lastSelectedDeckId') ?? ''
     );
     const [existingTemplate, setExistingTemplate] = useState<CardTemplate | null>(null);
     const [frontHtml, setFrontHtml] = useState('<h2>{{Question}}</h2>\n<p>{{Hint}}</p>');
     const [backHtml, setBackHtml] = useState('<p>{{Answer}}</p>');
-    const [styleHtml, setStyleHtml] = useState('h2, p {\n    color: white;\n    font-family: sans-serif;\n    text-align: center;\n}');
+    const [styleHtml, setStyleHtml] = useState(
+        'h2, p {\n    color: white;\n    font-family: sans-serif;\n    text-align: center;\n}'
+    );
     const [cardTextInputMode, setCardTextInputMode] = useState<CardTextInputMode>('front');
     const [previewSide, setPreviewSide] = useState<'front' | 'back'>('front');
     const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
@@ -44,16 +67,16 @@ export default function CardBuilder() {
 
     useEffect(() => {
         getDecks(userId ?? '')
-            .then(data => {
+            .then((data) => {
                 setDecks(data);
                 if (data.length > 0) {
                     const savedId = localStorage.getItem('lastSelectedDeckId');
-                    const validSavedId = savedId && data.find(d => d.id === savedId);
+                    const validSavedId = savedId && data.find((d) => d.id === savedId);
                     const initialId = validSavedId ? savedId : data[0].id;
                     setSelectedDeckId(initialId);
-                    localStorage.setItem('lastSelectedDeckId', initialId)
+                    localStorage.setItem('lastSelectedDeckId', initialId);
                     getTemplate(initialId)
-                        .then(t => {
+                        .then((t) => {
                             setExistingTemplate(t);
                             if (t) {
                                 setFrontHtml(t.frontTemplate);
@@ -64,7 +87,7 @@ export default function CardBuilder() {
                         .catch(() => setExistingTemplate(null));
                 }
             })
-            .catch(err => console.error(err));
+            .catch((err) => console.error(err));
     }, []);
 
     // When the selected deck changes, load its existing template (if any) and
@@ -73,7 +96,7 @@ export default function CardBuilder() {
         if (!selectedDeckId) return;
         setExistingTemplate(null);
         getTemplate(selectedDeckId)
-            .then(t => {
+            .then((t) => {
                 setExistingTemplate(t);
                 if (t) {
                     setFrontHtml(t.frontTemplate);
@@ -85,7 +108,12 @@ export default function CardBuilder() {
     }, [selectedDeckId]);
 
     // Which HTML to show in editor based on active tab
-    const currentHtml = cardTextInputMode === 'front' ? frontHtml : cardTextInputMode === 'back' ? backHtml : styleHtml;
+    const currentHtml =
+        cardTextInputMode === 'front'
+            ? frontHtml
+            : cardTextInputMode === 'back'
+              ? backHtml
+              : styleHtml;
 
     const handleHtmlChange = (newHtml: string) => {
         if (cardTextInputMode === 'front') setFrontHtml(newHtml);
@@ -100,7 +128,7 @@ export default function CardBuilder() {
     };
 
     const handleFlip = () => {
-        setPreviewSide(prev => prev === 'front' ? 'back' : 'front');
+        setPreviewSide((prev) => (prev === 'front' ? 'back' : 'front'));
     };
 
     const handleFormat = (format: string) => {
@@ -121,13 +149,29 @@ export default function CardBuilder() {
         for (const match of frontHtml.matchAll(tokenRegex)) fieldNames.add(match[1]);
         for (const match of backHtml.matchAll(tokenRegex)) fieldNames.add(match[1]);
         const DEFAULT_NAMES = new Set(['Question', 'Answer', 'Hint']);
-        const fields = [...fieldNames].map(name => ({ name, isDefault: DEFAULT_NAMES.has(name) }));
+        const fields = [...fieldNames].map((name) => ({
+            name,
+            isDefault: DEFAULT_NAMES.has(name),
+        }));
 
         try {
             if (existingTemplate) {
-                await updateFullTemplate(existingTemplate.id, frontHtml, backHtml, styleHtml, fields);
+                await updateFullTemplate(
+                    existingTemplate.id,
+                    frontHtml,
+                    backHtml,
+                    styleHtml,
+                    fields
+                );
             } else {
-                const created = await createTemplate(selectedDeckId, userId ?? '', frontHtml, backHtml, styleHtml, fields);
+                const created = await createTemplate(
+                    selectedDeckId,
+                    userId ?? '',
+                    frontHtml,
+                    backHtml,
+                    styleHtml,
+                    fields
+                );
                 setExistingTemplate(created);
             }
             setSaveStatus('saved');
@@ -145,43 +189,64 @@ export default function CardBuilder() {
 
     return (
         <Layout>
-            <div className='card-builder-page'>
+            <div className="card-builder-page">
                 {/* Title row — page title on the left, deck selector + save on the right */}
-                <div className='page-title-row'>
-                    <h1 className='page-title'>Card Builder</h1>
-                    <div className='title-row-actions'>
+                <div className="page-title-row">
+                    <h1 className="page-title">Card Builder</h1>
+                    <div className="title-row-actions">
                         <select
-                            className='deck-selector'
+                            className="deck-selector"
                             value={selectedDeckId}
-                            onChange={e => {setSelectedDeckId(e.target.value); localStorage.setItem('lastSelectedDeckId', e.target.value)}
-}
+                            onChange={(e) => {
+                                setSelectedDeckId(e.target.value);
+                                localStorage.setItem('lastSelectedDeckId', e.target.value);
+                            }}
                         >
-                            {decks.length === 0 && <option value=''>No decks yet</option>}
-                            {decks.map(deck => (
-                                <option key={deck.id} value={deck.id}>{deck.name}</option>
+                            {decks.length === 0 && <option value="">No decks yet</option>}
+                            {decks.map((deck) => (
+                                <option key={deck.id} value={deck.id}>
+                                    {deck.name}
+                                </option>
                             ))}
                         </select>
                         <button
-                            className='save-template-button'
+                            className="save-template-button"
                             onClick={handleSaveTemplate}
                             disabled={!selectedDeckId || saveStatus === 'saving'}
                         >
                             {saveStatus === 'saving' ? 'Saving…' : 'Save Template'}
                         </button>
                         {saveStatus !== 'idle' && saveStatus !== 'saving' && (
-                            <span className={`save-status save-status--${saveStatus}`}>{saveMessage}</span>
+                            <span className={`save-status save-status--${saveStatus}`}>
+                                {saveMessage}
+                            </span>
                         )}
                     </div>
                 </div>
 
                 {/* Editor controls — tabs and format toolbar are both editor-level tools */}
-                <div className='editor-controls'>
+                <div className="editor-controls">
                     <Tabs activeTab={cardTextInputMode} onClick={handleTabChange} />
-                    <EditorFormatControls handleFormat={handleFormat} disabled={cardTextInputMode === 'style'} />
+                    <EditorFormatControls
+                        handleFormat={handleFormat}
+                        disabled={cardTextInputMode === 'style'}
+                    />
                 </div>
-                <div className='workspace'>
-                    <CodeEditor ref={codeEditorRef} value={currentHtml} onChange={handleHtmlChange} filename={filename} />
-                    <PreviewPanel side={previewSide} template={previewTemplate} style={styleHtml} data={{}} onFlip={handleFlip} onInsert={handleInsert} />
+                <div className="workspace">
+                    <CodeEditor
+                        ref={codeEditorRef}
+                        value={currentHtml}
+                        onChange={handleHtmlChange}
+                        filename={filename}
+                    />
+                    <PreviewPanel
+                        side={previewSide}
+                        template={previewTemplate}
+                        style={styleHtml}
+                        data={{}}
+                        onFlip={handleFlip}
+                        onInsert={handleInsert}
+                    />
                 </div>
             </div>
         </Layout>

@@ -32,11 +32,18 @@ function calculateSRS(card: CardEntry, rating: string): Partial<CardEntry> {
     nextReviewAt.setDate(nextReviewAt.getDate() + interval);
 
     const MASTERY_THRESHOLD = 21;
-    const masteredAt = !card.masteredAt && interval >= MASTERY_THRESHOLD
-        ? nextReviewAt.toISOString()
-        : card.masteredAt;
+    const masteredAt =
+        !card.masteredAt && interval >= MASTERY_THRESHOLD
+            ? nextReviewAt.toISOString()
+            : card.masteredAt;
 
-    return { interval, easeFactor, reviewCount, nextReviewAt: nextReviewAt.toISOString(), masteredAt };
+    return {
+        interval,
+        easeFactor,
+        reviewCount,
+        nextReviewAt: nextReviewAt.toISOString(),
+        masteredAt,
+    };
 }
 
 export async function getDueCards(deckId: string): Promise<CardEntry[]> {
@@ -69,47 +76,45 @@ export async function submitReview(
 }
 
 export async function getCards(deckId: string): Promise<CardEntry[]> {
-    if(isGuest()){
+    if (isGuest()) {
         return guest.getCards(deckId);
-    }
-    else {
+    } else {
         return client.get(`/api/cards?deckId=${deckId}`);
     }
 }
 
 export async function getFieldUsageCount(deckId: string, fieldName: string): Promise<number> {
-    if(isGuest()){
+    if (isGuest()) {
         return guest.getFieldUsageCount(deckId, fieldName);
-    }
-    else{
+    } else {
         return client.get(`/api/cards/field-count?deckId=${deckId}&fieldName=${fieldName}`);
     }
 }
 
-export async function renameFieldInCards(deckId: string, oldName: string, newName: string): Promise<void> {
-    if(isGuest()){
+export async function renameFieldInCards(
+    deckId: string,
+    oldName: string,
+    newName: string
+): Promise<void> {
+    if (isGuest()) {
         return guest.renameFieldInCards(deckId, oldName, newName);
-    }
-    else{
+    } else {
         return client.patch(`/api/cards/rename-field`, { deckId, oldName, newName });
     }
 }
 
 export async function removeFieldFromCards(deckId: string, fieldName: string): Promise<void> {
-    if(isGuest()){
+    if (isGuest()) {
         return guest.removeFieldFromCards(deckId, fieldName);
-    }
-    else{
+    } else {
         return client.patch(`/api/cards/remove-field`, { deckId, fieldName });
     }
-
 }
 
 export async function deleteCard(cardId: string): Promise<void> {
-    if(isGuest()){
+    if (isGuest()) {
         return guest.deleteCard(cardId);
-    }
-    else {
+    } else {
         return client.del(`/api/cards/${cardId}`);
     }
 }
@@ -119,10 +124,9 @@ export async function createCard(
     deckId: string,
     data: Record<string, string>
 ): Promise<CardEntry> {
-    if(isGuest()){
+    if (isGuest()) {
         return guest.createCard(templateId, deckId, data);
-    }
-    else {
+    } else {
         return client.post(`/api/cards/`, { templateId, deckId, data });
     }
 }

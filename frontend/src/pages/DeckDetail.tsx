@@ -60,17 +60,13 @@ export function DeckDetail() {
     useEffect(() => {
         if (!deckId) return;
         const deckPromise = deck ? Promise.resolve(deck) : getDeck(deckId);
-        Promise.all([
-            deckPromise,
-            getCards(deckId),
-            getTemplate(deckId).catch(() => null),
-        ])
+        Promise.all([deckPromise, getCards(deckId), getTemplate(deckId).catch(() => null)])
             .then(([deckData, cardsData, templateData]) => {
                 setDeck(deckData);
                 setCards(cardsData);
                 setTemplate(templateData);
             })
-            .catch(err => console.error(err))
+            .catch((err) => console.error(err))
             .finally(() => setLoading(false));
     }, [deckId]);
 
@@ -78,9 +74,11 @@ export function DeckDetail() {
         const now = new Date();
         return {
             total: cards.length,
-            due: cards.filter(c => !c.masteredAt && c.reviewCount > 0 && new Date(c.nextReviewAt) <= now).length,
-            new: cards.filter(c => !c.masteredAt && c.reviewCount === 0).length,
-            mastered: cards.filter(c => Boolean(c.masteredAt)).length,
+            due: cards.filter(
+                (c) => !c.masteredAt && c.reviewCount > 0 && new Date(c.nextReviewAt) <= now
+            ).length,
+            new: cards.filter((c) => !c.masteredAt && c.reviewCount === 0).length,
+            mastered: cards.filter((c) => Boolean(c.masteredAt)).length,
         };
     }, [cards]);
 
@@ -96,11 +94,11 @@ export function DeckDetail() {
         setDeleting(true);
         deleteCard(cardToDelete.id)
             .then(() => {
-                setCards(prev => prev.filter(c => c.id !== cardToDelete.id));
+                setCards((prev) => prev.filter((c) => c.id !== cardToDelete.id));
                 if (selectedCard?.id === cardToDelete.id) setSelectedCard(null);
                 setCardToDelete(null);
             })
-            .catch(err => console.error(err))
+            .catch((err) => console.error(err))
             .finally(() => setDeleting(false));
     }
 
@@ -109,7 +107,7 @@ export function DeckDetail() {
     }
 
     function getFieldOrder(): string[] {
-        if (template?.fields?.length) return template.fields.map(f => f.name);
+        if (template?.fields?.length) return template.fields.map((f) => f.name);
         if (selectedCard) return Object.keys(selectedCard.data);
         return [];
     }
@@ -141,7 +139,6 @@ export function DeckDetail() {
     return (
         <Layout>
             <div className="deck-detail-page">
-
                 {/* ── Header ─────────────────────────────────────────── */}
                 <div className="deck-detail-header">
                     <button className="deck-detail-back" onClick={() => navigate('/decks')}>
@@ -188,7 +185,6 @@ export function DeckDetail() {
 
                 {/* ── Body: two-column ───────────────────────────────── */}
                 <div className="deck-detail-body">
-
                     {/* Left: scrollable card list */}
                     <div className="deck-card-list">
                         <div className="deck-card-list-header">
@@ -216,7 +212,7 @@ export function DeckDetail() {
                             </div>
                         ) : (
                             <div className="card-rows">
-                                {cards.map(card => {
+                                {cards.map((card) => {
                                     const status = getCardStatus(card);
                                     const isSelected = selectedCard?.id === card.id;
                                     return (
@@ -227,7 +223,9 @@ export function DeckDetail() {
                                         >
                                             <div className="card-row-bar" />
                                             <div className="card-row-content">
-                                                <span className="card-row-front">{getCardLabel(card)}</span>
+                                                <span className="card-row-front">
+                                                    {getCardLabel(card)}
+                                                </span>
                                             </div>
                                             <span className={`card-row-badge badge-${status}`}>
                                                 {STATUS_LABEL[status]}
@@ -276,11 +274,17 @@ export function DeckDetail() {
                                 <div className="card-preview">
                                     <p className="card-preview-text">
                                         {showFront
-                                            ? (selectedCard.data['Question'] ?? Object.values(selectedCard.data)[0] ?? '(empty)')
-                                            : (selectedCard.data['Answer'] ?? Object.values(selectedCard.data)[1] ?? '(empty)')}
+                                            ? (selectedCard.data['Question'] ??
+                                              Object.values(selectedCard.data)[0] ??
+                                              '(empty)')
+                                            : (selectedCard.data['Answer'] ??
+                                              Object.values(selectedCard.data)[1] ??
+                                              '(empty)')}
                                     </p>
                                     {showFront && selectedCard.data['Hint'] && (
-                                        <p className="card-preview-hint">Hint: {selectedCard.data['Hint']}</p>
+                                        <p className="card-preview-hint">
+                                            Hint: {selectedCard.data['Hint']}
+                                        </p>
                                     )}
                                 </div>
 
@@ -288,11 +292,13 @@ export function DeckDetail() {
                                 <div className="card-detail-section">
                                     <span className="card-section-label">Fields</span>
                                     <div className="card-fields">
-                                        {getFieldOrder().map(name => (
+                                        {getFieldOrder().map((name) => (
                                             <div key={name} className="card-field-row">
                                                 <span className="card-field-name">{name}</span>
                                                 <span className="card-field-value">
-                                                    {selectedCard.data[name] || <em className="card-field-empty">empty</em>}
+                                                    {selectedCard.data[name] || (
+                                                        <em className="card-field-empty">empty</em>
+                                                    )}
                                                 </span>
                                             </div>
                                         ))}
@@ -305,19 +311,30 @@ export function DeckDetail() {
                                     <div className="card-fields">
                                         <div className="card-field-row">
                                             <span className="card-field-name">Reviews</span>
-                                            <span className="card-field-value">{selectedCard.reviewCount}</span>
+                                            <span className="card-field-value">
+                                                {selectedCard.reviewCount}
+                                            </span>
                                         </div>
                                         <div className="card-field-row">
                                             <span className="card-field-name">Interval</span>
-                                            <span className="card-field-value">{formatInterval(selectedCard.interval)}</span>
+                                            <span className="card-field-value">
+                                                {formatInterval(selectedCard.interval)}
+                                            </span>
                                         </div>
                                         <div className="card-field-row">
                                             <span className="card-field-name">Next review</span>
-                                            <span className="card-field-value">{formatNextReview(selectedCard.nextReviewAt, selectedCard.reviewCount)}</span>
+                                            <span className="card-field-value">
+                                                {formatNextReview(
+                                                    selectedCard.nextReviewAt,
+                                                    selectedCard.reviewCount
+                                                )}
+                                            </span>
                                         </div>
                                         <div className="card-field-row">
                                             <span className="card-field-name">Ease factor</span>
-                                            <span className="card-field-value">{selectedCard.easeFactor.toFixed(2)}</span>
+                                            <span className="card-field-value">
+                                                {selectedCard.easeFactor.toFixed(2)}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -335,34 +352,39 @@ export function DeckDetail() {
             </div>
 
             {/* Delete confirmation modal */}
-            {cardToDelete && createPortal(
-                <>
-                    <div className="modal-overlay" onClick={() => !deleting && setCardToDelete(null)} />
-                    <div className="modal-dialog">
-                        <h3 className="modal-title">Delete card?</h3>
-                        <p className="modal-body">
-                            This card will be permanently deleted and all its review history will be lost.
-                        </p>
-                        <div className="modal-actions">
-                            <button
-                                className="modal-btn modal-btn--cancel"
-                                onClick={() => setCardToDelete(null)}
-                                disabled={deleting}
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                className="modal-btn modal-btn--danger"
-                                onClick={handleDeleteCard}
-                                disabled={deleting}
-                            >
-                                {deleting ? <span className="spinner" /> : 'Delete'}
-                            </button>
+            {cardToDelete &&
+                createPortal(
+                    <>
+                        <div
+                            className="modal-overlay"
+                            onClick={() => !deleting && setCardToDelete(null)}
+                        />
+                        <div className="modal-dialog">
+                            <h3 className="modal-title">Delete card?</h3>
+                            <p className="modal-body">
+                                This card will be permanently deleted and all its review history
+                                will be lost.
+                            </p>
+                            <div className="modal-actions">
+                                <button
+                                    className="modal-btn modal-btn--cancel"
+                                    onClick={() => setCardToDelete(null)}
+                                    disabled={deleting}
+                                >
+                                    Cancel
+                                </button>
+                                <button
+                                    className="modal-btn modal-btn--danger"
+                                    onClick={handleDeleteCard}
+                                    disabled={deleting}
+                                >
+                                    {deleting ? <span className="spinner" /> : 'Delete'}
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </>,
-                document.body
-            )}
+                    </>,
+                    document.body
+                )}
         </Layout>
     );
 }
